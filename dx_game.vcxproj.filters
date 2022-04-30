@@ -62,6 +62,9 @@
     <ClCompile Include="program\game\IngameScene.cpp" />
     <ClCompile Include="program\game\SceneManager.cpp" />
     <ClCompile Include="program\game\TitleScene.cpp" />
+    <ClCompile Include="program\game\Object\Player.cpp" />
+    <ClCompile Include="program\game\Object\Object.cpp" />
+    <ClCompile Include="program\game\Object\Bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\game\game_main.h">
@@ -135,5 +138,8 @@
     <ClInclude Include="program\game\Scene.h" />
     <ClInclude Include="program\game\SceneManager.h" />
     <ClInclude Include="program\game\TitleScene.h" />
+    <ClInclude Include="program\game\Object\Player.h" />
+    <ClInclude Include="program\game\Object\Object.h" />
+    <ClInclude Include="program\game\Object\Bullet.h" />
   </ItemGroup>
 </Project>

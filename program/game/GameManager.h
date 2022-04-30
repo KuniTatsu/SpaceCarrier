@@ -1,7 +1,5 @@
 //ゲーム全体を管理するマネージャクラス
 //シングルトンで作られている
-
-
 #pragma once
 #include<vector>
 #include<list>
@@ -9,10 +7,12 @@
 #include<unordered_map>
 #include"../dxlib_ext/dxlib_ext.h"
 #include<memory>
+#include"Object/Object.h"
 
 class SceneManager;
 class FadeControl;
 class Sound;
+class Object;
 
 class GameManager {
 
@@ -22,21 +22,20 @@ protected:
 public:
 	//インスタンスがなければ生成、あれば返す関数
 	static GameManager* Instance();
-	//static std::shared_ptr<GameManager> Instance();
 
 
 	int testGraphic = 0;
 
-	/*SceneManager* sManager = nullptr;
+	/*
 	FadeControl* fControl = nullptr;
 	Sound* sound = nullptr;*/
-
-
 
 	//一度読み込んだghを保存するmap
 	std::unordered_map<std::string, int> ghmap;
 
-	float deitatime_;
+	float deitatime_ = 0;
+	//画面中央座標
+	const tnl::Vector3 Center = { 512,364,0 };
 
 
 	void Update();
@@ -52,6 +51,10 @@ public:
 	//DrawRotaGraphの短縮版
 	void DrawRotaGraphNormal(int X, int Y, int GrHandle, int TransFlag);
 
+	//Objectリストへの追加
+	inline void AddObjectList(std::shared_ptr<Object> Ptr) {
+		objects.emplace_back(Ptr);
+	}
 
 
 private:
@@ -59,9 +62,10 @@ private:
 	static GameManager* instance;
 	//static std::shared_ptr<GameManager> instance;
 
-	//プレイヤーキャラクタGh
-	int playerGh[12] = {};
+	//ObjectList
+	//std::list<Object*> objects;
 
+	std::list<std::shared_ptr<Object>> objects;
 
 	//アイテム情報をexcelから読み取る関数
 	void loadItem();

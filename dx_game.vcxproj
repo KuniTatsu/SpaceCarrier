@@ -11,6 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="program\game\Object\Bullet.cpp" />
+    <ClCompile Include="program\game\Object\Object.cpp" />
+    <ClCompile Include="program\game\Object\Player.cpp" />
     <ClCompile Include="program\dxlib_ext\dxlib_ext.cpp" />
     <ClCompile Include="program\game\GameManager.cpp" />
     <ClCompile Include="program\game\game_main.cpp" />
@@ -29,6 +32,9 @@
     <ClCompile Include="program\system\sys_main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="program\game\Object\Bullet.h" />
+    <ClInclude Include="program\game\Object\Object.h" />
+    <ClInclude Include="program\game\Object\Player.h" />
     <ClInclude Include="program\dxlib_ext\dxlib_ext.h" />
     <ClInclude Include="program\game\GameManager.h" />
     <ClInclude Include="program\game\game_main.h" />

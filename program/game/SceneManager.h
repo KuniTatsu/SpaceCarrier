@@ -5,12 +5,17 @@ class Scene;
 
 class SceneManager {
 public:
-	enum SCENE {
+	/*enum SCENE {
 		TITLE,
 		INGAME
 
 
+	};*/
+	enum class SCENE {
+		TITLE,
+		INGAME
 	};
+
 
 	static void ChangeScene(SCENE Scene);     //
 	static void Update();                     //

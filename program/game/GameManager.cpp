@@ -2,6 +2,8 @@
 #include"SceneManager.h"
 #include"DxLib.h"
 #include<string>
+#include"Object/Player.h"
+#include"Object/Bullet.h"
 
 
 //#include"Item.h"
@@ -33,10 +35,31 @@ GameManager::~GameManager()
 void GameManager::Update()
 {
 	SceneManager::Update();
+	/*if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
+		new Player();
+	}
+	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2))
+	{
+		new Bullet();
+	}*/
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
+		auto hoge=std::make_shared<Player>();
+		hoge->SetList();
+	}
+	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2))
+	{
+		auto hoge = std::make_shared<Bullet>();
+		hoge->SetList();
+	}
 }
 void GameManager::Draw()
 {
 	SceneManager::Render();
+	auto itr = objects.begin();
+
+	for (int i = 0; i < objects.size(); ++i) {
+		(*itr)->Draw();
+	}
 }
 
 void GameManager::initGameManager()

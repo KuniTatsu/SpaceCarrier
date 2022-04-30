@@ -16,5 +16,7 @@ public:
 private:
 	GameManager* gManager = nullptr;
 
+	int testGh = 0;
+
 
 };
