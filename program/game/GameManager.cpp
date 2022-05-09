@@ -35,13 +35,7 @@ GameManager::~GameManager()
 void GameManager::Update()
 {
 	SceneManager::Update();
-	/*if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
-		new Player();
-	}
-	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2))
-	{
-		new Bullet();
-	}*/
+
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
 		auto hoge=std::make_shared<Player>();
 		hoge->SetList();
@@ -51,6 +45,13 @@ void GameManager::Update()
 		auto hoge = std::make_shared<Bullet>();
 		hoge->SetList();
 	}
+
+	auto itr = objects.begin();
+
+	for (int i = 0; i < objects.size(); ++i) {
+		(*itr)->Update();
+	}
+
 }
 void GameManager::Draw()
 {
@@ -72,10 +73,8 @@ void GameManager::initGameManager()
 
 	SceneManager::ChangeScene(SceneManager::SCENE::TITLE);
 	testGraphic = LoadGraphEx("graphics/test_1.png");
-	
-
-	//Block* testBlock1 = new Block(300, 300, 10, testGraphic);
-
+	auto hoge = std::make_shared<Player>();
+	hoge->SetList();
 }
 
 int GameManager::LoadGraphEx(std::string Gh)

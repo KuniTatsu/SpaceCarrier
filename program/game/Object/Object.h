@@ -10,6 +10,8 @@ protected:
 	tnl::Vector3 pos;
 	//‰æ‘œƒnƒ“ƒhƒ‹
 	int gh = 0;
+
+	GameManager* gManager = nullptr;
 public:
 	Object();
 
@@ -25,7 +27,7 @@ public:
 	virtual void Init() = 0;
 
 private:
-	GameManager* gManager = nullptr;
+
 
 };
 

@@ -21,6 +21,5 @@ void Bullet::Draw()
 
 void Bullet::Init()
 {
-	gManager = GameManager::Instance();
 	gh = gManager->LoadGraphEx("graphics/Player");
 }

@@ -60,10 +60,6 @@ public:
 private:
 	//シングルトンインスタンス
 	static GameManager* instance;
-	//static std::shared_ptr<GameManager> instance;
-
-	//ObjectList
-	//std::list<Object*> objects;
 
 	std::list<std::shared_ptr<Object>> objects;
 

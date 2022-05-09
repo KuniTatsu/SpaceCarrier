@@ -16,7 +16,6 @@ public:
 
 
 private:
-	GameManager* gManager = nullptr;
 
 };
 
