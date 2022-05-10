@@ -4,6 +4,8 @@
 #include<string>
 #include"Object/Player.h"
 #include"Object/Bullet.h"
+#include"Manager/BulletManager.h"
+#include"Object/Player.h"
 
 
 //#include"Item.h"
@@ -25,8 +27,6 @@ GameManager* GameManager::Instance()
 	return instance;
 }
 
-
-
 GameManager::~GameManager()
 {
 
@@ -35,32 +35,27 @@ GameManager::~GameManager()
 void GameManager::Update()
 {
 	SceneManager::Update();
-
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
-		auto hoge=std::make_shared<Player>();
-		hoge->SetList();
-	}
-	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2))
+if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2))
 	{
 		auto hoge = std::make_shared<Bullet>();
 		hoge->SetList();
 	}
 
-	auto itr = objects.begin();
 
-	for (int i = 0; i < objects.size(); ++i) {
-		(*itr)->Update();
-	}
-
+	
+	/*auto it = objects.begin();
+	while (it != objects.end()) {
+		(*it)->Update();
+		it++;
+	}*/
 }
 void GameManager::Draw()
 {
 	SceneManager::Render();
-	auto itr = objects.begin();
-
+	/*auto itr = objects.begin();
 	for (int i = 0; i < objects.size(); ++i) {
 		(*itr)->Draw();
-	}
+	}*/
 }
 
 void GameManager::initGameManager()
@@ -73,8 +68,14 @@ void GameManager::initGameManager()
 
 	SceneManager::ChangeScene(SceneManager::SCENE::TITLE);
 	testGraphic = LoadGraphEx("graphics/test_1.png");
-	auto hoge = std::make_shared<Player>();
-	hoge->SetList();
+
+	//プレイヤーの生成
+	player = std::make_shared<Player>();
+	player->SetList();	
+
+	//BulletManagerインスタンス確保
+	bManager = BulletManager::Instance();
+
 }
 
 int GameManager::LoadGraphEx(std::string Gh)
@@ -97,6 +98,20 @@ int GameManager::LoadGraphEx(std::string Gh)
 void GameManager::DrawRotaGraphNormal(int X, int Y, int GrHandle, int TransFlag)
 {
 	DrawRotaGraph(X, Y, 1, 0, GrHandle, true);
+}
+
+void GameManager::RemoveObjectList()
+{
+	if (objects.size() <= 1)return;
+	auto itr = objects.begin();
+
+	while (itr != objects.end()) {
+		if (!(*itr)->GetIsLive()) {
+			itr = objects.erase(itr);
+			continue;
+		}
+		itr++;
+	}
 }
 
 

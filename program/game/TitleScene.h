@@ -18,5 +18,7 @@ private:
 
 	int testGh = 0;
 
+	int backGroundGh = 0;
+
 
 };

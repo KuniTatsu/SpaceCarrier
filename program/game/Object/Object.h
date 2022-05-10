@@ -12,10 +12,15 @@ protected:
 	int gh = 0;
 
 	GameManager* gManager = nullptr;
+
+	bool isLive = true;
 public:
 	Object();
 
 	void SetList();
+	inline bool& GetIsLive() {
+		return isLive;
+	}
 
 	virtual~Object() {};
 
@@ -25,6 +30,8 @@ public:
 	virtual void Draw() = 0;
 
 	virtual void Init() = 0;
+	//¶€Šm”FŠÖ”
+	virtual	void CheckIsLive() = 0;
 
 private:
 

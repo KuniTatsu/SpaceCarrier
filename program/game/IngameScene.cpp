@@ -1,4 +1,9 @@
 #include "InGameScene.h"
+#include"Manager/BulletManager.h"
+#include"Object/Bullet.h"
+#include"GameManager.h"
+#include"Object/Object.h"
+#include"Object/Player.h"
 
 InGameScene::InGameScene()
 {
@@ -11,19 +16,46 @@ InGameScene::~InGameScene()
 
 void InGameScene::Update()
 {
+	if (tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_SPACE))player->ShootBullet();
+
+	{
+		auto list = gManager->GetObjectList();
+		auto it = list.begin();
+
+		while (it != list.end()) {
+			(*it)->Update();
+			it++;
+		}
+	}
+
+	bManager->RemoveBulletList();
+
+	gManager->RemoveObjectList();
 
 }
 
 void InGameScene::Draw()
 {
-	/*if (gManager->GetList().empty())return;
+	DrawRotaGraph(512, 384, 1, 0, backGroundGh, false);
 
-	for (auto obj : gManager->GetList()) {
-		obj->render(gManager->deitatime_);
-	}*/
+	auto objectList = gManager->GetObjectList();
+	auto itr = objectList.begin();
+
+
+	for (int i = 0; i < objectList.size(); ++i) {
+		(*itr)->Draw();
+		++itr;
+	}
+
+
 }
 
 void InGameScene::Init()
 {
 	gManager = GameManager::Instance();
+	bManager = BulletManager::Instance();
+
+	backGroundGh = gManager->LoadGraphEx("graphics/space.jpg");
+	//objectList = gManager->GetObjectList();
+	player = gManager->GetPlayer();
 }

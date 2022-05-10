@@ -4,11 +4,14 @@
 #include <algorithm>
 #include "game_main.h"
 #include"GameManager.h"
+#include"Manager/BulletManager.h"
 #include "../dxlib_ext/dxlib_ext.h"
 
 bool init = false;
 
 GameManager* GameManager::instance = nullptr;
+BulletManager* BulletManager::instance = nullptr;
+
 GameManager* gManager = nullptr;
 
 void gameMain(float delta_time) {

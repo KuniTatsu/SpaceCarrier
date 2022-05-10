@@ -13,6 +13,8 @@ class SceneManager;
 class FadeControl;
 class Sound;
 class Object;
+class BulletManager;
+class Player;
 
 class GameManager {
 
@@ -55,13 +57,28 @@ public:
 	inline void AddObjectList(std::shared_ptr<Object> Ptr) {
 		objects.emplace_back(Ptr);
 	}
+	//objectリスト取得
+	inline std::list<std::shared_ptr<Object>>& GetObjectList() {
+		return objects;
+	}
+
+	inline std::shared_ptr<Player> GetPlayer() {
+		return player;
+	}
+
+	void RemoveObjectList();
 
 
 private:
 	//シングルトンインスタンス
 	static GameManager* instance;
 
+	//BulletManagerインスタンス
+	BulletManager* bManager = nullptr;
+
 	std::list<std::shared_ptr<Object>> objects;
+
+	std::shared_ptr<Player>player = nullptr;
 
 	//アイテム情報をexcelから読み取る関数
 	void loadItem();
