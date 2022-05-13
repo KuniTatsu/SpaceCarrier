@@ -12,6 +12,7 @@ Bullet::Bullet(tnl::Vector3& StartPos, tnl::Vector3& VPos)
 
 Bullet::~Bullet()
 {
+	tnl::DebugTrace("\nBullet‚ª”jŠü‚³‚ê‚Ü‚µ‚½\n");
 }
 
 void Bullet::Update()

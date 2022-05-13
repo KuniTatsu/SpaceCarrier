@@ -1,6 +1,7 @@
 #include "Player.h"
 #include"../GameManager.h"
 #include"Bullet.h"
+#include"../Factory.h"
 
 Player::Player()
 {
@@ -15,8 +16,11 @@ Player::~Player()
 
 void Player::Update()
 {
+	//移動
 	Move();
-	
+
+	//弾発射タイマー更新
+	shootTimer += gManager->deltatime;
 }
 
 void Player::Draw()
@@ -28,6 +32,7 @@ void Player::Init()
 {
 	pos = gManager->Center;
 	gh = gManager->LoadGraphEx("graphics/Player_5050.png");
+	fac = gManager->GetFactory();
 }
 
 void Player::CheckIsLive()
@@ -46,8 +51,6 @@ void Player::Move()
 	//移動量リセット
 	moveX = 0;
 	moveY = 0;
-
-
 
 	//どうにかしてまとめたい　関数化したいがうまく思いつかない
 	//上下キー感知
@@ -81,11 +84,18 @@ void Player::Move()
 
 void Player::ShootBullet()
 {
+	//クールダウン中なら発射しない
+	if (shootTimer < SHOOTCOOLDOWN)return;
+	//クールダウンセット
+	shootTimer = 0;
+
+	//速度ベクトルセット
 	tnl::Vector3 vec = { 0,-10,0 };
 
-	tnl::DebugTrace("\n%d,%d,%d\n",pos.x, pos.y, pos.z);
+	tnl::DebugTrace("\n%d,%d,%d\n", pos.x, pos.y, pos.z);
 
-	auto bullet = std::make_shared<Bullet>(pos, vec);
+	//弾の生成
+	auto bullet = fac->create("Bullet", pos, vec);;
 	bullet->SetList();
 
 }

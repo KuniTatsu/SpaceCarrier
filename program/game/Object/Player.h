@@ -4,6 +4,7 @@
 #include<math.h>
 
 class GameManager;
+class Factory;
 
 class Player final :public Object
 {
@@ -21,18 +22,9 @@ private:
 
 	void Move();
 
-	
-
-	//方向
-	enum class DIR {
-		UP,
-		RIGHT,
-		DOWN,
-		LEFT,
-		MAX
-	};
 	//矢印キーの配列
-	const tnl::Input::eKeys arrowKeys[static_cast<int>(DIR::MAX)] = { tnl::Input::eKeys::KB_UP,tnl::Input::eKeys::KB_RIGHT, tnl::Input::eKeys::KB_DOWN, tnl::Input::eKeys::KB_LEFT };
+	const tnl::Input::eKeys arrowKeys[static_cast<int>(DIR::MAX)] = { tnl::Input::eKeys::KB_UP,tnl::Input::eKeys::KB_RIGHT, 
+																		tnl::Input::eKeys::KB_DOWN, tnl::Input::eKeys::KB_LEFT };
 
 	//キー取得
 	inline tnl::Input::eKeys GetKeys(int KeyNum){
@@ -63,6 +55,12 @@ private:
 
 	}
 	
+	//弾発射間隔
+	const float SHOOTCOOLDOWN = 0.01f;
+	//弾発射タイマー
+	float shootTimer = 0.0f;
 
+	//objファクトリーポインタ
+	Factory* fac = nullptr;
 };
 

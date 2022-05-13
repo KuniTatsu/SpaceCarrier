@@ -6,7 +6,7 @@
 #include"Object/Bullet.h"
 #include"Manager/BulletManager.h"
 #include"Object/Player.h"
-
+#include"Factory.h"
 
 //#include"Item.h"
 //#include "FadeControl.h"
@@ -32,8 +32,10 @@ GameManager::~GameManager()
 
 }
 
-void GameManager::Update()
+void GameManager::Update(const float Deltatime)
 {
+	deltatime = Deltatime;
+
 	SceneManager::Update();
 if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2))
 	{
@@ -41,7 +43,7 @@ if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2))
 		hoge->SetList();
 	}
 
-
+	
 	
 	/*auto it = objects.begin();
 	while (it != objects.end()) {
@@ -49,7 +51,7 @@ if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2))
 		it++;
 	}*/
 }
-void GameManager::Draw()
+void GameManager::Draw(const float Deltatime)
 {
 	SceneManager::Render();
 	/*auto itr = objects.begin();
@@ -64,10 +66,12 @@ void GameManager::initGameManager()
 	//sound = new Sound();
 	//fControl = new FadeControl();
 
-	deitatime_ = 0;
+	deltatime = 0.0f;
 
 	SceneManager::ChangeScene(SceneManager::SCENE::TITLE);
 	testGraphic = LoadGraphEx("graphics/test_1.png");
+
+	objFac = new ObjectFactory();
 
 	//ÉvÉåÉCÉÑÅ[ÇÃê∂ê¨
 	player = std::make_shared<Player>();

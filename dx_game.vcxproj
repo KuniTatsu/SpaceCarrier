@@ -11,8 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="program\game\Factory.cpp" />
     <ClCompile Include="program\game\Manager\BulletManager.cpp" />
     <ClCompile Include="program\game\Object\Bullet.cpp" />
+    <ClCompile Include="program\game\Object\Enemy.cpp" />
     <ClCompile Include="program\game\Object\Object.cpp" />
     <ClCompile Include="program\game\Object\Player.cpp" />
     <ClCompile Include="program\dxlib_ext\dxlib_ext.cpp" />
@@ -33,8 +35,10 @@
     <ClCompile Include="program\system\sys_main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="program\game\Factory.h" />
     <ClInclude Include="program\game\Manager\BulletManager.h" />
     <ClInclude Include="program\game\Object\Bullet.h" />
+    <ClInclude Include="program\game\Object\Enemy.h" />
     <ClInclude Include="program\game\Object\Object.h" />
     <ClInclude Include="program\game\Object\Player.h" />
     <ClInclude Include="program\dxlib_ext\dxlib_ext.h" />

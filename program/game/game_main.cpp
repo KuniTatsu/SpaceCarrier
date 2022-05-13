@@ -23,8 +23,8 @@ void gameMain(float delta_time) {
 		init = true;
 	}
 
-	gManager->Update();
-	gManager->Draw();
+	gManager->Update(delta_time);
+	gManager->Draw(delta_time);
 
 }
 

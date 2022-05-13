@@ -14,6 +14,15 @@ protected:
 	GameManager* gManager = nullptr;
 
 	bool isLive = true;
+
+	//•ûŒü
+	enum class DIR {
+		UP,
+		RIGHT,
+		DOWN,
+		LEFT,
+		MAX
+	};
 public:
 	Object();
 

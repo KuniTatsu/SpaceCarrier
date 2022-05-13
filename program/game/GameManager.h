@@ -15,6 +15,8 @@ class Sound;
 class Object;
 class BulletManager;
 class Player;
+class Factory;
+class ObjectFactory;
 
 class GameManager {
 
@@ -25,6 +27,13 @@ public:
 	//インスタンスがなければ生成、あれば返す関数
 	static GameManager* Instance();
 
+	//オブジェクトファクトリーインスタンス
+	Factory* objFac = nullptr;
+	//ファクトリーの取得
+
+	inline Factory* GetFactory() {
+		return objFac;
+	}
 
 	int testGraphic = 0;
 
@@ -35,13 +44,15 @@ public:
 	//一度読み込んだghを保存するmap
 	std::unordered_map<std::string, int> ghmap;
 
-	float deitatime_ = 0;
+	//フレーム秒
+	float deltatime = 0.0f;
+
 	//画面中央座標
 	const tnl::Vector3 Center = { 512,364,0 };
 
 
-	void Update();
-	void Draw();
+	void Update(const float Deltatime);
+	void Draw(const float Deltatime);
 
 	//GameManagerの初期化
 	void initGameManager();
@@ -76,6 +87,7 @@ private:
 	//BulletManagerインスタンス
 	BulletManager* bManager = nullptr;
 
+	//オブジェクトリスト
 	std::list<std::shared_ptr<Object>> objects;
 
 	std::shared_ptr<Player>player = nullptr;

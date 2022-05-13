@@ -8,7 +8,6 @@ class BulletManager;
 class Object;
 class Player;
 
-
 class InGameScene:public BaseScene
 {
 public:
@@ -23,7 +22,9 @@ private:
 	void Init();
 	GameManager* gManager = nullptr;
 	BulletManager* bManager = nullptr;
+
 	std::shared_ptr<Player>player = nullptr;
+
 
 	int backGroundGh = 0;
 	//オブジェクトリスト

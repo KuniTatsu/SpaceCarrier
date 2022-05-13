@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include"GameManager.h"
 #include"SceneManager.h"
+
 //#include"Object.h"
 
 TitleScene::TitleScene()
@@ -22,7 +23,7 @@ void TitleScene::Update()
 		SceneManager::ChangeScene(SceneManager::SCENE::INGAME);
 		return;
 	}
-
+	
 }
 
 void TitleScene::Draw()
@@ -34,4 +35,9 @@ void TitleScene::Draw()
 	}*/
 
 	DrawRotaGraph(512, 384, 1, 0, backGroundGh, false);
+
+	/*for (int i = 9; i > 0; --i) {
+		DrawStringEx(100, 470 - (i * 30), -1, " %d", i);
+	}*/
+
 }

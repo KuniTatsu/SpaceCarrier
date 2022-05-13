@@ -16,8 +16,10 @@ InGameScene::~InGameScene()
 
 void InGameScene::Update()
 {
-	if (tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_SPACE))player->ShootBullet();
+	//spaceキーを押したら弾を発射する
+	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_SPACE))player->ShootBullet();
 
+	//オブジェクトリストのアップデート
 	{
 		auto list = gManager->GetObjectList();
 		auto it = list.begin();
@@ -28,8 +30,8 @@ void InGameScene::Update()
 		}
 	}
 
+	//弾のインスタンス消去
 	bManager->RemoveBulletList();
-
 	gManager->RemoveObjectList();
 
 }
@@ -40,7 +42,6 @@ void InGameScene::Draw()
 
 	auto objectList = gManager->GetObjectList();
 	auto itr = objectList.begin();
-
 
 	for (int i = 0; i < objectList.size(); ++i) {
 		(*itr)->Draw();
@@ -54,6 +55,7 @@ void InGameScene::Init()
 {
 	gManager = GameManager::Instance();
 	bManager = BulletManager::Instance();
+	
 
 	backGroundGh = gManager->LoadGraphEx("graphics/space.jpg");
 	//objectList = gManager->GetObjectList();
