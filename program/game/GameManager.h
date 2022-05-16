@@ -79,6 +79,12 @@ public:
 
 	void RemoveObjectList();
 
+	int GetRandEx(int a, int b);
+
+	const tnl::Vector3 SPAWNPOS = { 0,-50,0 };
+	//画面内のランダムなポジションを取得する関数
+	tnl::Vector3 GetRandomPos();
+
 
 private:
 	//シングルトンインスタンス

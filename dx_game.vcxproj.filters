@@ -68,6 +68,7 @@
     <ClCompile Include="program\game\Manager\BulletManager.cpp" />
     <ClCompile Include="program\game\Object\Enemy.cpp" />
     <ClCompile Include="program\game\Factory.cpp" />
+    <ClCompile Include="program\game\Movement\Movement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\game\game_main.h">
@@ -147,5 +148,6 @@
     <ClInclude Include="program\game\Manager\BulletManager.h" />
     <ClInclude Include="program\game\Object\Enemy.h" />
     <ClInclude Include="program\game\Factory.h" />
+    <ClInclude Include="program\game\Movement\Movement.h" />
   </ItemGroup>
 </Project>

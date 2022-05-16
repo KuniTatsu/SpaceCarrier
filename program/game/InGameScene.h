@@ -7,6 +7,8 @@ class GameManager;
 class BulletManager;
 class Object;
 class Player;
+class Enemy;
+class Factory;
 
 class InGameScene:public BaseScene
 {
@@ -22,8 +24,14 @@ private:
 	void Init();
 	GameManager* gManager = nullptr;
 	BulletManager* bManager = nullptr;
+	
+	//enemyリスト
+	std::list<std::shared_ptr<Enemy>>enemyList;
 
 	std::shared_ptr<Player>player = nullptr;
+
+	//objファクトリーポインタ
+	Factory* fac = nullptr;
 
 
 	int backGroundGh = 0;

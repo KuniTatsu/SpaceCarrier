@@ -4,6 +4,9 @@
 #include"GameManager.h"
 #include"Object/Object.h"
 #include"Object/Player.h"
+#include"Factory.h"
+#include<time.h>
+#include"Object/Enemy.h"
 
 InGameScene::InGameScene()
 {
@@ -16,6 +19,12 @@ InGameScene::~InGameScene()
 
 void InGameScene::Update()
 {
+	if (/*GetRand(time(0)) % 100 > 80*/tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_E)) {
+		std::shared_ptr<Enemy>enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(), tnl::Vector3(0, 5, 0), Factory::MOVETYPE::STRAIGHT));
+		enemy->SetList();
+	}
+
+
 	//spaceƒL[‚ð‰Ÿ‚µ‚½‚ç’e‚ð”­ŽË‚·‚é
 	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_SPACE))player->ShootBullet();
 
@@ -55,9 +64,11 @@ void InGameScene::Init()
 {
 	gManager = GameManager::Instance();
 	bManager = BulletManager::Instance();
-	
+
 
 	backGroundGh = gManager->LoadGraphEx("graphics/space.jpg");
 	//objectList = gManager->GetObjectList();
 	player = gManager->GetPlayer();
+
+	fac = gManager->GetFactory();
 }

@@ -7,6 +7,7 @@
 #include"Manager/BulletManager.h"
 #include"Object/Player.h"
 #include"Factory.h"
+#include<time.h>
 
 //#include"Item.h"
 //#include "FadeControl.h"
@@ -37,14 +38,14 @@ void GameManager::Update(const float Deltatime)
 	deltatime = Deltatime;
 
 	SceneManager::Update();
-if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2))
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2))
 	{
 		auto hoge = std::make_shared<Bullet>();
 		hoge->SetList();
 	}
 
-	
-	
+
+
 	/*auto it = objects.begin();
 	while (it != objects.end()) {
 		(*it)->Update();
@@ -62,7 +63,7 @@ void GameManager::Draw(const float Deltatime)
 
 void GameManager::initGameManager()
 {
-	
+
 	//sound = new Sound();
 	//fControl = new FadeControl();
 
@@ -75,7 +76,7 @@ void GameManager::initGameManager()
 
 	//プレイヤーの生成
 	player = std::make_shared<Player>();
-	player->SetList();	
+	player->SetList();
 
 	//BulletManagerインスタンス確保
 	bManager = BulletManager::Instance();
@@ -116,6 +117,32 @@ void GameManager::RemoveObjectList()
 		}
 		itr++;
 	}
+}
+
+//aからbまでの値からランダムに取得する
+int GameManager::GetRandEx(int a, int b)
+{
+	if (a > b) {
+		int diff = static_cast<int>(a - b);
+		int random = static_cast<int>(GetRand(diff) + b);
+
+		return random;
+	}
+	else {
+		int diff = static_cast<int>(b - a);
+		int random = static_cast<int>(GetRand(diff) + a);
+
+		return random;
+	}
+	return 0;
+}
+
+tnl::Vector3 GameManager::GetRandomPos()
+{
+	float x = 0;
+	x = static_cast<float>(GetRandEx(200, 1000));
+
+	return tnl::Vector3(x, SPAWNPOS.y, 0);
 }
 
 
