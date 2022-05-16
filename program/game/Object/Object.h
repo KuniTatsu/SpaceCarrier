@@ -30,8 +30,22 @@ public:
 	Object();
 
 	void SetList();
+	//¶€ó‘Ô‚ÌŠl“¾
 	inline bool& GetIsLive() {
 		return isLive;
+	}
+
+	inline void	SetIsLive() {
+		isLive = false;
+	}
+
+	//•`‰æÀ•W‚Ìæ“¾
+	inline tnl::Vector3& GetPos() {
+		return pos;
+	}
+	//”¼Œa‚Ìæ“¾
+	inline int& GetRadius() {
+		return radius;
 	}
 
 	virtual~Object() {};

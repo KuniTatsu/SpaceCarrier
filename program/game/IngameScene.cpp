@@ -23,6 +23,7 @@ void InGameScene::Update()
 	if (GetRand(100) % 100 > 98) {
 		auto enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(), tnl::Vector3(0, 5, 0), Factory::MOVETYPE::STRAIGHT));
 		enemy->SetList();
+		enemy->SetEnemyList();
 	}
 
 
@@ -39,8 +40,15 @@ void InGameScene::Update()
 			it++;
 		}
 	}
-	
-	
+	//弾とエネミーの当たり判定
+	for (auto enemy : eManager->GetList()) {
+		for (auto bullet : bManager->GetList()) {
+			if (tnl::IsIntersectSphere(enemy->GetPos(), enemy->GetRadius(), bullet->GetPos(), bullet->GetRadius())) {
+				enemy->SetIsLive();
+				bullet->SetIsLive();
+			}
+		}
+	}
 
 	//tnl::IsIntersectSphere()
 

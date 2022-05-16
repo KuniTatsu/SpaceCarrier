@@ -20,6 +20,8 @@ public:
 
 	void SetEnemyList();
 
+	
+
 protected:
 	EnemyManager* eManager = nullptr;
 
