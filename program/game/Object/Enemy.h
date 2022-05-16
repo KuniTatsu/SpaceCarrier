@@ -3,6 +3,7 @@
 
 class MovementBase;
 class GameManager;
+class EnemyManager;
 
 class Enemy :public Object
 {
@@ -17,7 +18,11 @@ public:
 	void Init()override;
 	void CheckIsLive()override;
 
+	void SetEnemyList();
+
 protected:
+	EnemyManager* eManager = nullptr;
+
 
 	void Move();
 

@@ -68,6 +68,7 @@ void GameManager::initGameManager()
 	//fControl = new FadeControl();
 
 	deltatime = 0.0f;
+	SRand(time(0));
 
 	SceneManager::ChangeScene(SceneManager::SCENE::TITLE);
 	testGraphic = LoadGraphEx("graphics/test_1.png");

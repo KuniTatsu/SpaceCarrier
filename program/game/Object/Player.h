@@ -56,9 +56,14 @@ private:
 	}
 	
 	//弾発射間隔
-	const float SHOOTCOOLDOWN = 0.01f;
+	const float SHOOTCOOLDOWN = 0.1f;
 	//弾発射タイマー
 	float shootTimer = 0.0f;
+
+	//弾発射ポイント補正
+	const float INITPOSY = 25.0f;
+
+	
 
 	//objファクトリーポインタ
 	Factory* fac = nullptr;

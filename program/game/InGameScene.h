@@ -5,6 +5,7 @@
 
 class GameManager;
 class BulletManager;
+class EnemyManager;
 class Object;
 class Player;
 class Enemy;
@@ -24,6 +25,8 @@ private:
 	void Init();
 	GameManager* gManager = nullptr;
 	BulletManager* bManager = nullptr;
+	EnemyManager* eManager = nullptr;
+
 	
 	//enemyƒŠƒXƒg
 	std::list<std::shared_ptr<Enemy>>enemyList;

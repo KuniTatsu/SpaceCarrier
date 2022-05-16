@@ -20,12 +20,15 @@ public:
 		liveBullet.clear();
 	}
 
-	//void RemoveBullet(Bullet* bullet);
-
 	inline std::list<std::shared_ptr<Bullet>>& GetList() {
 		return liveBullet;
 	}
 
+	//BulletƒŠƒXƒg‚Ö‚Ì’Ç‰Á
+	inline void AddBulletList(std::shared_ptr<Bullet> Ptr) {
+		tnl::DebugTrace("\nBulletList‚É“o˜^‚³‚ê‚Ü‚µ‚½\n");
+		liveBullet.emplace_back(Ptr);
+	}
 	void RemoveBulletList();
 
 private:

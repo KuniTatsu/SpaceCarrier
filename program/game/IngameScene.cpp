@@ -1,5 +1,6 @@
 #include "InGameScene.h"
 #include"Manager/BulletManager.h"
+#include"Manager/EnemyManager.h"
 #include"Object/Bullet.h"
 #include"GameManager.h"
 #include"Object/Object.h"
@@ -19,8 +20,8 @@ InGameScene::~InGameScene()
 
 void InGameScene::Update()
 {
-	if (/*GetRand(time(0)) % 100 > 80*/tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_E)) {
-		std::shared_ptr<Enemy>enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(), tnl::Vector3(0, 5, 0), Factory::MOVETYPE::STRAIGHT));
+	if (GetRand(100) % 100 > 98) {
+		auto enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(), tnl::Vector3(0, 5, 0), Factory::MOVETYPE::STRAIGHT));
 		enemy->SetList();
 	}
 
@@ -38,11 +39,15 @@ void InGameScene::Update()
 			it++;
 		}
 	}
+	
+	
 
-	//弾のインスタンス消去
+	//tnl::IsIntersectSphere()
+
+	//インスタンス消去
 	bManager->RemoveBulletList();
+	eManager->RemoveEnemyList();
 	gManager->RemoveObjectList();
-
 }
 
 void InGameScene::Draw()
@@ -64,7 +69,7 @@ void InGameScene::Init()
 {
 	gManager = GameManager::Instance();
 	bManager = BulletManager::Instance();
-
+	eManager = EnemyManager::Instance();
 
 	backGroundGh = gManager->LoadGraphEx("graphics/space.jpg");
 	//objectList = gManager->GetObjectList();

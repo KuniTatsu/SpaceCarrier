@@ -11,6 +11,9 @@ protected:
 	//‰æ‘œƒnƒ“ƒhƒ‹
 	int gh = 0;
 
+	//“–‚½‚è”»’è—p‚Ì”¼Œa(‰~‚Æ‰~‚ÌÕ“Ë‚Æ‚µ‚ÄÀ‘•‚·‚é)
+	int radius = 0;
+
 	GameManager* gManager = nullptr;
 
 	bool isLive = true;

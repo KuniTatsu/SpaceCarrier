@@ -18,9 +18,13 @@ std::shared_ptr<Object> ObjectFactory::CreateObject(std::string type, const tnl:
 			MovementBase* move = new StraightMove(VPos);
 			return std::make_shared<Enemy>(StartPos, move);
 		}
-
-
-
+	}
+	else if (type == "Bullet") {
+		//ˆÚ“®•û–@‚É‚æ‚Á‚Ä¶¬‚ğ•Ï‚¦‚é
+		if (Move == MOVETYPE::STRAIGHT) {
+			MovementBase* move = new StraightMove(VPos);
+			return std::make_shared<Bullet>(StartPos, move);
+		}
 	}
 
 }
