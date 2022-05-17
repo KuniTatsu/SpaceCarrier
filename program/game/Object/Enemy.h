@@ -2,6 +2,7 @@
 #include"Object.h"
 
 class MovementBase;
+class ShootBase;
 class GameManager;
 class EnemyManager;
 
@@ -10,7 +11,7 @@ class Enemy :public Object
 public:
 	explicit Enemy(tnl::Vector3 StartPos);
 
-	Enemy(tnl::Vector3 StartPos,MovementBase* MoveType);
+	Enemy(tnl::Vector3 StartPos, MovementBase* MoveType, ShootBase* ShootType);
 	~Enemy();
 
 	void Update()override;
@@ -20,7 +21,7 @@ public:
 
 	void SetEnemyList();
 
-	
+
 
 protected:
 	EnemyManager* eManager = nullptr;
@@ -41,9 +42,11 @@ protected:
 	*/
 	//速度ベクトル
 	tnl::Vector3 vecSpeed = {};
-	
+
 	//ストラテジーパターンを使って行動を変えてみる
 	MovementBase* moveType = nullptr;
+	ShootBase* shootType = nullptr;
+
 
 	//ステータス
 	float hp = 0;

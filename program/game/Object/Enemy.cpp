@@ -1,5 +1,6 @@
 #include "Enemy.h"
-#include"../Movement/Movement.h"
+#include"../StrategyPattern/MovementPattern.h"
+#include"../StrategyPattern/ShootPattern.h"
 #include"../GameManager.h"
 #include"../Manager/EnemyManager.h"
 
@@ -13,7 +14,7 @@ Enemy::Enemy(tnl::Vector3 StartPos)
 	pos = StartPos;
 }
 
-Enemy::Enemy(tnl::Vector3 StartPos, MovementBase* MoveType)
+Enemy::Enemy(tnl::Vector3 StartPos, MovementBase* MoveType, ShootBase* ShootType)
 {
 	tnl::DebugTrace("\n“G‚ª¶¬‚³‚ê‚Ü‚µ‚½\n");
 
@@ -27,6 +28,7 @@ Enemy::Enemy(tnl::Vector3 StartPos, MovementBase* MoveType)
 
 	//moveType = new StraightMove(vecSpeed);
 	moveType = MoveType;
+	shootType = ShootType;
 
 	eManager = EnemyManager::Instance();
 }
@@ -34,11 +36,13 @@ Enemy::Enemy(tnl::Vector3 StartPos, MovementBase* MoveType)
 Enemy::~Enemy()
 {
 	tnl::DebugTrace("\n“G‚ªÁ‹Ž‚³‚ê‚Ü‚µ‚½\n");
+	tnl::DebugTrace("\npos[%f,%f]\n",pos.x,pos.y);
 }
 
 void Enemy::Update()
 {
 	Move();
+	shootType->Shoot(pos,radius,gManager->deltatime);
 	CheckIsLive();
 }
 

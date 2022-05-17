@@ -1,7 +1,7 @@
 #include "Bullet.h"
 #include"../GameManager.h"
 #include"../Manager/BulletManager.h"
-#include"../Movement/Movement.h"
+#include"../StrategyPattern/MovementPattern.h"
 
 Bullet::Bullet(tnl::Vector3& StartPos, tnl::Vector3& VPos)
 {
@@ -74,4 +74,9 @@ void Bullet::CheckIsLive()
 void Bullet::SetBulletList()
 {
 	bManager->AddBulletList(std::dynamic_pointer_cast<Bullet, Object>(shared_from_this()));
+}
+
+void Bullet::SetEnemyBulletList()
+{
+	bManager->AddEnemyBulletList(std::dynamic_pointer_cast<Bullet, Object>(shared_from_this()));
 }

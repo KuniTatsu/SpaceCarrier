@@ -2,7 +2,8 @@
 #include"Object/Object.h"
 #include"Object/Bullet.h"
 #include"Object/Enemy.h"
-#include"Movement/Movement.h"
+#include"StrategyPattern/MovementPattern.h"
+#include"StrategyPattern/ShootPattern.h"
 
 ObjectFactory::ObjectFactory()
 {
@@ -10,13 +11,22 @@ ObjectFactory::ObjectFactory()
 }
 
 
-std::shared_ptr<Object> ObjectFactory::CreateObject(std::string type, const tnl::Vector3& StartPos, const tnl::Vector3& VPos, MOVETYPE Move)
+std::shared_ptr<Object> ObjectFactory::CreateObject(std::string type, const tnl::Vector3& StartPos, const tnl::Vector3& VPos, MOVETYPE Move, SHOOTTYPE Shoot)
 {
 	if (type == "Enemy") {
 		//à⁄ìÆï˚ñ@Ç…ÇÊÇ¡Çƒê∂ê¨ÇïœÇ¶ÇÈ
 		if (Move == MOVETYPE::STRAIGHT) {
 			MovementBase* move = new StraightMove(VPos);
-			return std::make_shared<Enemy>(StartPos, move);
+
+			//íeÇÃî≠éÀï˚ñ@Ç…ÇÊÇ¡Çƒê∂ê¨ÇïœÇ¶ÇÈ
+			if (Shoot == SHOOTTYPE::STRAIGHT) {
+
+				tnl::Vector3 vecSpeed = { 0,10,0 };
+				float coolDawn = 0.5f;
+
+				ShootBase* shoot = new StraightShoot(vecSpeed, coolDawn);
+				return std::make_shared<Enemy>(StartPos, move, shoot);
+			}
 		}
 	}
 	else if (type == "Bullet") {
@@ -30,6 +40,7 @@ std::shared_ptr<Object> ObjectFactory::CreateObject(std::string type, const tnl:
 }
 
 
+/*
 std::shared_ptr<Object> ObjectFactory::CreateObject(std::string type, tnl::Vector3& StartPos, tnl::Vector3& VPos)
 {
 	if (type == "Enemy") {
@@ -40,7 +51,7 @@ std::shared_ptr<Object> ObjectFactory::CreateObject(std::string type, tnl::Vecto
 	}
 	return nullptr;
 }
-
+*/
 
 Factory::Factory()
 {
@@ -50,12 +61,19 @@ Factory::Factory()
 //--------------------------Objectå^Çê∂ê¨Ç∑ÇÈä÷êî------------------------------------//
 std::shared_ptr<Object> Factory::create(std::string type, const tnl::Vector3& StartPos, const tnl::Vector3& VPos, MOVETYPE Move)
 {
-	auto p = CreateObject(type, StartPos, VPos, Move);
-	
-	//std::shared_ptr<Object> p = CreateObject(type, StartPos, VPos);
-	return p;
+	auto object = CreateObject(type, StartPos, VPos, Move, SHOOTTYPE::DUMMY);
+
+	return object;
 }
 
+std::shared_ptr<Object> Factory::create(std::string type, const tnl::Vector3& StartPos, const tnl::Vector3& VPos, MOVETYPE Move, SHOOTTYPE Shoot)
+{
+	auto object = CreateObject(type, StartPos, VPos, Move, Shoot);
+
+	return object;
+}
+
+/*
 //ObjectÇê∂ê¨Ç∑ÇÈä÷êî typeÇ…ÇÊÇ¡Çƒê∂ê¨Ç≥ÇÍÇÈåpè≥êÊÇ™àŸÇ»ÇÈ
 std::shared_ptr<Object> Factory::create(std::string type, tnl::Vector3& StartPos, tnl::Vector3& VPos)
 {
@@ -63,6 +81,7 @@ std::shared_ptr<Object> Factory::create(std::string type, tnl::Vector3& StartPos
 	//std::shared_ptr<Object> p = CreateObject(type, StartPos, VPos);
 	return p;
 }
+*/
 
 //------------------------------------------------------------------------------------//
 

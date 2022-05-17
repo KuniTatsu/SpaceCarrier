@@ -25,7 +25,7 @@ void InGameScene::Update()
 	MoveBackGround();
 
 	if (GetRand(100) % 100 > 98) {
-		auto enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(), tnl::Vector3(0, 5, 0), Factory::MOVETYPE::STRAIGHT));
+		auto enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(), tnl::Vector3(0, 5, 0), Factory::MOVETYPE::STRAIGHT, Factory::SHOOTTYPE::STRAIGHT));
 		enemy->SetList();
 		enemy->SetEnemyList();
 	}

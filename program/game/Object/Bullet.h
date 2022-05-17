@@ -26,9 +26,11 @@ public:
 
 	void CheckIsLive()override;
 
-	//Bulletリスト登録
+	//PlayerBulletリスト登録
 	void SetBulletList();
 
+	//EnemyBulletリスト登録
+	void SetEnemyBulletList();
 
 private:
 	//BulletManagerのインスタンス
