@@ -20,6 +20,10 @@ InGameScene::~InGameScene()
 
 void InGameScene::Update()
 {
+	//”wŒiˆÚ“®
+
+	MoveBackGround();
+
 	if (GetRand(100) % 100 > 98) {
 		auto enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(), tnl::Vector3(0, 5, 0), Factory::MOVETYPE::STRAIGHT));
 		enemy->SetList();
@@ -60,7 +64,9 @@ void InGameScene::Update()
 
 void InGameScene::Draw()
 {
-	DrawRotaGraph(512, 384, 1, 0, backGroundGh, false);
+	//ˆê–‡–Ú‚Ì”wŒi‰æ‘œ
+	DrawRotaGraph(backGroundPos.x, backGroundPos.y, 2, 0, backGroundGh, false);
+	DrawRotaGraph(backGroundPos.x, backGroundPos.y - SIZEY, 2, 0, testGh, false);
 
 	auto objectList = gManager->GetObjectList();
 	auto itr = objectList.begin();
@@ -80,8 +86,21 @@ void InGameScene::Init()
 	eManager = EnemyManager::Instance();
 
 	backGroundGh = gManager->LoadGraphEx("graphics/space.jpg");
+	testGh = gManager->LoadGraphEx("graphics/space.jpg");
+
+	backGroundPos = { gManager->Center.x,gManager->Center.y,0 };
 	//objectList = gManager->GetObjectList();
 	player = gManager->GetPlayer();
 
 	fac = gManager->GetFactory();
+}
+
+void InGameScene::MoveBackGround()
+{
+	backGroundPos.y+=5;
+	//‰æ–Ê‰º’[‚É‰æ‘œ‚Ìã’[‚ªˆÚ“®‚µ‚½‚ç
+	if (backGroundPos.y - 480 >= 768) {
+		//Œ³‚É–ß‚· Œ³‰æ‘œƒTƒCƒY‚Æ‰æ–ÊƒTƒCƒY‚Ì·‚ğˆø‚­
+		backGroundPos.y = gManager->Center.y-72;
+	}
 }
