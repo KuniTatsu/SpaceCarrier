@@ -19,6 +19,10 @@ public:
 	inline void ResetBulletList() {
 		liveBullet.clear();
 	}
+	//EnemyBulletリストの初期化
+	inline void ResetEnemyBulletList() {
+		enemyBullet.clear();
+	}
 	//Playerの弾リストの取得
 	inline std::list<std::shared_ptr<Bullet>>& GetList() {
 		return liveBullet;

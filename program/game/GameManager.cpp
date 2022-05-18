@@ -75,9 +75,9 @@ void GameManager::initGameManager()
 
 	objFac = new ObjectFactory();
 
-	//プレイヤーの生成
-	player = std::make_shared<Player>();
-	player->SetList();
+	////プレイヤーの生成
+	//player = std::make_shared<Player>();
+	//player->SetList();
 
 	//BulletManagerインスタンス確保
 	bManager = BulletManager::Instance();
@@ -141,7 +141,7 @@ int GameManager::GetRandEx(int a, int b)
 tnl::Vector3 GameManager::GetRandomPos()
 {
 	float x = 0;
-	x = static_cast<float>(GetRandEx(200, 1000));
+	x = static_cast<float>(GetRandEx(200, 900));
 
 	return tnl::Vector3(x, SPAWNPOS.y, 0);
 }

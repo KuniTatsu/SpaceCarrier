@@ -20,11 +20,86 @@ InGameScene::~InGameScene()
 
 void InGameScene::Update()
 {
+	mainSeqence.update(gManager->deltatime);
+
+
+}
+
+void InGameScene::Draw()
+{
+	//一枚目の背景画像
+	DrawRotaGraph(backGroundPos.x, backGroundPos.y, 2, 0, backGroundGh, false);
+	DrawRotaGraph(backGroundPos.x, backGroundPos.y - SIZEY, 2, 0, testGh, false);
+
+	auto objectList = gManager->GetObjectList();
+	auto itr = objectList.begin();
+
+	for (int i = 0; i < objectList.size(); ++i) {
+		(*itr)->Draw();
+		++itr;
+	}
+
+	DrawProgressGauge();
+
+	if (nowSeq == sequence::GOALRESALT) {
+		gManager->DrawRotaGraphNormal(gManager->Center.x, gManager->Center.y, goalTestGh, false);
+	}
+}
+
+void InGameScene::Init()
+{
+	gManager = GameManager::Instance();
+	bManager = BulletManager::Instance();
+	eManager = EnemyManager::Instance();
+
+	backGroundGh = gManager->LoadGraphEx("graphics/space.jpg");
+	testGh = gManager->LoadGraphEx("graphics/space.jpg");
+
+	stageGaugeBase = gManager->LoadGraphEx("graphics/StageGauge_None.png");
+	stageGaugeFill = gManager->LoadGraphEx("graphics/StageGauge_Fill.png");
+
+	goalTestGh = gManager->LoadGraphEx("graphics/TestGoal.png");
+
+	backGroundPos = { gManager->Center.x,gManager->Center.y,0 };
+	//objectList = gManager->GetObjectList();
+	//player = gManager->GetPlayer();
+
+	//プレイヤーの生成
+	player = std::make_shared<Player>();
+	player->SetList();
+
+	//プレイヤーの巡航速度を取得
+	PlayerSpeed = player->GetCruizeSpeed();
+	//荷重率の取得
+	CapacityRate = player->GetCapaciryRate();
+
+	fac = gManager->GetFactory();
+
+	stageLength = gManager->GetStageLength();
+
+
+}
+
+bool InGameScene::SeqCruize(const float deltatime)
+{
 	//背景移動
 	MoveBackGround();
-	//ステージ進捗更新
-	Cruize();
 
+	//ステージ進捗更新
+	//もしゴールについたらtrueが帰る
+	if (Cruize()) {
+		//すべての敵と弾をリストから消去する
+		//インスタンス消去
+		bManager->ResetBulletList();
+		bManager->ResetEnemyBulletList();
+		eManager->ResetEnemyList();
+		gManager->ResetObjectList();
+
+		ChangeSequence(sequence::GOALRESALT);
+		return true;
+	}
+
+	//敵の生成　いずれEnemyManagerを介してマスターデータからEnemyの種類を決定,生成する
 	if (GetRand(100) % 100 > 98) {
 		auto enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(),
 			tnl::Vector3(0, 2, 0), Factory::MOVETYPE::STRAIGHT, Factory::SHOOTTYPE::STRAIGHT));
@@ -55,55 +130,50 @@ void InGameScene::Update()
 			}
 		}
 	}
-
-	//tnl::IsIntersectSphere()
-
 	//インスタンス消去
 	bManager->RemoveBulletList();
 	eManager->RemoveEnemyList();
 	gManager->RemoveObjectList();
+
+	return true;
 }
-
-void InGameScene::Draw()
+//ゴールリザルト描画シークエンス
+bool InGameScene::SeqGoalResalt(const float deltatime)
 {
-	//一枚目の背景画像
-	DrawRotaGraph(backGroundPos.x, backGroundPos.y, 2, 0, backGroundGh, false);
-	DrawRotaGraph(backGroundPos.x, backGroundPos.y - SIZEY, 2, 0, testGh, false);
+	//もしEnterを押したら最初からスタートする
+	if (tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_RETURN)) {
+		//ステージの進捗状況をリセットする
+		ResetStageProgress();
 
-	auto objectList = gManager->GetObjectList();
-	auto itr = objectList.begin();
+		//プレイヤーの生成
+		player = std::make_shared<Player>();
+		player->SetList();
 
-	for (int i = 0; i < objectList.size(); ++i) {
-		(*itr)->Draw();
-		++itr;
+		ChangeSequence(sequence::CRUIZE);
+		return true;
 	}
-
-	DrawProgressGauge();
+	return true;
 }
-
-void InGameScene::Init()
+//シークエンスを変更する関数
+void InGameScene::ChangeSequence(const sequence seq)
 {
-	gManager = GameManager::Instance();
-	bManager = BulletManager::Instance();
-	eManager = EnemyManager::Instance();
+	lastSeq = nowSeq;
+	nowSeq = seq;
 
-	backGroundGh = gManager->LoadGraphEx("graphics/space.jpg");
-	testGh = gManager->LoadGraphEx("graphics/space.jpg");
-
-	stageGaugeBase = gManager->LoadGraphEx("graphics/StageGauge_None.png");
-	stageGaugeFill = gManager->LoadGraphEx("graphics/StageGauge_Fill.png");
-
-	backGroundPos = { gManager->Center.x,gManager->Center.y,0 };
-	//objectList = gManager->GetObjectList();
-	player = gManager->GetPlayer();
-
-	fac = gManager->GetFactory();
-
-	stageLength = gManager->GetStageLength();
-
-
+	switch (seq)
+	{
+	case sequence::CRUIZE: {
+		mainSeqence.change(&InGameScene::SeqCruize);
+		break;
+	}
+	case sequence::GOALRESALT: {
+		mainSeqence.change(&InGameScene::SeqGoalResalt);
+		break;
+	}
+	default:
+		break;
+	}
 }
-
 void InGameScene::MoveBackGround()
 {
 	backGroundPos.y += 5;
@@ -114,42 +184,47 @@ void InGameScene::MoveBackGround()
 	}
 }
 
-void InGameScene::Cruize()
+bool InGameScene::Cruize()
 {
-	//プレイヤーの巡航速度を取得
-	const float PLAYERSPEED = player->GetCruizeSpeed();
-	//荷重率の取得
-	const float CAPACITYRATE = player->GetCapaciryRate();
-
 	//一秒で進む距離を取得 巡航速度と荷重率,レーン補正をかけた値を乗算
 	//荷重率は逆数をかける(軽い(1未満)と早くなり、重い(1以上)と遅くなる)
 	float addCruizeDistance = 0;
 	//荷重率が0の場合は無視する
-	if (CAPACITYRATE == 0) {
-		addCruizeDistance = (PLAYERSPEED * LANEEXRATIO[static_cast<int>(myLane)]);
+	if (CapacityRate == 0) {
+		addCruizeDistance = (PlayerSpeed * LANEEXRATIO[static_cast<int>(myLane)]);
 	}
 	else {
-		addCruizeDistance = (PLAYERSPEED * LANEEXRATIO[static_cast<int>(myLane)]) / CAPACITYRATE;
+		addCruizeDistance = (PlayerSpeed * LANEEXRATIO[static_cast<int>(myLane)]) / CapacityRate;
 	}
 
 	//progressが1になっていれば加算しない
-	if (progress >= 1.0)return;
+	if (progress >= 1.0)return true;
 	//現在地に加算する
-	nowStayPos += addCruizeDistance *gManager->deltatime;
+	//nowStayPos += addCruizeDistance * gManager->deltatime;
 
 	//debug
-	//nowStayPos += addCruizeDistance *gManager->deltatime*3;
+	nowStayPos += addCruizeDistance * gManager->deltatime * 10;
 
 	//ステージの進捗率更新
 	progress = static_cast<double>(nowStayPos / stageLength);
+	//debug
+	//tnl::DebugTrace("\n%.2f\n", progress);
+
+	return false;
 }
 
 void InGameScene::DrawProgressGauge()
 {
-	//ステージ進行ゲージの描画5
+	//ステージ進行ゲージの描画
 	DrawRotaGraph(1024 - 25, gManager->Center.y, 1, 0, stageGaugeBase, true);
 	//現在の進行度に応じてゲージの長さを描画
-	DrawRotaGraph3(1024, 768-5, 50, 768, 1, progress, 0, stageGaugeFill, true);
+	DrawRotaGraph3(1024, 768 - 5, 50, 768, 1, progress, 0, stageGaugeFill, true);
+}
 
-	tnl::DebugTrace("\n%.2f\n", progress);
+void InGameScene::ResetStageProgress()
+{
+	nowStayPos = 0.0f;
+	progress = 0.0f;
+
+	player->SetPos(gManager->Center);
 }

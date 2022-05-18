@@ -37,6 +37,33 @@ private:
 	//objファクトリーポインタ
 	Factory* fac = nullptr;
 
+	//--------------シークエンス関係----------------//
+	tnl::Sequence<InGameScene>mainSeqence =
+		tnl::Sequence<InGameScene>(this, &InGameScene::SeqCruize);
+
+	//巡航シークエンス
+	bool SeqCruize(const float deltatime);
+	//ゴール後リザルトシークエンス
+	bool SeqGoalResalt(const float deltatime);
+
+
+
+	//シークエンスの列挙体
+	enum class sequence {
+		CRUIZE,
+		GOALRESALT,
+		MAX
+
+	};
+	sequence nowSeq = sequence::CRUIZE;
+	sequence lastSeq = sequence::CRUIZE;
+
+	//Sequenceを移動させる関数,enumも一緒に変更する
+	void ChangeSequence(const sequence seq);
+	//----------------------------------------------//
+
+	//--------------ステージ進捗関係----------------//
+
 	//移動レーンの種類
 	enum class LANE {
 		NORMALSPEED,//移動速度*1.0 敵の強さも標準
@@ -46,8 +73,13 @@ private:
 	};
 	//現在の選択レーン
 	LANE myLane = LANE::NORMALSPEED;
-
+	//レーンごとの巡航速度レート
 	const float LANEEXRATIO[static_cast<int>(LANE::MAX)]{ 1.0,1.5,2.0 };
+
+	//プレイヤーの巡航速度を取得
+	float PlayerSpeed = 0.0f;
+	//荷重率の取得
+	float CapacityRate = 0.0f;
 
 	//ステージの長さ
 	float stageLength = 0.0f;
@@ -59,9 +91,12 @@ private:
 	double progress = 0;
 
 	//ステージ内の巡航関数 スタートからゴールに移動する関数
-	void Cruize();
+	bool Cruize();
 
+	//ステージの進捗状況のリセット
+	void ResetStageProgress();
 
+	//------------------------------------//
 	//-------------背景関係---------------//
 
 	//グラフィックハンドル
@@ -84,6 +119,9 @@ private:
 	int stageGaugeBase = 0;
 	//ステージ進行ゲージのFill画像
 	int stageGaugeFill = 0;
+
+	//ゴール画像
+	int goalTestGh = 0;
 
 	//進行ゲージの描画
 	void DrawProgressGauge();

@@ -16,7 +16,7 @@ public:
 	static EnemyManager* Instance();
 
 	//BulletƒŠƒXƒg‚Ì‰Šú‰»
-	inline void ResetBulletList() {
+	inline void ResetEnemyList() {
 		liveEnemy.clear();
 	}
 

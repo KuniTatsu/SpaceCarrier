@@ -43,6 +43,11 @@ public:
 	inline tnl::Vector3& GetPos() {
 		return pos;
 	}
+	//描画座標のセット
+	inline void	SetPos(tnl::Vector3 Pos) {
+		pos = Pos;
+	}
+
 	//半径の取得
 	inline int& GetRadius() {
 		return radius;

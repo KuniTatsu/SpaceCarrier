@@ -64,6 +64,10 @@ public:
 	//DrawRotaGraphの短縮版
 	void DrawRotaGraphNormal(int X, int Y, int GrHandle, int TransFlag);
 
+	//Objectリストの初期化
+	inline void ResetObjectList() {
+		objects.clear();
+	}
 	//Objectリストへの追加
 	inline void AddObjectList(std::shared_ptr<Object> Ptr) {
 		objects.emplace_back(Ptr);
@@ -72,11 +76,11 @@ public:
 	inline std::list<std::shared_ptr<Object>>& GetObjectList() {
 		return objects;
 	}
-
+	//プレイヤーの取得
 	inline std::shared_ptr<Player> GetPlayer() {
 		return player;
 	}
-
+	//オブジェクトリストからの排除
 	void RemoveObjectList();
 
 	int GetRandEx(int a, int b);
