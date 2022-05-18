@@ -101,6 +101,19 @@ int GameManager::LoadGraphEx(std::string Gh)
 	return ghmap[Gh];
 }
 
+void GameManager::LoadDivGraphEx(const std::string Gh, const int AllNum, const int WidthNum, const int HeightNum, int XSize, int YSize, std::vector<int>& GhVector)
+{
+	int* buf = new int[AllNum];
+	LoadDivGraph(Gh.c_str(), AllNum, WidthNum, HeightNum, XSize, YSize, buf);
+
+
+	for (int i = 0; i < AllNum; ++i) {
+		GhVector.emplace_back(buf[i]);
+	}
+	delete[] buf;
+
+}
+
 void GameManager::DrawRotaGraphNormal(int X, int Y, int GrHandle, int TransFlag)
 {
 	DrawRotaGraph(X, Y, 1, 0, GrHandle, true);

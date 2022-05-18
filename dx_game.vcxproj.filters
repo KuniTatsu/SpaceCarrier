@@ -71,6 +71,7 @@
     <ClCompile Include="program\game\StrategyPattern\MovementPattern.cpp" />
     <ClCompile Include="program\game\Manager\EnemyManager.cpp" />
     <ClCompile Include="program\game\StrategyPattern\ShootPattern.cpp" />
+    <ClCompile Include="program\game\Animation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\game\game_main.h">
@@ -153,5 +154,6 @@
     <ClInclude Include="program\game\StrategyPattern\MovementPattern.h" />
     <ClInclude Include="program\game\Manager\EnemyManager.h" />
     <ClInclude Include="program\game\StrategyPattern\ShootPattern.h" />
+    <ClInclude Include="program\game\Animation.h" />
   </ItemGroup>
 </Project>

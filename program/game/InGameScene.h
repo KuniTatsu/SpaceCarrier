@@ -2,6 +2,7 @@
 #include"Scene.h"
 #include<memory>
 #include<list>
+#include<vector>
 #include"../dxlib_ext/dxlib_ext.h"
 
 class GameManager;
@@ -11,6 +12,7 @@ class Object;
 class Player;
 class Enemy;
 class Factory;
+class Animation;
 
 class InGameScene :public BaseScene
 {
@@ -126,6 +128,21 @@ private:
 	//進行ゲージの描画
 	void DrawProgressGauge();
 	//------------------------------------//
+
+	//-------------エフェクト関係------------//
+	//画面内に生きているエフェクトリスト
+	std::list<std::shared_ptr<Animation>>liveAnimationList;
+
+	//アニメーション生成
+	void MakeAnimation(std::string Gh, tnl::Vector3 Pos, int ActSpeed, int MaxIndex, int XNum, int YNum, int XSize, int YSize);
+	//アニメーション更新
+	void UpdateAnimation();
+	//アニメーション描画
+	void DrawAnimation();
+	//アニメーション破棄
+	void DeleteAnimation();
+
+	//---------------------------------------//
 
 	//オブジェクトリスト
 	//std::list<std::shared_ptr<Object>> objectList;

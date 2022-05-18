@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="program\game\Animation.cpp" />
     <ClCompile Include="program\game\Factory.cpp" />
     <ClCompile Include="program\game\Manager\BulletManager.cpp" />
     <ClCompile Include="program\game\Manager\EnemyManager.cpp" />
@@ -38,6 +39,7 @@
     <ClCompile Include="program\system\sys_main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="program\game\Animation.h" />
     <ClInclude Include="program\game\Factory.h" />
     <ClInclude Include="program\game\Manager\BulletManager.h" />
     <ClInclude Include="program\game\Manager\EnemyManager.h" />

@@ -61,6 +61,10 @@ public:
 	//‚·‚Å‚É‚ ‚égh‚È‚ç‚»‚ê‚ğ•Ô‚·
 	int LoadGraphEx(std::string Gh);
 
+	//•¡”–‡‚Ì˜A‚È‚Á‚½‰æ‘œ‚ğvector‚ÉŠi”[‚·‚éŠÖ”
+	void LoadDivGraphEx(const std::string Gh, const int AllNum, const int WidthNum, const int HeightNum,
+		int XSize, int YSize, std::vector<int>& GhVector);
+
 	//DrawRotaGraph‚Ì’Zk”Å
 	void DrawRotaGraphNormal(int X, int Y, int GrHandle, int TransFlag);
 

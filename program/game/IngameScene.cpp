@@ -5,9 +5,10 @@
 #include"GameManager.h"
 #include"Object/Object.h"
 #include"Object/Player.h"
+#include"Object/Enemy.h"
 #include"Factory.h"
 #include<time.h>
-#include"Object/Enemy.h"
+#include"Animation.h"
 
 InGameScene::InGameScene()
 {
@@ -20,9 +21,10 @@ InGameScene::~InGameScene()
 
 void InGameScene::Update()
 {
+	//アニメーション更新
+	UpdateAnimation();
+	//現在のシークエンスのアップデート
 	mainSeqence.update(gManager->deltatime);
-
-
 }
 
 void InGameScene::Draw()
@@ -38,7 +40,9 @@ void InGameScene::Draw()
 		(*itr)->Draw();
 		++itr;
 	}
-
+	//アニメーション描画
+	DrawAnimation();
+	//進捗ゲージ描画
 	DrawProgressGauge();
 
 	if (nowSeq == sequence::GOALRESALT) {
@@ -64,6 +68,9 @@ void InGameScene::Init()
 	//objectList = gManager->GetObjectList();
 	//player = gManager->GetPlayer();
 
+	//エフェクト画像のロード
+	//gManager->LoadDivGraphEx("graphics/Explosion.png", 7, 7, 1, 120, 120, explosionGh);
+
 	//プレイヤーの生成
 	player = std::make_shared<Player>();
 	player->SetList();
@@ -72,9 +79,9 @@ void InGameScene::Init()
 	PlayerSpeed = player->GetCruizeSpeed();
 	//荷重率の取得
 	CapacityRate = player->GetCapaciryRate();
-
+	//オブジェクトファクトリーの取得
 	fac = gManager->GetFactory();
-
+	//ステージの長さの取得
 	stageLength = gManager->GetStageLength();
 
 
@@ -125,6 +132,9 @@ bool InGameScene::SeqCruize(const float deltatime)
 	for (auto enemy : eManager->GetList()) {
 		for (auto bullet : bManager->GetList()) {
 			if (tnl::IsIntersectSphere(enemy->GetPos(), enemy->GetRadius(), bullet->GetPos(), bullet->GetRadius())) {
+				//アニメーションを生成する
+				MakeAnimation("graphics/Explosion.png", enemy->GetPos(), 10, 7, 7, 1, 120, 120);
+				//敵と弾を死亡状態にする
 				enemy->SetIsLive();
 				bullet->SetIsLive();
 			}
@@ -228,3 +238,38 @@ void InGameScene::ResetStageProgress()
 
 	player->SetPos(gManager->Center);
 }
+
+void InGameScene::MakeAnimation(std::string Gh, tnl::Vector3 Pos, int ActSpeed, int MaxIndex, int XNum, int YNum, int XSize, int YSize)
+{
+	auto anim = std::make_shared<Animation>(Gh, Pos, ActSpeed, MaxIndex, XNum, YNum, XSize, YSize);
+	liveAnimationList.emplace_back(anim);
+}
+
+void InGameScene::UpdateAnimation()
+{
+	for (auto anim : liveAnimationList) {
+		anim->Update();
+	}
+	DeleteAnimation();
+}
+
+void InGameScene::DrawAnimation()
+{
+	for (auto anim : liveAnimationList) {
+		anim->Draw();
+	}
+}
+
+void InGameScene::DeleteAnimation()
+{
+	auto itr = liveAnimationList.begin();
+	while (itr != liveAnimationList.end()) {
+		if (!(*itr)->GetIsAlive()) {
+			itr = liveAnimationList.erase(itr);
+			continue;
+		}
+		++itr;
+	}
+}
+
+
