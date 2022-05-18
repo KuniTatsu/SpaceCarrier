@@ -19,9 +19,9 @@ Enemy::Enemy(tnl::Vector3 StartPos, MovementBase* MoveType, ShootBase* ShootType
 	tnl::DebugTrace("\n“G‚ª¶¬‚³‚ê‚Ü‚µ‚½\n");
 
 	//‰æ‘œ“Ç‚İ‚İ
-	gh = gManager->LoadGraphEx("graphics/Enemy.png");
+	gh = gManager->LoadGraphEx("graphics/Enemy_2525.png");
 
-	radius = 25;
+	radius = 13;
 
 	//‰ŠúÀ•WŒˆ’è
 	pos = StartPos;

@@ -37,7 +37,7 @@ bool StraightShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
 	if (coolDown < COOLTIME)return false;
 
 	coolDown = 0;
-	auto initPos = tnl::Vector3(0, -Radius, 0);
+	auto initPos = tnl::Vector3(0, +Radius, 0);
 
 	auto shootPoint = Pos + initPos;
 

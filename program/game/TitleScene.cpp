@@ -7,8 +7,8 @@
 TitleScene::TitleScene()
 {
 	gManager = GameManager::Instance();
-	testGh = gManager->LoadGraphEx("graphics/test_1.png");
-	backGroundGh = gManager->LoadGraphEx("graphics/backGround_1.jpg");
+	//testGh = gManager->LoadGraphEx("graphics/test_1.png");
+	backGroundGh = gManager->LoadGraphEx("graphics/TestTitle.png");
 }
 
 TitleScene::~TitleScene()

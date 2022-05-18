@@ -31,9 +31,16 @@ void Player::Draw()
 void Player::Init()
 {
 	pos = gManager->Center;
-	gh = gManager->LoadGraphEx("graphics/Player_5050.png");
+	gh = gManager->LoadGraphEx("graphics/Player_2525.png");
 
-	radius = 25;
+	//playerの当たり判定半径
+	radius = 13;
+
+	//最大化重量のデフォルト
+	maxCapacity = 500;
+
+	//ステージ内を移動するスピード
+	CruizeSpeed = 10;
 	fac = gManager->GetFactory();
 }
 

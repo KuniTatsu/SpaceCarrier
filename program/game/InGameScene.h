@@ -12,7 +12,7 @@ class Player;
 class Enemy;
 class Factory;
 
-class InGameScene:public BaseScene
+class InGameScene :public BaseScene
 {
 public:
 	InGameScene();
@@ -28,7 +28,7 @@ private:
 	BulletManager* bManager = nullptr;
 	EnemyManager* eManager = nullptr;
 
-	
+
 	//enemyリスト
 	std::list<std::shared_ptr<Enemy>>enemyList;
 
@@ -36,6 +36,33 @@ private:
 
 	//objファクトリーポインタ
 	Factory* fac = nullptr;
+
+	//移動レーンの種類
+	enum class LANE {
+		NORMALSPEED,//移動速度*1.0 敵の強さも標準
+		CRUISESPEED,//移動速度*1.5 敵の強さ*1.5
+		HYPERSPEED,//移動速度*2.0  敵の強さ*2.0
+		MAX
+	};
+	//現在の選択レーン
+	LANE myLane = LANE::NORMALSPEED;
+
+	const float LANEEXRATIO[static_cast<int>(LANE::MAX)]{ 1.0,1.5,2.0 };
+
+	//ステージの長さ
+	float stageLength = 0.0f;
+
+	//ステージの現在地
+	float nowStayPos = 0.0f;
+
+	//ステージ進行度
+	double progress = 0;
+
+	//ステージ内の巡航関数 スタートからゴールに移動する関数
+	void Cruize();
+
+
+	//-------------背景関係---------------//
 
 	//グラフィックハンドル
 	int backGroundGh = 0;
@@ -50,6 +77,17 @@ private:
 	//背景画像スクロール
 	void MoveBackGround();
 
+	//------------------------------------//
+
+	//-------------UI関係---------------//
+	//ステージ進行ゲージの元画像
+	int stageGaugeBase = 0;
+	//ステージ進行ゲージのFill画像
+	int stageGaugeFill = 0;
+
+	//進行ゲージの描画
+	void DrawProgressGauge();
+	//------------------------------------//
 
 	//オブジェクトリスト
 	//std::list<std::shared_ptr<Object>> objectList;

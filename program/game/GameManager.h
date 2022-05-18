@@ -48,7 +48,7 @@ public:
 	float deltatime = 0.0f;
 
 	//画面中央座標
-	const tnl::Vector3 Center = { 512,364,0 };
+	const tnl::Vector3 Center = { 512,384,0 };
 
 
 	void Update(const float Deltatime);
@@ -85,6 +85,11 @@ public:
 	//画面内のランダムなポジションを取得する関数
 	tnl::Vector3 GetRandomPos();
 
+	//選択したステージの長さを渡す関数
+	inline const float GetStageLength() {
+		return STAGELENGTH[static_cast<int>(mystage)];
+	}
+
 
 private:
 	//シングルトンインスタンス
@@ -92,6 +97,19 @@ private:
 
 	//BulletManagerインスタンス
 	BulletManager* bManager = nullptr;
+
+	//ステージのリスト
+	enum class STAGE:uint32_t {
+		SOL,	//ステージ1 難易度低 
+		AIGIS,	//ステージ2 難易度中 
+		ICALOS,	//ステージ3 難易度低高
+		MAX
+	};
+	
+	//選択したステージ
+	STAGE mystage = STAGE::SOL;
+	//ステージの長さ
+	const float STAGELENGTH[static_cast<uint32_t>(STAGE::MAX)] = {1000,1500,2000};
 
 	//オブジェクトリスト
 	std::list<std::shared_ptr<Object>> objects;
