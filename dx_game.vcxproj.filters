@@ -58,10 +58,10 @@
     <ClCompile Include="program\dxlib_ext\dxlib_ext.cpp">
       <Filter>program\dxlib_ext</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\GameManager.cpp" />
-    <ClCompile Include="program\game\IngameScene.cpp" />
-    <ClCompile Include="program\game\SceneManager.cpp" />
-    <ClCompile Include="program\game\TitleScene.cpp" />
+    <ClCompile Include="program\game\Manager\GameManager.cpp" />
+    <ClCompile Include="program\game\Scene\IngameScene.cpp" />
+    <ClCompile Include="program\game\Manager\SceneManager.cpp" />
+    <ClCompile Include="program\game\Scene\TitleScene.cpp" />
     <ClCompile Include="program\game\Object\Player.cpp" />
     <ClCompile Include="program\game\Object\Object.cpp" />
     <ClCompile Include="program\game\Object\Bullet.cpp" />
@@ -72,6 +72,9 @@
     <ClCompile Include="program\game\Manager\EnemyManager.cpp" />
     <ClCompile Include="program\game\StrategyPattern\ShootPattern.cpp" />
     <ClCompile Include="program\game\Animation.cpp" />
+    <ClCompile Include="program\game\Scene\StageSelectScene.cpp" />
+    <ClCompile Include="program\game\GraphicUI.cpp" />
+    <ClCompile Include="program\game\Manager\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\game\game_main.h">
@@ -140,11 +143,11 @@
     <ClInclude Include="program\dxlib_ext\dxlib_ext.h">
       <Filter>program\dxlib_ext</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\GameManager.h" />
-    <ClInclude Include="program\game\InGameScene.h" />
-    <ClInclude Include="program\game\Scene.h" />
-    <ClInclude Include="program\game\SceneManager.h" />
-    <ClInclude Include="program\game\TitleScene.h" />
+    <ClInclude Include="program\game\Manager\GameManager.h" />
+    <ClInclude Include="program\game\Scene\InGameScene.h" />
+    <ClInclude Include="program\game\Scene\Scene.h" />
+    <ClInclude Include="program\game\Manager\SceneManager.h" />
+    <ClInclude Include="program\game\Scene\TitleScene.h" />
     <ClInclude Include="program\game\Object\Player.h" />
     <ClInclude Include="program\game\Object\Object.h" />
     <ClInclude Include="program\game\Object\Bullet.h" />
@@ -155,5 +158,8 @@
     <ClInclude Include="program\game\Manager\EnemyManager.h" />
     <ClInclude Include="program\game\StrategyPattern\ShootPattern.h" />
     <ClInclude Include="program\game\Animation.h" />
+    <ClInclude Include="program\game\Scene\StageSelectScene.h" />
+    <ClInclude Include="program\game\GraphicUI.h" />
+    <ClInclude Include="program\game\Manager\UIManager.h" />
   </ItemGroup>
 </Project>

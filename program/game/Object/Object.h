@@ -12,7 +12,7 @@ protected:
 	int gh = 0;
 
 	//“–‚½‚è”»’è—p‚Ì”¼Œa(‰~‚Æ‰~‚ÌÕ“Ë‚Æ‚µ‚ÄÀ‘•‚·‚é)
-	int radius = 0;
+	float radius = 0;
 
 	GameManager* gManager = nullptr;
 
@@ -49,7 +49,7 @@ public:
 	}
 
 	//”¼Œa‚Ìæ“¾
-	inline int& GetRadius() {
+	inline float& GetRadius() {
 		return radius;
 	}
 

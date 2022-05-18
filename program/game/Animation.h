@@ -12,10 +12,13 @@ class GameManager;
 class Animation {
 public:
 	Animation() {};
+	//URL,描画中心,更新速度,最大枚数,横分割枚数,縦分割枚数,横画像サイズ,縦画像サイズ
 	Animation(std::string Gh, tnl::Vector3 Pos, int ActSpeed, int MaxIndex, int XNum, int YNum, int XSize, int YSize);
 	~Animation();
 
+	//アニメーション更新
 	void Update();
+	//アニメーション描画
 	void Draw();
 	//アニメーションが終了しているか取得する関数
 	inline bool GetIsAlive() {
@@ -24,7 +27,7 @@ public:
 
 private:
 	GameManager* gManager = nullptr;
-
+	//画像ハンドル
 	std::vector<int>animGh = {};
 
 	//描画座標

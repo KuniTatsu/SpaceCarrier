@@ -1,5 +1,5 @@
 #include "Animation.h"
-#include"GameManager.h"
+#include"Manager/GameManager.h"
 
 Animation::Animation(std::string Gh, tnl::Vector3 Pos, int ActSpeed, int MaxIndex, int XNum, int YNum, int XSize, int YSize)
 {

@@ -3,7 +3,7 @@
 #include<memory>
 #include<list>
 #include<vector>
-#include"../dxlib_ext/dxlib_ext.h"
+#include"../../dxlib_ext/dxlib_ext.h"
 
 class GameManager;
 class BulletManager;

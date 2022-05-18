@@ -2,11 +2,12 @@
 #include"SceneManager.h"
 #include"DxLib.h"
 #include<string>
-#include"Object/Player.h"
-#include"Object/Bullet.h"
-#include"Manager/BulletManager.h"
-#include"Object/Player.h"
-#include"Factory.h"
+#include"../Object/Player.h"
+#include"../Object/Bullet.h"
+#include"../Object/Object.h"
+#include"../Manager/BulletManager.h"
+#include"../Object/Player.h"
+#include"../Factory.h"
 #include<time.h>
 
 //#include"Item.h"
@@ -36,6 +37,8 @@ GameManager::~GameManager()
 void GameManager::Update(const float Deltatime)
 {
 	deltatime = Deltatime;
+	//マウス座標取得
+	GetMousePoint(&mousePosX, &mousePosY);
 
 	SceneManager::Update();
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2))
@@ -63,7 +66,6 @@ void GameManager::Draw(const float Deltatime)
 
 void GameManager::initGameManager()
 {
-
 	//sound = new Sound();
 	//fControl = new FadeControl();
 
@@ -159,7 +161,17 @@ tnl::Vector3 GameManager::GetRandomPos()
 	return tnl::Vector3(x, SPAWNPOS.y, 0);
 }
 
+bool GameManager::isClickedRect(int MouseX, int MouseY, int RectLeft, int RectTop, int RectRight, int RectBottom)
+{
+	//マウスの座標が四角形の外側ならreturn false
+	if (MouseX<RectLeft || MouseX>RectRight || mousePosY<RectTop || mousePosY>RectBottom)return false;
 
+	//四角形の内側かつ左クリックしていたら
+	if (tnl::Input::IsMouseTrigger(tnl::Input::eMouseTrigger::IN_LEFT)) {
+		return true;
+	}
+	return false;
+}
 
 void GameManager::loadItem()
 {

@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include"../StrategyPattern/MovementPattern.h"
 #include"../StrategyPattern/ShootPattern.h"
-#include"../GameManager.h"
+#include"../Manager/GameManager.h"
 #include"../Manager/EnemyManager.h"
 
 Enemy::Enemy(tnl::Vector3 StartPos)
@@ -21,7 +21,7 @@ Enemy::Enemy(tnl::Vector3 StartPos, MovementBase* MoveType, ShootBase* ShootType
 	//‰æ‘œ“Ç‚İ‚İ
 	gh = gManager->LoadGraphEx("graphics/Enemy_2525.png");
 
-	radius = 13;
+	radius = 12.5;
 
 	//‰ŠúÀ•WŒˆ’è
 	pos = StartPos;

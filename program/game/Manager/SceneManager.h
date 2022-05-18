@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Scene.h"
+#include "../Scene/Scene.h"
 
 class Scene;
 
@@ -13,6 +13,7 @@ public:
 	};*/
 	enum class SCENE {
 		TITLE,
+		SELECT,
 		INGAME
 	};
 

@@ -3,7 +3,7 @@
 #include <map>
 #include <algorithm>
 #include "game_main.h"
-#include"GameManager.h"
+#include"Manager/GameManager.h"
 #include"Manager/BulletManager.h"
 #include"Manager/EnemyManager.h"
 #include "../dxlib_ext/dxlib_ext.h"

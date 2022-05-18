@@ -1,5 +1,5 @@
 #include "Bullet.h"
-#include"../GameManager.h"
+#include"../Manager/GameManager.h"
 #include"../Manager/BulletManager.h"
 #include"../StrategyPattern/MovementPattern.h"
 

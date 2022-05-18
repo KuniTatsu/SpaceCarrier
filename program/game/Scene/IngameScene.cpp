@@ -1,14 +1,14 @@
 #include "InGameScene.h"
-#include"Manager/BulletManager.h"
-#include"Manager/EnemyManager.h"
-#include"Object/Bullet.h"
-#include"GameManager.h"
-#include"Object/Object.h"
-#include"Object/Player.h"
-#include"Object/Enemy.h"
-#include"Factory.h"
+#include"../Manager/BulletManager.h"
+#include"../Manager/EnemyManager.h"
+#include"../Object/Bullet.h"
+#include"../Manager/GameManager.h"
+#include"../Object/Object.h"
+#include"../Object/Player.h"
+#include"../Object/Enemy.h"
+#include"../Factory.h"
 #include<time.h>
-#include"Animation.h"
+#include"../Animation.h"
 
 InGameScene::InGameScene()
 {
@@ -65,11 +65,6 @@ void InGameScene::Init()
 	goalTestGh = gManager->LoadGraphEx("graphics/TestGoal.png");
 
 	backGroundPos = { gManager->Center.x,gManager->Center.y,0 };
-	//objectList = gManager->GetObjectList();
-	//player = gManager->GetPlayer();
-
-	//エフェクト画像のロード
-	//gManager->LoadDivGraphEx("graphics/Explosion.png", 7, 7, 1, 120, 120, explosionGh);
 
 	//プレイヤーの生成
 	player = std::make_shared<Player>();
@@ -96,12 +91,13 @@ bool InGameScene::SeqCruize(const float deltatime)
 	//もしゴールについたらtrueが帰る
 	if (Cruize()) {
 		//すべての敵と弾をリストから消去する
-		//インスタンス消去
+		//-----インスタンス消去-------
 		bManager->ResetBulletList();
 		bManager->ResetEnemyBulletList();
 		eManager->ResetEnemyList();
 		gManager->ResetObjectList();
-
+		//----------------------------
+		//リザルトシークエンスに飛ぶ
 		ChangeSequence(sequence::GOALRESALT);
 		return true;
 	}
@@ -167,9 +163,11 @@ bool InGameScene::SeqGoalResalt(const float deltatime)
 //シークエンスを変更する関数
 void InGameScene::ChangeSequence(const sequence seq)
 {
+	//今のシークエンスと一つ前のシークエンスをそれぞれ更新
 	lastSeq = nowSeq;
 	nowSeq = seq;
 
+	//シークエンスを切り替える
 	switch (seq)
 	{
 	case sequence::CRUIZE: {
@@ -233,15 +231,19 @@ void InGameScene::DrawProgressGauge()
 
 void InGameScene::ResetStageProgress()
 {
+	//初期位置にリセット
 	nowStayPos = 0.0f;
+	//進捗を0にリセット
 	progress = 0.0f;
-
+	//playerの描画座標を画面中心に移動
 	player->SetPos(gManager->Center);
 }
 
 void InGameScene::MakeAnimation(std::string Gh, tnl::Vector3 Pos, int ActSpeed, int MaxIndex, int XNum, int YNum, int XSize, int YSize)
 {
+	//アニメーションインスタンス生成
 	auto anim = std::make_shared<Animation>(Gh, Pos, ActSpeed, MaxIndex, XNum, YNum, XSize, YSize);
+	//アニメーションリストに登録
 	liveAnimationList.emplace_back(anim);
 }
 

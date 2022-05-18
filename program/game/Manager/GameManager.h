@@ -5,9 +5,8 @@
 #include<list>
 #include<string>
 #include<unordered_map>
-#include"../dxlib_ext/dxlib_ext.h"
+#include"../../dxlib_ext/dxlib_ext.h"
 #include<memory>
-#include"Object/Object.h"
 
 class SceneManager;
 class FadeControl;
@@ -36,6 +35,14 @@ public:
 	}
 
 	int testGraphic = 0;
+
+	//ステージのリスト
+	enum class STAGE :uint32_t {
+		SOL,	//ステージ1 難易度低 
+		AIGIS,	//ステージ2 難易度中 
+		ICALOS,	//ステージ3 難易度低高
+		MAX
+	};
 
 	/*
 	FadeControl* fControl = nullptr;
@@ -93,11 +100,29 @@ public:
 	//画面内のランダムなポジションを取得する関数
 	tnl::Vector3 GetRandomPos();
 
+	//ステージ設定関数
+	void SetMyStage(STAGE stage) {
+		mystage = stage;
+	}
+
 	//選択したステージの長さを渡す関数
 	inline const float GetStageLength() {
 		return STAGELENGTH[static_cast<int>(mystage)];
 	}
 
+	//四角形のマウス感知
+	bool isClickedRect(int MouseX, int MouseY,int RectLeft,int RectTop,int RectRight,int RectBottom );
+
+	//マウス座標
+	int mousePosX = 0;
+	int mousePosY = 0;
+
+	//UIを並べる方向
+	enum class DIR {
+		HORIZONTAL,
+		VERTICAL,
+		MAX
+	};
 
 private:
 	//シングルトンインスタンス
@@ -106,14 +131,6 @@ private:
 	//BulletManagerインスタンス
 	BulletManager* bManager = nullptr;
 
-	//ステージのリスト
-	enum class STAGE:uint32_t {
-		SOL,	//ステージ1 難易度低 
-		AIGIS,	//ステージ2 難易度中 
-		ICALOS,	//ステージ3 難易度低高
-		MAX
-	};
-	
 	//選択したステージ
 	STAGE mystage = STAGE::SOL;
 	//ステージの長さ

@@ -1,8 +1,9 @@
 #include"SceneManager.h"
 #include <cstddef>
 #include"DxLib.h"
-#include"TitleScene.h"
-#include"InGameScene.h"
+#include"../Scene/TitleScene.h"
+#include"../Scene/InGameScene.h"
+#include"../Scene/StageSelectScene.h"
 
 
 BaseScene* SceneManager::nowScene = NULL;       //始めはシーンは空
@@ -15,12 +16,13 @@ void SceneManager::ChangeScene(SCENE Scene) {
 
     switch (Scene) {          //引数のシーン
     case SCENE::TITLE:
-        nowScene = new TitleScene();      //タイトルシーンを現在のシーンにする
+        nowScene = new TitleScene();          //タイトルシーンを現在のシーンにする
         break;
     case SCENE::INGAME:
-        nowScene = new InGameScene();       //ダンジョンシーンを現在のシーンにする
+        nowScene = new InGameScene();         //インゲームシーンを現在のシーンにする
         break;
-
+    case SCENE::SELECT:
+        nowScene = new StageSelectScene();     //ステージセレクトシーンを現在のシーンにする
     default:
         break;
     }

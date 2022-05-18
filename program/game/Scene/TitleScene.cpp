@@ -1,6 +1,6 @@
 #include "TitleScene.h"
-#include"GameManager.h"
-#include"SceneManager.h"
+#include"../Manager/GameManager.h"
+#include"../Manager/SceneManager.h"
 
 //#include"Object.h"
 
@@ -20,7 +20,7 @@ void TitleScene::Update()
 	/*gManager->Move();
 	gManager->PlayerMove();*/
 	if (tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_RETURN)) {
-		SceneManager::ChangeScene(SceneManager::SCENE::INGAME);
+		SceneManager::ChangeScene(SceneManager::SCENE::SELECT);
 		return;
 	}
 	

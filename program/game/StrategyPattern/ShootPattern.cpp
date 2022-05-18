@@ -1,7 +1,7 @@
 #include "ShootPattern.h"
 #include"../Object/Bullet.h"
 #include"../Factory.h"
-#include"../GameManager.h"
+#include"../Manager/GameManager.h"
 
 //------------------BaseClass----------------------------//
 ShootBase::ShootBase()

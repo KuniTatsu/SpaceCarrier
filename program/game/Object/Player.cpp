@@ -1,5 +1,5 @@
 #include "Player.h"
-#include"../GameManager.h"
+#include"../Manager/GameManager.h"
 #include"Bullet.h"
 #include"../Factory.h"
 
@@ -34,7 +34,7 @@ void Player::Init()
 	gh = gManager->LoadGraphEx("graphics/Player_2525.png");
 
 	//playerの当たり判定半径
-	radius = 13;
+	radius = 12.5;
 
 	//最大化重量のデフォルト
 	maxCapacity = 500;
