@@ -91,6 +91,16 @@ public:
 	inline std::shared_ptr<Player> GetPlayer() {
 		return player;
 	}
+
+	//単位ベクトル取得関数
+	inline tnl::Vector3 GetFixVector(float X, float Y) {
+
+		float vecLength = std::sqrt(X * X + Y * Y);
+
+		return tnl::Vector3(X / vecLength, Y / vecLength, 0);
+
+	}
+
 	//オブジェクトリストからの排除
 	void RemoveObjectList();
 

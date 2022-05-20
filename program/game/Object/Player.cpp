@@ -81,7 +81,7 @@ void Player::Move()
 	//ˆÚ“®—Ê‚ª0‚Å‚È‚¯‚ê‚ÎƒxƒNƒgƒ‹‚ð³‹K‰»‚µ‚ÄˆÚ“®‚³‚¹‚é
 	if (moveX != 0 || moveY != 0) {
 
-		tnl::Vector3 fixVec = GetFixVector(moveX, moveY);
+		tnl::Vector3 fixVec = gManager->GetFixVector(moveX, moveY);
 
 		float fixMoveX = fixVec.x * SPEED;
 		float fixMoveY = fixVec.y * SPEED;

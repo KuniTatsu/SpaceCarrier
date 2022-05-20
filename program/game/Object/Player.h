@@ -55,15 +55,6 @@ private:
 	//移動キーを押したときの移動量
 	const int MOVEAMOUNT[static_cast<int>(DIR::MAX)] = { -SPEED,SPEED,SPEED,-SPEED };
 
-	//単位ベクトル取得関数
-	inline tnl::Vector3 GetFixVector(float X, float Y) {
-
-		float vecLength = std::sqrt(X * X + Y * Y);
-
-		return tnl::Vector3(X / vecLength, Y / vecLength, 0);
-
-	}
-
 	//---------------------------------------------------//
 
 	//弾発射間隔

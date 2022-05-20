@@ -17,6 +17,7 @@
     <ClCompile Include="program\game\Manager\BulletManager.cpp" />
     <ClCompile Include="program\game\Manager\EnemyManager.cpp" />
     <ClCompile Include="program\game\Manager\UIManager.cpp" />
+    <ClCompile Include="program\game\Scene\CustomizeScene.cpp" />
     <ClCompile Include="program\game\Scene\StageSelectScene.cpp" />
     <ClCompile Include="program\game\StrategyPattern\MovementPattern.cpp" />
     <ClCompile Include="program\game\Object\Bullet.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="program\game\Manager\BulletManager.h" />
     <ClInclude Include="program\game\Manager\EnemyManager.h" />
     <ClInclude Include="program\game\Manager\UIManager.h" />
+    <ClInclude Include="program\game\Scene\CustomizeScene.h" />
     <ClInclude Include="program\game\Scene\StageSelectScene.h" />
     <ClInclude Include="program\game\StrategyPattern\MovementPattern.h" />
     <ClInclude Include="program\game\Object\Bullet.h" />

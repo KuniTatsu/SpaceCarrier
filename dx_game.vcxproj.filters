@@ -75,6 +75,7 @@
     <ClCompile Include="program\game\Scene\StageSelectScene.cpp" />
     <ClCompile Include="program\game\GraphicUI.cpp" />
     <ClCompile Include="program\game\Manager\UIManager.cpp" />
+    <ClCompile Include="program\game\Scene\CustomizeScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\game\game_main.h">
@@ -161,5 +162,6 @@
     <ClInclude Include="program\game\Scene\StageSelectScene.h" />
     <ClInclude Include="program\game\GraphicUI.h" />
     <ClInclude Include="program\game\Manager\UIManager.h" />
+    <ClInclude Include="program\game\Scene\CustomizeScene.h" />
   </ItemGroup>
 </Project>

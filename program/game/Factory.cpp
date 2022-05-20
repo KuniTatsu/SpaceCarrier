@@ -38,7 +38,7 @@ std::shared_ptr<Object> ObjectFactory::CreateObject(std::string type, const tnl:
 	}
 
 }
-
+//memo レーザー作る時に使う->tnl::IsIntersectRayOBB
 
 /*
 std::shared_ptr<Object> ObjectFactory::CreateObject(std::string type, tnl::Vector3& StartPos, tnl::Vector3& VPos)

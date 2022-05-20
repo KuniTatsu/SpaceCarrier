@@ -108,6 +108,7 @@ bool InGameScene::SeqCruize(const float deltatime)
 			tnl::Vector3(0, 2, 0), Factory::MOVETYPE::STRAIGHT, Factory::SHOOTTYPE::STRAIGHT));
 		enemy->SetList();
 		enemy->SetEnemyList();
+	
 	}
 
 
