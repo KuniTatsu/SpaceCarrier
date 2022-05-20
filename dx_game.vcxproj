@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\game\Animation.cpp" />
+    <ClCompile Include="program\game\EnemyData.cpp" />
     <ClCompile Include="program\game\Factory.cpp" />
     <ClCompile Include="program\game\GraphicUI.cpp" />
     <ClCompile Include="program\game\Manager\BulletManager.cpp" />
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\game\Animation.h" />
+    <ClInclude Include="program\game\EnemyData.h" />
     <ClInclude Include="program\game\Factory.h" />
     <ClInclude Include="program\game\GraphicUI.h" />
     <ClInclude Include="program\game\Manager\BulletManager.h" />

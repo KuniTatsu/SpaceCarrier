@@ -76,6 +76,7 @@
     <ClCompile Include="program\game\GraphicUI.cpp" />
     <ClCompile Include="program\game\Manager\UIManager.cpp" />
     <ClCompile Include="program\game\Scene\CustomizeScene.cpp" />
+    <ClCompile Include="program\game\EnemyData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\game\game_main.h">
@@ -163,5 +164,6 @@
     <ClInclude Include="program\game\GraphicUI.h" />
     <ClInclude Include="program\game\Manager\UIManager.h" />
     <ClInclude Include="program\game\Scene\CustomizeScene.h" />
+    <ClInclude Include="program\game\EnemyData.h" />
   </ItemGroup>
 </Project>

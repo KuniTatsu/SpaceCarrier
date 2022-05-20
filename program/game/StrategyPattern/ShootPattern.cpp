@@ -50,3 +50,33 @@ bool StraightShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
 
 	return true;
 }
+
+FocusShoot::FocusShoot(tnl::Vector3 VecSpeed, float CoolDawn)
+{
+}
+
+FocusShoot::~FocusShoot()
+{
+}
+
+bool FocusShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
+{
+	//クールダウンタイムの更新
+	coolDown += Deltatime;
+	//クールダウン解消前なら撃てない
+	if (coolDown < COOLTIME)return false;
+
+	coolDown = 0;
+	auto initPos = tnl::Vector3(0, +Radius, 0);
+
+	auto shootPoint = Pos + initPos;
+
+
+	//弾の生成
+	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, vecSpeed, Factory::MOVETYPE::STOPPOS));
+	bullet->SetList();
+	//bullet->SetBulletList();
+	bullet->SetEnemyBulletList();
+
+	return true;
+}

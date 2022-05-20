@@ -102,10 +102,10 @@ bool InGameScene::SeqCruize(const float deltatime)
 		return true;
 	}
 
-	//敵の生成　いずれEnemyManagerを介してマスターデータからEnemyの種類を決定,生成する
+	//敵の生成　いずれEnemyManagerを介してマスターデータからEnemyの種類を決定,生成する eManager->CreateEnemy("NORMAL",startpos,vpos);
 	if (GetRand(100) % 100 > 98) {
 		auto enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(),
-			tnl::Vector3(0, 2, 0), Factory::MOVETYPE::STRAIGHT, Factory::SHOOTTYPE::STRAIGHT));
+			tnl::Vector3(0, 2, 0), Factory::MOVETYPE::STOPPOS , Factory::SHOOTTYPE::STRAIGHT));
 		enemy->SetList();
 		enemy->SetEnemyList();
 	

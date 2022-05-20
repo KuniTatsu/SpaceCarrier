@@ -14,12 +14,12 @@ Enemy::Enemy(tnl::Vector3 StartPos)
 	pos = StartPos;
 }
 
-Enemy::Enemy(tnl::Vector3 StartPos, MovementBase* MoveType, ShootBase* ShootType)
+Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, MovementBase* MoveType, ShootBase* ShootType)
 {
 	tnl::DebugTrace("\n敵が生成されました\n");
 
 	//画像読み込み
-	gh = gManager->LoadGraphEx("graphics/Enemy_2525.png");
+	gh = gManager->LoadGraphEx(Gh);
 
 	radius = 12.5;
 
@@ -33,16 +33,67 @@ Enemy::Enemy(tnl::Vector3 StartPos, MovementBase* MoveType, ShootBase* ShootType
 	eManager = EnemyManager::Instance();
 }
 
+Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, float Defence, float Speed, MovementBase* MoveType, ShootBase* ShootType)
+{
+	tnl::DebugTrace("\n敵が生成されました\n");
+
+	//画像読み込み
+	gh = gManager->LoadGraphEx(Gh);
+
+	radius = 12.5;
+
+	//初期座標決定
+	pos = StartPos;
+	//-----ステータス決定-----//
+	hp = Hp;
+	attack = Attack;
+	defence = Defence;
+	speed = Speed;
+	//------------------------//
+
+	//moveType = new StraightMove(vecSpeed);
+	moveType = MoveType;
+	shootType = ShootType;
+
+	eManager = EnemyManager::Instance();
+}
+
+Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, float Defence, float Speed, MovementBase* MoveType, ShootBase* ShootType, ShootBase* ExShootType)
+{
+	tnl::DebugTrace("\n敵が生成されました\n");
+
+	//画像読み込み
+	gh = gManager->LoadGraphEx(Gh);
+
+	radius = 12.5;
+
+	//初期座標決定
+	pos = StartPos;
+	//-----ステータス決定-----//
+	hp = Hp;
+	attack = Attack;
+	defence = Defence;
+	speed = Speed;
+	//------------------------//
+
+	//moveType = new StraightMove(vecSpeed);
+	moveType = MoveType;
+	shootType = ShootType;
+	exShootType = ExShootType;
+
+	eManager = EnemyManager::Instance();
+}
+
 Enemy::~Enemy()
 {
 	tnl::DebugTrace("\n敵が消去されました\n");
-	tnl::DebugTrace("\npos[%f,%f]\n",pos.x,pos.y);
+	tnl::DebugTrace("\npos[%f,%f]\n", pos.x, pos.y);
 }
 
 void Enemy::Update()
 {
 	Move();
-	shootType->Shoot(pos,radius,gManager->deltatime);
+	shootType->Shoot(pos, radius, gManager->deltatime);
 	CheckIsLive();
 }
 

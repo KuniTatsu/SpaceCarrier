@@ -61,11 +61,18 @@ CenterStopMove::~CenterStopMove()
 
 tnl::Vector3 CenterStopMove::Move(tnl::Vector3 Pos)
 {
-	//目的地についていたら移動しない
-	if (stopPos.x == Pos.x && stopPos.y == Pos.y)return Pos;
+	////目的地についていたら移動しない
+	//if (stopPos.x == Pos.x && stopPos.y == Pos.y)return Pos;
 
 	//目的地までの方向ベクトルを取得
 	tnl::Vector3 moveVec = stopPos - Pos;
+
+	//方向ベクトルの大きさを取得
+	float vecLength = std::sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
+
+	//方向ベクトルの大きさ=距離が一定以下なら移動しない
+	if (vecLength < 1.0f)return Pos;
+
 	//正規化
 	tnl::Vector3 fixVec = gManager->GetFixVector(moveVec.x, moveVec.y);
 	//速度をかけて移動

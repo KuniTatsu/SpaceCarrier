@@ -34,4 +34,13 @@ public:
 	bool Shoot(tnl::Vector3 Pos,int Radius,float Deltatime);
 };
 
+class FocusShoot :public ShootBase
+{
+public:
+	FocusShoot(tnl::Vector3 VecSpeed, float CoolDawn);
+	~FocusShoot();
+
+	bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime);
+};
+
 
