@@ -19,7 +19,9 @@ public:
 		STRAIGHT,
 		STOPPOS,
 		FARSTOP,
-		CURVE,
+		MIDDLESTOP,
+		ACCEL,
+		SLIDE,
 		MAX
 	};
 
@@ -38,6 +40,9 @@ public:
 		BOSS,
 		MAX
 	};
+	//enemyManageræ“¾
+	void GetEnemyManager();
+
 
 	//Object‚ğŒp³‚µ‚½•¨‚ğì‚é‚Æ‚«‚Í‚±‚ÌŠÖ”‚ğŒÄ‚Ô
 	std::shared_ptr<Object>create(std::string type, const tnl::Vector3& StartPos, const tnl::Vector3& VPos, MOVETYPE Move);
@@ -53,10 +58,9 @@ protected:
 	GameManager* gManager = nullptr;
 	EnemyManager* eManager = nullptr;
 private:
-	//Œp³æ‚ÅÀ‘•‚·‚é
-	virtual std::shared_ptr<Object>CreateObject(std::string type, tnl::Vector3& StartPos, tnl::Vector3& VPos, MOVETYPE Move) = 0;
 
-	virtual std::shared_ptr<Object>CreateObject(std::string type, const tnl::Vector3& StartPos, const tnl::Vector3& VPos, MOVETYPE Move, SHOOTTYPE Shoot) = 0;
+	//Œp³æ‚ÅÀ‘•‚·‚é
+	virtual std::shared_ptr<Object>CreateObject(std::string type, const tnl::Vector3& StartPos, const tnl::Vector3& VPos, MOVETYPE Move) = 0;
 
 	virtual std::shared_ptr<Object>CreateObject(const tnl::Vector3& StartPos, const tnl::Vector3& VPos, std::shared_ptr<EnemyData>Data) = 0;
 
@@ -65,12 +69,8 @@ class ObjectFactory :public Factory {
 public:
 	ObjectFactory();
 	//type‚É‚æ‚Á‚Ä¶¬‚·‚éObject‚ğ•ÏX‚·‚é
-	std::shared_ptr<Object>CreateObject(std::string type, tnl::Vector3& StartPos, tnl::Vector3& VPos, MOVETYPE Move);
-
-	std::shared_ptr<Object> CreateObject(std::string type, const tnl::Vector3& StartPos, const tnl::Vector3& VPos, MOVETYPE Move, SHOOTTYPE Shoot);
+	std::shared_ptr<Object>CreateObject(std::string type, const tnl::Vector3& StartPos, const tnl::Vector3& VPos, MOVETYPE Move);
 
 	std::shared_ptr<Object>CreateObject(const tnl::Vector3& StartPos, const tnl::Vector3& VPos, std::shared_ptr<EnemyData>Data);
-
-	//std::shared_ptr<Object> CreateObject(std::string type, tnl::Vector3& StartPos, tnl::Vector3& VPos);
 };
 

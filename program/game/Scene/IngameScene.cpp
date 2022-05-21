@@ -69,6 +69,7 @@ void InGameScene::Init()
 	//プレイヤーの生成
 	player = std::make_shared<Player>();
 	player->SetList();
+	gManager->SetPlayer(player);
 
 	//プレイヤーの巡航速度を取得
 	PlayerSpeed = player->GetCruizeSpeed();
@@ -76,6 +77,7 @@ void InGameScene::Init()
 	CapacityRate = player->GetCapaciryRate();
 	//オブジェクトファクトリーの取得
 	fac = gManager->GetFactory();
+	fac->GetEnemyManager();
 	//ステージの長さの取得
 	stageLength = gManager->GetStageLength();
 
@@ -104,13 +106,14 @@ bool InGameScene::SeqCruize(const float deltatime)
 
 	//敵の生成　いずれEnemyManagerを介してマスターデータからEnemyの種類を決定,生成する eManager->CreateEnemy("NORMAL",startpos,vpos);
 	if (GetRand(100) % 100 > 98) {
-		auto enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(),
-			tnl::Vector3(0, 2, 0), Factory::MOVETYPE::STOPPOS , Factory::SHOOTTYPE::STRAIGHT));
+		/*auto enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(),
+			tnl::Vector3(0, 2, 0), Factory::MOVETYPE::STOPPOS , Factory::SHOOTTYPE::STRAIGHT));*/
+
+		auto enemy = eManager->CreateEnemy(EnemyManager::ENEMYTYPE::NORMAL, gManager->GetRandomPos(), tnl::Vector3(0, 2, 0));
 		enemy->SetList();
 		enemy->SetEnemyList();
 	
 	}
-
 
 	//spaceキーを押したら弾を発射する
 	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_SPACE))player->ShootBullet();
@@ -209,10 +212,10 @@ bool InGameScene::Cruize()
 	//progressが1になっていれば加算しない
 	if (progress >= 1.0)return true;
 	//現在地に加算する
-	//nowStayPos += addCruizeDistance * gManager->deltatime;
+	nowStayPos += addCruizeDistance * gManager->deltatime;
 
 	//debug
-	nowStayPos += addCruizeDistance * gManager->deltatime * 10;
+	//nowStayPos += addCruizeDistance * gManager->deltatime * 10;
 
 	//ステージの進捗率更新
 	progress = static_cast<double>(nowStayPos / stageLength);

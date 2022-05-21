@@ -17,12 +17,6 @@ public:
 	//特殊射撃を持つEnemy
 	Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, float Defence, float Speed, MovementBase* MoveType, ShootBase* ShootType, ShootBase* ExShootType);
 
-	//master用コンストラクタ
-	//特殊射撃を持たないEnemy
-	Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, float Defence, float Speed, Factory::MOVETYPE Move,Factory::SHOOTTYPE Shoot);
-	//特殊射撃を持つEnemy
-	Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, float Defence, float Speed, Factory::MOVETYPE Move, Factory::SHOOTTYPE Shoot, Factory::SHOOTTYPE ExShootType);
-
 	~Enemy();
 
 	void Update()override;

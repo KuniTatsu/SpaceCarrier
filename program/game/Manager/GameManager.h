@@ -91,6 +91,10 @@ public:
 	inline std::shared_ptr<Player> GetPlayer() {
 		return player;
 	}
+	//プレイヤーの設定
+	inline void	SetPlayer(std::shared_ptr<Player> Player) {
+		player = Player;
+	}
 
 	//単位ベクトル取得関数
 	inline tnl::Vector3 GetFixVector(float X, float Y) {
@@ -121,7 +125,7 @@ public:
 	}
 
 	//四角形のマウス感知
-	bool isClickedRect(int MouseX, int MouseY,int RectLeft,int RectTop,int RectRight,int RectBottom );
+	bool isClickedRect(int MouseX, int MouseY, int RectLeft, int RectTop, int RectRight, int RectBottom);
 
 	//マウス座標
 	int mousePosX = 0;
@@ -144,7 +148,7 @@ private:
 	//選択したステージ
 	STAGE mystage = STAGE::SOL;
 	//ステージの長さ
-	const float STAGELENGTH[static_cast<uint32_t>(STAGE::MAX)] = {1000,1500,2000};
+	const float STAGELENGTH[static_cast<uint32_t>(STAGE::MAX)] = { 1000,1500,2000 };
 
 	//オブジェクトリスト
 	std::list<std::shared_ptr<Object>> objects;

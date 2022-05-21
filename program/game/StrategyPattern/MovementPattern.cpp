@@ -43,7 +43,7 @@ tnl::Vector3 FarStopMove::Move(tnl::Vector3 Pos)
 {
 	//è„Ç©ÇÁóàÇΩìGÇ™í‚é~ç¿ïWÇÊÇËYç¿ïWÇ™â∫Ç»ÇÁà⁄ìÆÇµÇ»Ç¢
 	if (Pos.y > stopPosY)return Pos;
-	return tnl::Vector3();
+	return Pos += vecSpeed;
 }
 
 //------------------------------------------------//
@@ -79,3 +79,39 @@ tnl::Vector3 CenterStopMove::Move(tnl::Vector3 Pos)
 	return Pos += tnl::Vector3(fixVec.x * moveSpeed, fixVec.y * moveSpeed, 0);
 }
 //---------------------------------------------------//
+
+//---------------â¡ë¨à⁄ìÆClass-------------------//
+AccelMove::AccelMove(tnl::Vector3 VecSpeed, float StartSpeed, float Accel, float MaxSpeed)
+{
+	vecSpeed = VecSpeed;
+	moveSpeed = StartSpeed;
+
+	accel = Accel;
+	maxMoveSpeed = MaxSpeed;
+}
+
+AccelMove::~AccelMove()
+{
+}
+
+tnl::Vector3 AccelMove::Move(tnl::Vector3 Pos)
+{
+	//ç≈ëÂë¨ìxà»â∫Ç»ÇÁâ¡ë¨Ç≥ÇπÇÈ
+	if (moveSpeed < maxMoveSpeed) moveSpeed += accel;
+
+	return Pos += (vecSpeed * moveSpeed);
+}
+
+SlideMove::SlideMove(tnl::Vector3 VecSpeed)
+{
+	vecSpeed = VecSpeed;
+}
+
+SlideMove::~SlideMove()
+{
+}
+
+tnl::Vector3 SlideMove::Move(tnl::Vector3 Pos)
+{
+	return Pos += vecSpeed;
+}

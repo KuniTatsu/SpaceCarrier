@@ -10,6 +10,7 @@ EnemyManager::EnemyManager()
 {
 	gManager = GameManager::Instance();
 	fac = gManager->GetFactory();
+	LoadEnemyMaster();
 }
 
 EnemyManager::~EnemyManager()
@@ -41,7 +42,7 @@ std::shared_ptr<Enemy> EnemyManager::CreateEnemy(ENEMYTYPE Type, tnl::Vector3 St
 	if (Type == ENEMYTYPE::NORMAL) {
 		//これはfactoryで読み取りたい
 		//auto enemy = GetRandomEnemyData(static_cast<int>(Type));
-		fac->create("Enemy", StartPos, VPos, Factory::ENEMYTYPE::NORMAL);
+		return std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", StartPos, VPos, Factory::ENEMYTYPE::NORMAL));
 	}
 
 
@@ -52,6 +53,8 @@ std::shared_ptr<Enemy> EnemyManager::CreateEnemy(ENEMYTYPE Type, tnl::Vector3 St
 void EnemyManager::LoadEnemyMaster()
 {
 	loadEnemy = tnl::LoadCsv("Csv/EnemyMaster.csv");
+
+	enemyMaster.resize(3);
 
 	//id(int)	EnemyType(int)	Enemy_Name(string)	HP(int)	Atack(int)	Defence(int)	Speed(int)	Gh(std::string)	
 					//MoveType(string)ShootType(string) ExShootType	Exp(int)	
@@ -70,6 +73,7 @@ void EnemyManager::LoadEnemyMaster()
 		//Speed
 		float speed = std::stof(loadEnemy[i][6]);
 
+
 		//----------移動方法の決定------------//
 		Factory::MOVETYPE move;
 		if (loadEnemy[i][8] == "STRAIGHT") {
@@ -78,7 +82,7 @@ void EnemyManager::LoadEnemyMaster()
 		}
 		else if (loadEnemy[i][8] == "SLIDE") {
 			//後から変更するので仮の値
-			//move = Factory::MOVETYPE::SLIDE;
+			move = Factory::MOVETYPE::SLIDE;
 		}
 		else if (loadEnemy[i][8] == "FARSTOP") {
 			//後から変更するので仮の値
@@ -86,7 +90,7 @@ void EnemyManager::LoadEnemyMaster()
 		}
 		else if (loadEnemy[i][8] == "MIDDLESTOP") {
 			//VPosは後から変更するので仮の値
-			move = Factory::MOVETYPE::STOPPOS;
+			move = Factory::MOVETYPE::MIDDLESTOP;
 		}
 		//------------------------------------//
 
@@ -99,11 +103,11 @@ void EnemyManager::LoadEnemyMaster()
 		}
 		else if (loadEnemy[i][9] == "FOCUS") {
 			//後から変更するので仮の値
-			//shoot = Factory::SHOOTTYPE::FOCUS;
+			shoot = Factory::SHOOTTYPE::FOCUS;
 		}
 		else if (loadEnemy[i][9] == "FASTSHOT") {
 			//後から変更するので仮の値
-			//shoot = Factory::SHOOTTYPE::FAST;
+			shoot = Factory::SHOOTTYPE::FAST;
 		}
 		//---exShoot---
 
@@ -117,14 +121,15 @@ void EnemyManager::LoadEnemyMaster()
 		}
 		else if (loadEnemy[i][10] == "FOCUS") {
 			//後から変更するので仮の値
-			//exShoot =Factory::SHOOTTYPE::FOCUS;
+			exShoot =Factory::SHOOTTYPE::FOCUS;
 		}
 		else if (loadEnemy[i][10] == "FASTSHOT") {
 			//後から変更するので仮の値
-			//exShoot =Factory::SHOOTTYPE::FAST;
+			exShoot =Factory::SHOOTTYPE::FAST;
 		}
 
 		auto masterEnemy = std::make_shared<EnemyData>(id, type, loadEnemy[i][2], hp, attack, defence, speed, loadEnemy[i][7], move, shoot, exShoot);
+		enemyMaster[type].emplace_back(masterEnemy);
 	}
 
 
