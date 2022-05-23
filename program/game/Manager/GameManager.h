@@ -104,6 +104,12 @@ public:
 		return tnl::Vector3(X / vecLength, Y / vecLength, 0);
 
 	}
+	//引数のPos同士の距離を取得する関数
+	inline float GetLength(tnl::Vector3 PosA, tnl::Vector3 PosB) {
+		return std::sqrt(((PosA.x - PosB.x) * (PosA.x - PosB.x)) + ((PosA.y - PosB.y) * (PosA.y - PosB.y)));
+	}
+
+
 
 	//オブジェクトリストからの排除
 	void RemoveObjectList();

@@ -26,12 +26,23 @@ void Player::Update()
 void Player::Draw()
 {
 	gManager->DrawRotaGraphNormal(pos.x, pos.y, gh, true);
+	if (autoTargetMode) {
+		DrawStringEx(200, 200, -1, "オートターゲットON");
+		//ターゲットサークル描画
+		if (myTarget == nullptr)return;
+		DrawRotaGraph(myTarget->GetPos().x, myTarget->GetPos().y, 1, 0, targetingCircle, true);
+	}
+	else DrawStringEx(200, 200, -1, "オートターゲットOFF");
+
+
 }
 
 void Player::Init()
 {
 	pos = gManager->Center;
 	gh = gManager->LoadGraphEx("graphics/Player_2525.png");
+
+	targetingCircle = gManager->LoadGraphEx("graphics/TargetPointa.png");
 
 	//playerの当たり判定半径
 	radius = 12.5;
@@ -107,18 +118,78 @@ void Player::ShootBullet()
 	shootTimer = 0;
 
 	//速度ベクトルセット
-	 tnl::Vector3 vec = { 0,-10,0 };
+	tnl::Vector3 vec = { 0,-10,0 };
 
 	tnl::DebugTrace("\n%d,%d,%d\n", pos.x, pos.y, pos.z);
 
 	auto initPos = tnl::Vector3(0, -INITPOSY, 0);
 
-	 auto shootPoint = pos + initPos;
+	auto shootPoint = pos + initPos;
 
-	
+
 	//弾の生成
 	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, vec, Factory::MOVETYPE::STRAIGHT));
 	bullet->SetList();
 	bullet->SetBulletList();
 
+}
+void Player::SetMyTarget(std::shared_ptr<Object> Target)
+{
+	myTarget = Target;
+}
+
+//Playerに設定されたターゲットに向かって撃つオートターゲット射撃関数
+void Player::AimShootBullet()
+{
+	//MyTargetが設定されているか確認
+	if (!isSetTarget()) {
+		tnl::DebugTrace("\nMyTargetが設定されていません\n");
+		return;
+	}
+
+	//クールダウン中なら発射しない
+	if (shootTimer < SHOOTCOOLDOWN)return;
+	//クールダウンセット
+	shootTimer = 0;
+
+	auto initPos = tnl::Vector3(0, -INITPOSY, 0);
+
+	auto shootPoint = pos + initPos;
+
+	//TargetPos方向の方向ベクトルを取得する 正規化していないことに注意
+	tnl::Vector3 pVec = myTarget->GetPos() - pos;
+
+	/*
+	//Targetの方向ベクトル成分を少し足す
+	tnl::Vector3 enemyVecSpeed = myTarget->GetVecSpeed();
+	pVec += enemyVecSpeed;
+	*/
+
+	//弾の生成
+	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, pVec, Factory::MOVETYPE::TOENEMY));
+	bullet->SetList();
+	bullet->SetBulletList();
+
+}
+//直接目的のオブジェクトを引数にいれて呼び出すオートターゲット射撃関数
+void Player::AimShootBullet(std::shared_ptr<Object> Target)
+{
+	//クールダウン中なら発射しない
+	if (shootTimer < SHOOTCOOLDOWN)return;
+	//クールダウンセット
+	shootTimer = 0;
+
+	tnl::DebugTrace("\n%d,%d,%d\n", pos.x, pos.y, pos.z);
+
+	auto initPos = tnl::Vector3(0, -INITPOSY, 0);
+
+	auto shootPoint = pos + initPos;
+
+	//TargetPos方向の方向ベクトルを取得する 正規化していないことに注意
+	tnl::Vector3 pVec = Target->GetPos() - pos;
+
+	//弾の生成
+	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, pVec, Factory::MOVETYPE::TOENEMY));
+	bullet->SetList();
+	bullet->SetBulletList();
 }

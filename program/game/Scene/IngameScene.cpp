@@ -112,11 +112,25 @@ bool InGameScene::SeqCruize(const float deltatime)
 		auto enemy = eManager->CreateEnemy(EnemyManager::ENEMYTYPE::NORMAL, gManager->GetRandomPos(), tnl::Vector3(0, 2, 0));
 		enemy->SetList();
 		enemy->SetEnemyList();
-	
+
 	}
 
+	//TABを押したら一番近くの敵をオートターゲットする
+	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_TAB)) {
+		//playerから一番近い敵をオートターゲット目標として登録
+		player->SetMyTarget(GetNearestEnemy());
+
+		//オートターゲットの更新を有効にする
+		player->ChageAutoTargerMode();
+	}
+	//ターゲットが設定されていればオートターゲット射撃が可能
 	//spaceキーを押したら弾を発射する
-	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_SPACE))player->ShootBullet();
+	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_SPACE)) {
+		if (player->isAutoTargetMode()) {
+			player->AimShootBullet();
+		}
+		player->ShootBullet();
+	}
 
 	//オブジェクトリストのアップデート
 	{
@@ -137,6 +151,7 @@ bool InGameScene::SeqCruize(const float deltatime)
 				//敵と弾を死亡状態にする
 				enemy->SetIsLive();
 				bullet->SetIsLive();
+				isDestroyEnemy = true;
 			}
 		}
 	}
@@ -144,6 +159,20 @@ bool InGameScene::SeqCruize(const float deltatime)
 	bManager->RemoveBulletList();
 	eManager->RemoveEnemyList();
 	gManager->RemoveObjectList();
+
+	if (isDestroyEnemy) {
+
+		isDestroyEnemy = false;
+		//オートターゲットがONなら次のターゲットを登録する
+		if (!player->isAutoTargetMode())return true;
+
+		//ターゲットを消去
+		player->CleanTarget();
+		//playerから一番近い敵をオートターゲット目標として登録
+		player->SetMyTarget(GetNearestEnemy());
+
+
+	}
 
 	return true;
 }
@@ -276,6 +305,29 @@ void InGameScene::DeleteAnimation()
 		}
 		++itr;
 	}
+}
+
+std::shared_ptr<Enemy> InGameScene::GetNearestEnemy()
+{
+	//一番近い敵
+	std::shared_ptr<Enemy> nearEnemy = nullptr;
+	for (auto enemy : eManager->GetList()) {
+		float minLength = 0;
+		if (nearEnemy == nullptr) {
+			nearEnemy = enemy;
+			minLength = gManager->GetLength(player->GetPos(), enemy->GetPos());
+			continue;
+		}
+		//playerとの距離とチェック
+		float distance = gManager->GetLength(player->GetPos(), enemy->GetPos());
+		//minlengthより短かったらこっちを入れる
+		if (minLength > distance) {
+			nearEnemy = enemy;
+			minLength = distance;
+		}
+	}
+	return nearEnemy;
+	/*player->SetMyTarget(nearEnemy);*/
 }
 
 

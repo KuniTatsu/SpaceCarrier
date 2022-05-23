@@ -22,6 +22,7 @@ public:
 		MIDDLESTOP,
 		ACCEL,
 		SLIDE,
+		TOENEMY,
 		MAX
 	};
 

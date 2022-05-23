@@ -55,6 +55,9 @@ Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, floa
 	moveType = MoveType;
 	shootType = ShootType;
 
+	//VecSpeed‚ğæ“¾
+	vecSpeed = moveType->GetVecSpeed();
+
 	eManager = EnemyManager::Instance();
 }
 

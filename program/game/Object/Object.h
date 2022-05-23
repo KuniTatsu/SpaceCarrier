@@ -3,13 +3,16 @@
 
 class GameManager;
 
-class Object:public std::enable_shared_from_this<Object>
+class Object :public std::enable_shared_from_this<Object>
 {
 protected:
 	//描画座標
 	tnl::Vector3 pos;
 	//画像ハンドル
 	int gh = 0;
+
+	//速度ベクトル
+	tnl::Vector3 vecSpeed = {};
 
 	//当たり判定用の半径(円と円の衝突として実装する)
 	float radius = 0;
@@ -53,6 +56,11 @@ public:
 		return radius;
 	}
 
+	//速度ベクトル取得関数
+	inline tnl::Vector3 GetVecSpeed() {
+		return vecSpeed;
+	}
+
 	virtual~Object() {};
 
 	//*******純粋仮想関数 継承先で実装************//
@@ -65,7 +73,5 @@ public:
 	virtual	void CheckIsLive() = 0;
 
 private:
-
-
 };
 

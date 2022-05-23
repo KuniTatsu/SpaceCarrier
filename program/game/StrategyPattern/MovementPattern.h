@@ -11,6 +11,12 @@ public:
 	virtual ~MovementBase();
 	//移動関数 仮想関数
 	virtual tnl::Vector3 Move(tnl::Vector3 Pos) = 0;
+
+	//速度ベクトル取得関数
+	inline tnl::Vector3 GetVecSpeed() {
+		return vecSpeed;
+	}
+
 protected:
 	//速度ベクトル
 	tnl::Vector3 vecSpeed = {};
@@ -98,4 +104,15 @@ public:
 	//正規化ベクトルに速度をかけて移動する
 	tnl::Vector3 Move(tnl::Vector3 Pos)override;
 };
-
+////Playerに向かうクラス---->いずれ無くす
+//class ToPlayerMove :public MovementBase
+//{
+//public:
+//	//速度ベクトルは左右方向
+//	ToPlayerMove(tnl::Vector3 VecSpeed);
+//	~ToPlayerMove();
+//	//指定座標から現在座標を引いて方向ベクトルを出す
+//	//出した方向ベクトルを正規化する
+//	//正規化ベクトルに速度をかけて移動する
+//	tnl::Vector3 Move(tnl::Vector3 Pos)override;
+//};

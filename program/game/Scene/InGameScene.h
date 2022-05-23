@@ -144,6 +144,12 @@ private:
 
 	//---------------------------------------//
 
+	//すべての敵の中から一番playerに近い敵を選ぶ関数
+	std::shared_ptr<Enemy>GetNearestEnemy();
+
+	//敵を倒したフラグ
+	bool isDestroyEnemy = false;
+
 	//オブジェクトリスト
 	//std::list<std::shared_ptr<Object>> objectList;
 

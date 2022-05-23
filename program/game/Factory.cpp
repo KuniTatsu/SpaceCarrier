@@ -9,6 +9,7 @@
 #include"Manager/GameManager.h"
 #include"Manager/EnemyManager.h"
 
+
 ObjectFactory::ObjectFactory()
 {
 	tnl::DebugTrace("\nFactory子クラスが生成されました。\n");
@@ -30,14 +31,23 @@ std::shared_ptr<Object> ObjectFactory::CreateObject(std::string type, const tnl:
 			//MovementBase* move = new CenterStopMove(speed,)
 			std::shared_ptr<Player>player = gManager->GetPlayer();
 			tnl::Vector3 vec = player->GetPos() - StartPos;
-			tnl::Vector3 fixPos = gManager->GetFixVector(vec.x, vec.y);
+			tnl::Vector3 fixVec = gManager->GetFixVector(vec.x, vec.y);
 
-			MovementBase* move = new StraightMove(fixPos * speed);
+			MovementBase* move = new StraightMove(fixVec * speed);
 			return std::make_shared<Bullet>(StartPos, move);
 		}
 		else if (Move == MOVETYPE::ACCEL) {
 
 			MovementBase* move = new AccelMove(VPos);
+			return std::make_shared<Bullet>(StartPos, move);
+		}
+		else if (Move == MOVETYPE::TOENEMY) {
+			//VPosを正規化する
+			tnl::Vector3 fixVec = gManager->GetFixVector(VPos.x, VPos.y);
+			//速度 いずれどっかから持ってくる
+			float speed = 5.0f;
+			//moveを生成
+			MovementBase* move = new StraightMove(fixVec * speed);
 			return std::make_shared<Bullet>(StartPos, move);
 		}
 		return std::shared_ptr<Object>();

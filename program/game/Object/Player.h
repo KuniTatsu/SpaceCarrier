@@ -18,6 +18,36 @@ public:
 	void CheckIsLive()override;
 	//弾発射関数
 	void ShootBullet();
+
+	//特定の敵をターゲットする関数
+	void SetMyTarget(std::shared_ptr<Object> Target);
+	//ターゲットを初期化する関数
+	inline void	CleanTarget() {
+		myTarget = nullptr;
+	}
+	//オートターゲット自動更新を切り替える関数
+	inline void	ChageAutoTargerMode() {
+		if (autoTargetMode) {
+			autoTargetMode = false;
+			return;
+		}
+		autoTargetMode = true;
+	}
+	//オートターゲット自動更新の確認関数
+	inline bool	isAutoTargetMode() {
+		return autoTargetMode;
+	}
+
+	//特定の目標に向かって射撃する関数
+	void AimShootBullet();
+	void AimShootBullet(std::shared_ptr<Object>Target);
+
+	//MyTargetが設定されているか確認する関数 true:設定されている,false:設定されていない
+	inline bool isSetTarget() {
+		if (myTarget != nullptr)return true;
+		return false;
+	}
+
 	//巡航速度取得関数
 	inline const float GetCruizeSpeed() {
 		return CruizeSpeed;
@@ -57,6 +87,7 @@ private:
 
 	//---------------------------------------------------//
 
+	//---------------射撃関係---------------------------//
 	//弾発射間隔
 	const float SHOOTCOOLDOWN = 0.1f;
 	//弾発射タイマー
@@ -65,6 +96,14 @@ private:
 	//弾発射ポイント補正
 	const float INITPOSY = 25.0f;
 
+	//弾の速度
+	const float BULLETSPEED = 5.0f;
+
+	//オートターゲット用
+	std::shared_ptr<Object> myTarget = nullptr;
+
+	//オートターゲットモード
+	bool autoTargetMode = false;
 
 	//航行スピード ステージ内をゴールへ向かうスピード
 	float CruizeSpeed = 0;
@@ -76,6 +115,11 @@ private:
 	float haveCapacity = 0;
 
 	//--------------------------------------------------//
+	
+	//-----------------画像関係---------------//
+	//オートターゲット標準gh
+	int targetingCircle = 0;
+
 	//objファクトリーポインタ
 	Factory* fac = nullptr;
 };

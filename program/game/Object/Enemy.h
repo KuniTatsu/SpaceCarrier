@@ -34,7 +34,6 @@ public:
 		return shootType;
 	}
 
-
 protected:
 	EnemyManager* eManager = nullptr;
 
@@ -52,9 +51,7 @@ protected:
 	//追尾ありなし
 	bool isChase = false;
 	*/
-	//速度ベクトル
-	tnl::Vector3 vecSpeed = {};
-
+	
 	//ストラテジーパターンを使って行動を変えてみる
 	//動き方
 	MovementBase* moveType = nullptr;
