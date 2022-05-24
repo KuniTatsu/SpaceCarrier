@@ -4,7 +4,7 @@
 class Factory;
 class GameManager;
 
-//移動方法のベースクラス
+//----------移動方法のベースクラス------------
 class ShootBase
 {
 public:
@@ -27,7 +27,7 @@ protected:
 	//クールダウン確認関数
 	bool CheckCoolDawn(const float Deltatime);
 };
-//vecspeed方向ベクトルへ直進するクラス
+//------------vecspeed方向ベクトルへ直進するクラス-------------
 class StraightShoot :public ShootBase
 {
 public:
@@ -36,7 +36,7 @@ public:
 
 	bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
 };
-//撃つタイミングでプレイヤーがいた方向に放つクラス
+//------------撃つタイミングでプレイヤーがいた方向に放つクラス-----------
 class FocusShoot :public ShootBase
 {
 public:
@@ -45,12 +45,22 @@ public:
 
 	bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
 };
-//クールダウンが短く弾速がだんだん早くなるクラス
+//------------クールダウンが短く弾速がだんだん早くなるクラス------------
 class FastShoot :public ShootBase
 {
 public:
 	FastShoot(tnl::Vector3 VecSpeed, float CoolDawn);
 	~FastShoot()override;
+
+	bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
+};
+
+//------------追尾する弾のクラス------------
+class TrackShoot :public ShootBase
+{
+public:
+	TrackShoot(tnl::Vector3 VecSpeed, float CoolDawn);
+	~TrackShoot()override;
 
 	bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
 };

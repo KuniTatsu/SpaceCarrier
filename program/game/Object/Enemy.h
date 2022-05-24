@@ -60,6 +60,9 @@ protected:
 	//特殊射撃方法
 	ShootBase* exShootType = nullptr;
 
+	//メモリ解放
+	void DeleteMemory();
+
 	//ステータス
 	float hp = 0;
 	float attack = 0;

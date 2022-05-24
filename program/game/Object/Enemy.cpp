@@ -91,6 +91,8 @@ Enemy::~Enemy()
 {
 	tnl::DebugTrace("\n“G‚ªÁ‹Ž‚³‚ê‚Ü‚µ‚½\n");
 	tnl::DebugTrace("\npos[%f,%f]\n", pos.x, pos.y);
+
+	DeleteMemory();
 }
 
 void Enemy::Update()
@@ -124,4 +126,11 @@ void Enemy::SetEnemyList()
 void Enemy::Move()
 {
 	pos = moveType->Move(pos);
+}
+
+void Enemy::DeleteMemory()
+{
+	delete moveType;
+	delete shootType;
+	if (exShootType != nullptr)delete exShootType;
 }

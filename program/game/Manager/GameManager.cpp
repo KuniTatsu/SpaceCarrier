@@ -6,6 +6,7 @@
 #include"../Object/Bullet.h"
 #include"../Object/Object.h"
 #include"../Manager/BulletManager.h"
+#include"../Manager/PartsManager.h"
 #include"../Object/Player.h"
 #include"../Factory.h"
 #include<time.h>
@@ -83,6 +84,7 @@ void GameManager::initGameManager()
 
 	//BulletManagerインスタンス確保
 	bManager = BulletManager::Instance();
+	pManager = PartsManager::Instance();
 
 }
 

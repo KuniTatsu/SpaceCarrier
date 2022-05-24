@@ -1,0 +1,13 @@
+id(int),PartsType(int),Parts_Name,HP(int),Atack(int),Defence(int),Speed(int),Gh(std::string),ContainerAmount
+100,0,船体[軽量](仮),100,0,50,0,graphics/Hull_small.png,100
+101,0,船体[重厚](仮),200,0,100,-20,g,200
+102,1,貨物室[小](仮),50,0,0,-20,graphics/Container_small.png,1000
+103,1,貨物室[中](仮),100,0,0,-40,,2000
+104,2,装甲[小](仮),200,0,200,-40,graphics/Armor_small.png,0
+105,2,装甲[大](仮),400,0,400,-80,,0
+106,3,発電機[小](仮),0,0,0,0,graphics/Generator_small.png,0
+107,3,発電機[中](仮),0,0,0,0,,0
+108,3,発電機[大](仮),0,0,0,0,,0
+109,4,スラスター[小](仮),0,0,0,60,graphics/Thruster_small.png,0
+110,4,スラスター[中](仮),0,0,0,80,,0
+111,4,スラスター[大](仮),0,0,0,120,,0

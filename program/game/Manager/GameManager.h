@@ -13,6 +13,7 @@ class FadeControl;
 class Sound;
 class Object;
 class BulletManager;
+class PartsManager;
 class Player;
 class Factory;
 class ObjectFactory;
@@ -29,7 +30,6 @@ public:
 	//オブジェクトファクトリーインスタンス
 	Factory* objFac = nullptr;
 	//ファクトリーの取得
-
 	inline Factory* GetFactory() {
 		return objFac;
 	}
@@ -151,6 +151,9 @@ private:
 
 	//BulletManagerインスタンス
 	BulletManager* bManager = nullptr;
+
+	//PartsManagerインスタンス
+	PartsManager* pManager = nullptr;
 
 	//選択したステージ
 	STAGE mystage = STAGE::SOL;

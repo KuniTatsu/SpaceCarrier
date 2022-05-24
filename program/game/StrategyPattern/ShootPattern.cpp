@@ -127,3 +127,32 @@ bool FastShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
 
 	return true;
 }
+
+TrackShoot::TrackShoot(tnl::Vector3 VecSpeed, float CoolDawn)
+{
+	vecSpeed = VecSpeed;
+	COOLTIME = CoolDawn;
+}
+
+TrackShoot::~TrackShoot()
+{
+}
+
+bool TrackShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
+{
+	if (!CheckCoolDawn(Deltatime))return false;
+
+	//クールダウン初期化
+	coolDown = 0;
+
+	auto initPos = tnl::Vector3(Radius, 0, 0);
+
+	auto shootPoint = Pos + initPos;
+
+	//tnl::Vector3 vPos = tnl::Vector3(8.0f, 0, 0);
+
+	//弾の生成
+	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, vecSpeed, Factory::MOVETYPE::TRACKING));
+	bullet->SetList();
+	bullet->SetBulletList();
+}

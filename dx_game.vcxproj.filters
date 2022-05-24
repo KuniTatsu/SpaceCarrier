@@ -77,6 +77,10 @@
     <ClCompile Include="program\game\Manager\UIManager.cpp" />
     <ClCompile Include="program\game\Scene\CustomizeScene.cpp" />
     <ClCompile Include="program\game\EnemyData.cpp" />
+    <ClCompile Include="program\game\Ship.cpp" />
+    <ClCompile Include="program\game\ShipParts\ShipParts.cpp" />
+    <ClCompile Include="program\game\Manager\PartsManager.cpp" />
+    <ClCompile Include="program\game\ShipParts\WeaponParts.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\game\game_main.h">
@@ -165,5 +169,10 @@
     <ClInclude Include="program\game\Manager\UIManager.h" />
     <ClInclude Include="program\game\Scene\CustomizeScene.h" />
     <ClInclude Include="program\game\EnemyData.h" />
+    <ClInclude Include="program\game\Ship.h" />
+    <ClInclude Include="program\game\ShipParts\PartsBase.h" />
+    <ClInclude Include="program\game\ShipParts\ShipParts.h" />
+    <ClInclude Include="program\game\Manager\PartsManager.h" />
+    <ClInclude Include="program\game\ShipParts\WeaponParts.h" />
   </ItemGroup>
 </Project>

@@ -213,7 +213,7 @@ void Player::ShootMissile()
 
 	auto shootPoint = pos + initPos;
 
-	tnl::Vector3 vPos = tnl::Vector3(0,-8.0,0);
+	tnl::Vector3 vPos = tnl::Vector3(0,-8.0f,0);
 
 	//íeÇÃê∂ê¨
 	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, vPos, Factory::MOVETYPE::TRACKING));

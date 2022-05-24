@@ -1,0 +1,11 @@
+id(int),PartsType(int),Parts_Name,Atack(int),CoolDawn(float),BulletType(string),Gh(std::string)
+200,0,単発砲[プロトタイプ],10,5,STRAIGHT,graphics/bullet_5050.png
+201,0,単発砲[強化版],20,5,STRAIGHT,graphics/bullet_5050.png
+202,0,速射砲[プロトタイプ],10,2,STRAIGHT,graphics/bullet_5050.png
+203,0,速射砲[強化版],15,1,STRAIGHT,graphics/bullet_5050.png
+204,0,改良型速射砲,20,0.1,STRAIGHT,graphics/bullet_5050.png
+205,1,宇宙魚雷[プロトタイプ],50,10,MISSILE,graphics/Missile_5050.png
+206,1,宇宙魚雷[強化版],70,10,MISSILE,graphics/Missile_5050.png
+207,1,連装式宙間魚雷,60,5,MISSILE,graphics/Missile_5050.png
+208,1,改良型連装式宙間魚雷,100,5,MISSILE,graphics/Missile_5050.png
+209,1,自動装填型宙間魚雷,100,1,MISSILE,graphics/Missile_5050.png
