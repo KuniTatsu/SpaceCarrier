@@ -21,6 +21,8 @@ void Player::Update()
 
 	//弾発射タイマー更新
 	shootTimer += gManager->deltatime;
+
+	missileTimer += gManager->deltatime;
 }
 
 void Player::Draw()
@@ -159,11 +161,12 @@ void Player::AimShootBullet()
 	//TargetPos方向の方向ベクトルを取得する 正規化していないことに注意
 	tnl::Vector3 pVec = myTarget->GetPos() - pos;
 
-	/*
-	//Targetの方向ベクトル成分を少し足す
-	tnl::Vector3 enemyVecSpeed = myTarget->GetVecSpeed();
-	pVec += enemyVecSpeed;
-	*/
+
+	////Targetの方向ベクトル成分を少し足す
+	//tnl::Vector3 enemyVecSpeed = myTarget->GetVecSpeed() * gManager->deltatime;
+	////逆方向なのでマイナスを掛ける
+	//pVec += (enemyVecSpeed * -1);
+
 
 	//弾の生成
 	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, pVec, Factory::MOVETYPE::TOENEMY));
@@ -190,6 +193,30 @@ void Player::AimShootBullet(std::shared_ptr<Object> Target)
 
 	//弾の生成
 	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, pVec, Factory::MOVETYPE::TOENEMY));
+	bullet->SetList();
+	bullet->SetBulletList();
+}
+
+void Player::ShootMissile()
+{
+	//MyTargetが設定されているか確認
+	if (!isSetTarget()) {
+		tnl::DebugTrace("\nMyTargetが設定されていません\n");
+		return;
+	}
+	//クールダウン中なら発射しない
+	if (missileTimer < MISSILECOOLDOWN)return;
+	//クールダウンセット
+	missileTimer = 0;
+
+	auto initPos = tnl::Vector3(0, -INITPOSY, 0);
+
+	auto shootPoint = pos + initPos;
+
+	tnl::Vector3 vPos = tnl::Vector3(0,-8.0,0);
+
+	//弾の生成
+	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, vPos, Factory::MOVETYPE::TRACKING));
 	bullet->SetList();
 	bullet->SetBulletList();
 }

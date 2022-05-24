@@ -1,7 +1,7 @@
 id(int),EnemyType(int),Enemy_Name,HP(int),Atack(int),Defence(int),Speed(int),Gh(std::string),MoveType,ShootType,ExShootType,Exp(int)
 100,0,ŠC‘¯‰º‚Á’[<‘|ŠC’ø>,50,20,10,5,graphics/Enemy_2525.png,STRAIGHT,STRAIGHT,NONE,10
-101,0,ŠC‘¯‰º‚Á’[<‹ì’€ŠÍ>,100,50,30,7,graphics/Enemy_2525.png,SLIDE,FOCUS,NONE,20
-102,0,ŠC‘¯‰º‚Á’[<‹›—‹’ø>,60,100,20,3,graphics/Enemy_2525.png,FARSTOP,FOCUS,NONE,10
+101,0,ŠC‘¯‰º‚Á’[<‹ì’€ŠÍ>,100,50,30,7,graphics/Enemy_dest.png,SLIDE,FOCUS,NONE,20
+102,0,ŠC‘¯‰º‚Á’[<‹›—‹’ø>,60,100,20,3,graphics/Enemy_fort.png,FARSTOP,FOCUS,NONE,10
 103,0,ŠC‘¯‰º‚Á’[<—vÇ>,200,100,100,1,graphics/Enemy_2525.png,MIDDLESTOP,FASTSHOT,FOCUS,40
 104,1,ŠC‘¯Š²•”,300,200,100,6,graphics/Enemy_2525.png,FARSTOP,STRAIGHT,FOCUS,50
 105,2,ŠC‘¯“ª—Ì,400,300,200,7,graphics/Enemy_2525.png,FARSTOP,FASTSHOT,FOCUS,70

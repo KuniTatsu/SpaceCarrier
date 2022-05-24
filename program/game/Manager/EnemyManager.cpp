@@ -44,9 +44,6 @@ std::shared_ptr<Enemy> EnemyManager::CreateEnemy(ENEMYTYPE Type, tnl::Vector3 St
 		//auto enemy = GetRandomEnemyData(static_cast<int>(Type));
 		return std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", StartPos, VPos, Factory::ENEMYTYPE::NORMAL));
 	}
-
-
-
 	return std::shared_ptr<Enemy>();
 }
 

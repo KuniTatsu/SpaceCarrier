@@ -16,13 +16,14 @@ class Factory {
 public:
 	Factory();
 	enum class MOVETYPE {
-		STRAIGHT,
-		STOPPOS,
-		FARSTOP,
-		MIDDLESTOP,
-		ACCEL,
-		SLIDE,
-		TOENEMY,
+		STRAIGHT,		//直進
+		STOPPOS,		//特定方向へ直進
+		FARSTOP,		//画面上部に向けて移動
+		MIDDLESTOP,		//画面中心へ向けて移動
+		ACCEL,			//加速する直進移動
+		SLIDE,			//横へ移動
+		TOENEMY,		//特定のObjectの座標へ直進
+		TRACKING,
 		MAX
 	};
 

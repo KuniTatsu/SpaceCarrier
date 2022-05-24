@@ -40,6 +40,12 @@ private:
 	//移動ベクトル
 	tnl::Vector3 vPos = {};
 
+	//最大生存時間
+	const float MAXLIVETIME = 10.0f;
+
+	//生存時間
+	float liveTime = 0.0f;
+
 	//ストラテジーパターンを使って行動を変えてみる
 	MovementBase* moveType = nullptr;
 

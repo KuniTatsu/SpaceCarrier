@@ -18,6 +18,10 @@ Bullet::Bullet(tnl::Vector3 StartPos, MovementBase* MoveType)
 
 	moveType = MoveType;
 
+	/*tnl::Vector3 vecSpeed = moveType->GetVecSpeed();
+
+	tnl::DebugTrace("\n%d,%d,%d\n", vecSpeed.x, vecSpeed.y, vecSpeed.z);*/
+
 }
 
 Bullet::~Bullet()
@@ -28,6 +32,8 @@ Bullet::~Bullet()
 void Bullet::Update()
 {
 	pos = moveType->Move(pos);
+	liveTime += gManager->deltatime;
+	
 	CheckIsLive();
 }
 
@@ -68,6 +74,7 @@ void Bullet::CheckIsLive()
 	if (pos.y < 0 || pos.y>768 || pos.x < 0 || pos.x>1024) {
 		isLive = false;
 	}
+	if (liveTime > MAXLIVETIME)isLive = false;
 
 }
 

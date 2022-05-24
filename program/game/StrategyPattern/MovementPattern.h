@@ -1,7 +1,9 @@
 #pragma once
 #include"../../dxlib_ext/dxlib_ext.h"
+#include<memory>
 
 class GameManager;
+class Object;
 
 //移動方法のベースクラス
 class MovementBase
@@ -22,6 +24,12 @@ protected:
 	tnl::Vector3 vecSpeed = {};
 	//gameManagerpoint
 	GameManager* gManager = nullptr;
+	//cos(tnl::ToRadian(1.0f))の値
+	float radianX = 0.0f;
+	//sin(tnl::ToRadian(1.0f))の値
+	float radianY = 0.0f;
+
+
 };
 //vecspeed方向ベクトルへ直進するクラス
 class StraightMove :public MovementBase
@@ -73,7 +81,7 @@ class AccelMove :public MovementBase
 {
 public:
 	//VecSpeed:速度ベクトル,StartSpeed:速度倍率,Accel:速度倍率の増え方,MaxSpeed:最大速度倍率
-	AccelMove(tnl::Vector3 VecSpeed, float StartSpeed = 1.0f, float Accel = 0.01f, float MaxSpeed = 2.0f);
+	AccelMove(tnl::Vector3 VecSpeed, float StartSpeed = 0.5f, float Accel = 0.1f, float MaxSpeed = 2.0f);
 	~AccelMove();
 	//指定座標から現在座標を引いて方向ベクトルを出す
 	//出した方向ベクトルを正規化する
@@ -104,15 +112,17 @@ public:
 	//正規化ベクトルに速度をかけて移動する
 	tnl::Vector3 Move(tnl::Vector3 Pos)override;
 };
-////Playerに向かうクラス---->いずれ無くす
-//class ToPlayerMove :public MovementBase
-//{
-//public:
-//	//速度ベクトルは左右方向
-//	ToPlayerMove(tnl::Vector3 VecSpeed);
-//	~ToPlayerMove();
-//	//指定座標から現在座標を引いて方向ベクトルを出す
-//	//出した方向ベクトルを正規化する
-//	//正規化ベクトルに速度をかけて移動する
-//	tnl::Vector3 Move(tnl::Vector3 Pos)override;
-//};
+//目標物に向かって追尾して飛ぶ
+class ToTargetMove :public MovementBase
+{
+public:
+	//速度ベクトルは左右方向
+	ToTargetMove(tnl::Vector3 VecSpeed, std::shared_ptr<Object>Target);
+	~ToTargetMove();
+
+
+	tnl::Vector3 Move(tnl::Vector3 Pos)override;
+private:
+
+	std::shared_ptr<Object>target;
+};

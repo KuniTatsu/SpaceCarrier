@@ -108,7 +108,8 @@ public:
 	inline float GetLength(tnl::Vector3 PosA, tnl::Vector3 PosB) {
 		return std::sqrt(((PosA.x - PosB.x) * (PosA.x - PosB.x)) + ((PosA.y - PosB.y) * (PosA.y - PosB.y)));
 	}
-
+	//２つのベクトルの外積を求める関数 VecA:速度ベクトル VecB:方向ベクトル
+	float GetCross(tnl::Vector3 VecA, tnl::Vector3 VecB);
 
 
 	//オブジェクトリストからの排除

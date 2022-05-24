@@ -121,6 +121,11 @@ void GameManager::DrawRotaGraphNormal(int X, int Y, int GrHandle, int TransFlag)
 	DrawRotaGraph(X, Y, 1, 0, GrHandle, true);
 }
 
+float GameManager::GetCross(tnl::Vector3 VecA, tnl::Vector3 VecB)
+{
+	return (VecA.x * VecB.y) - (VecA.y * VecB.x);
+}
+
 void GameManager::RemoveObjectList()
 {
 	if (objects.size() <= 1)return;

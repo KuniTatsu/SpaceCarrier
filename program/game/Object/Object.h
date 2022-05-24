@@ -61,6 +61,12 @@ public:
 		return vecSpeed;
 	}
 
+	//速度ベクトル変更関数
+	inline void	SetVecSpeed(float VecX,float VecY) {
+		vecSpeed.x = VecX;
+		vecSpeed.y = VecY;
+	}
+
 	virtual~Object() {};
 
 	//*******純粋仮想関数 継承先で実装************//

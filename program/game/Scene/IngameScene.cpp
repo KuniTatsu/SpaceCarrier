@@ -116,10 +116,9 @@ bool InGameScene::SeqCruize(const float deltatime)
 	}
 
 	//TABを押したら一番近くの敵をオートターゲットする
-	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_TAB)) {
+	if (tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_TAB)) {
 		//playerから一番近い敵をオートターゲット目標として登録
 		player->SetMyTarget(GetNearestEnemy());
-
 		//オートターゲットの更新を有効にする
 		player->ChageAutoTargerMode();
 	}
@@ -130,6 +129,10 @@ bool InGameScene::SeqCruize(const float deltatime)
 			player->AimShootBullet();
 		}
 		player->ShootBullet();
+	}
+
+	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_1)) {
+		player->ShootMissile();
 	}
 
 	//オブジェクトリストのアップデート
@@ -160,6 +163,7 @@ bool InGameScene::SeqCruize(const float deltatime)
 	eManager->RemoveEnemyList();
 	gManager->RemoveObjectList();
 
+	//次のターゲットへ変更する処理
 	if (isDestroyEnemy) {
 
 		isDestroyEnemy = false;
@@ -170,8 +174,6 @@ bool InGameScene::SeqCruize(const float deltatime)
 		player->CleanTarget();
 		//playerから一番近い敵をオートターゲット目標として登録
 		player->SetMyTarget(GetNearestEnemy());
-
-
 	}
 
 	return true;

@@ -50,6 +50,13 @@ std::shared_ptr<Object> ObjectFactory::CreateObject(std::string type, const tnl:
 			MovementBase* move = new StraightMove(fixVec * speed);
 			return std::make_shared<Bullet>(StartPos, move);
 		}
+		else if (Move == MOVETYPE::TRACKING) {
+			std::shared_ptr<Player>player = gManager->GetPlayer();
+			auto target = player->GetMyTarget();
+			MovementBase* track = new ToTargetMove(VPos, target);
+
+			return std::make_shared<Bullet>(StartPos, track);
+		}
 		return std::shared_ptr<Object>();
 	}
 }
@@ -82,6 +89,7 @@ std::shared_ptr<Object>ObjectFactory::CreateObject(const tnl::Vector3& StartPos,
 		move = new CenterStopMove(2.0f, gManager->Center);
 	}
 	else if (Data->GetMoveType() == MOVETYPE::SLIDE) {
+		
 		move = new SlideMove(VPos);
 	}
 	else if (Data->GetMoveType() == MOVETYPE::ACCEL) {

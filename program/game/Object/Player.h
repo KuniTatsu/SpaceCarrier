@@ -42,10 +42,17 @@ public:
 	void AimShootBullet();
 	void AimShootBullet(std::shared_ptr<Object>Target);
 
+	//誘導ミサイル
+	void ShootMissile();
+
 	//MyTargetが設定されているか確認する関数 true:設定されている,false:設定されていない
 	inline bool isSetTarget() {
 		if (myTarget != nullptr)return true;
 		return false;
+	}
+
+	inline std::shared_ptr<Object>GetMyTarget() {
+		return myTarget;
 	}
 
 	//巡航速度取得関数
@@ -85,6 +92,9 @@ private:
 	//移動キーを押したときの移動量
 	const int MOVEAMOUNT[static_cast<int>(DIR::MAX)] = { -SPEED,SPEED,SPEED,-SPEED };
 
+	//規定方向ベクトル
+	const tnl::Vector3 FRONT = { 0,-1,0 };
+
 	//---------------------------------------------------//
 
 	//---------------射撃関係---------------------------//
@@ -92,6 +102,12 @@ private:
 	const float SHOOTCOOLDOWN = 0.1f;
 	//弾発射タイマー
 	float shootTimer = 0.0f;
+
+	//Missileクールダウン
+	const float MISSILECOOLDOWN = 1.0f;
+
+	//Missile発射タイマー
+	float missileTimer = 0.0f;
 
 	//弾発射ポイント補正
 	const float INITPOSY = 25.0f;
