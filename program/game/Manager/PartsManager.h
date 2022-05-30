@@ -8,6 +8,7 @@
 #include"../../dxlib_ext/dxlib_ext.h"
 #include<memory>
 
+class PartsBase;
 class ShipParts;
 class WeaponParts;
 
@@ -24,6 +25,21 @@ public:
 	void Init();
 	//Csvロード
 	void LoadCsv();
+
+	//パーツコード
+	enum class PARTSCODE:uint32_t {
+		HULL,
+		CONTAINER,
+		ARMOR,
+		GENERATOR,
+		THRUSTER,
+		MAX
+	};
+	//初期パーツ格納関数
+	void SetProtoTypeParts(std::vector<std::shared_ptr<PartsBase>>& PartsSet);
+
+	//パーツデータ取得関数
+
 
 private:
 	//シングルトンインスタンス

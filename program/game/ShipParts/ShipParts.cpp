@@ -1,7 +1,7 @@
 #include "ShipParts.h"
 #include"../Manager/GameManager.h"
 
-ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float Attack, float Defence, float Speed, std::string GhPass, float ContainerAmount)
+ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float Energy, float Defence, float Speed, std::string GhPass, float ContainerAmount)
 {
 	gManager = GameManager::Instance();
 
@@ -11,12 +11,12 @@ ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float At
 	partsName = Name;
 
 	hp = Hp;
-	attack = Attack;
+	energy = Energy;
 	defence = Defence;
 	speed = Speed;
 
 	basicStatus[0] = hp;
-	basicStatus[1] = attack;
+	basicStatus[1] = energy;
 	basicStatus[2] = defence;
 	basicStatus[3] = speed;
 
