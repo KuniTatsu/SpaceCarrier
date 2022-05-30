@@ -37,6 +37,8 @@ public:
 	};
 	//初期パーツ格納関数
 	void SetProtoTypeParts(std::vector<std::shared_ptr<PartsBase>>& PartsSet);
+	//初期武器格納関数
+	void SetProtoTypeWeapon(std::vector<std::shared_ptr<PartsBase>>& WeaponSet);
 
 	//パーツデータ取得関数
 

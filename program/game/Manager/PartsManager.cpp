@@ -83,3 +83,9 @@ void PartsManager::SetProtoTypeParts(std::vector<std::shared_ptr<PartsBase>>& Pa
 	PartsSet[static_cast<uint32_t>(PARTSCODE::THRUSTER)] = shipPartsMaster[static_cast<uint32_t>(PARTSCODE::THRUSTER)][0];
 
 }
+
+void PartsManager::SetProtoTypeWeapon(std::vector<std::shared_ptr<PartsBase>>& WeaponSet)
+{
+	WeaponSet.emplace_back(weaponPartsMaster[0][0]);
+	WeaponSet.emplace_back(weaponPartsMaster[1][1]);
+}

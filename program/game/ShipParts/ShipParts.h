@@ -11,6 +11,11 @@ public:
 	//船改造画面での描画関数
 	void DrawParts(int X, int Y);
 
+	//基本ステータス取得関数
+	inline float* GetPartsStatus() {
+		return basicStatus;
+	}
+
 private:
 	//パーツの追加体力
 	float hp = 0;
@@ -23,7 +28,7 @@ private:
 	//パーツの追加積載可能量
 	float containerAmount = 0;
 
-	//hp,energy,def,speed
-	float basicStatus[4] = {};
+	//hp,energy,def,speed,container
+	float basicStatus[5] = {};
 
 };

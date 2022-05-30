@@ -3,6 +3,8 @@
 
 class GameManager;
 
+class Ship;
+
 class TitleScene:public BaseScene 
 {
 
@@ -20,5 +22,6 @@ private:
 
 	int backGroundGh = 0;
 
+	Ship* testShip = nullptr;
 
 };

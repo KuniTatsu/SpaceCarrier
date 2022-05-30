@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include"../Manager/GameManager.h"
 #include"../Manager/SceneManager.h"
+#include"../Ship.h"
 
 //#include"Object.h"
 
@@ -9,6 +10,8 @@ TitleScene::TitleScene()
 	gManager = GameManager::Instance();
 	//testGh = gManager->LoadGraphEx("graphics/test_1.png");
 	backGroundGh = gManager->LoadGraphEx("graphics/TestTitle.png");
+
+	//testShip = new Ship();
 }
 
 TitleScene::~TitleScene()
@@ -39,5 +42,12 @@ void TitleScene::Draw()
 	/*for (int i = 9; i > 0; --i) {
 		DrawStringEx(100, 470 - (i * 30), -1, " %d", i);
 	}*/
+
+	/*const float* test = testShip->GetShipStatus();
+
+	for (int i = 0; i < 5; ++i) {
+		DrawStringEx(200, 200 + (50 * i), GetColor(0,0,0), "%f", test[i]);
+	}*/
+
 
 }

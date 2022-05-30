@@ -5,6 +5,7 @@
 #include<memory>
 
 class PartsBase;
+class PartsManager;
 
 class Ship
 {
@@ -12,10 +13,17 @@ public:
 	Ship();
 	~Ship();
 
+	inline const float* GetShipStatus() {
+		return shipStatus;
+	}
+
 private:
 
 	//初期化関数
 	void ShipInit();
+
+	//パーツマネージャポインタ
+	PartsManager* pManager = nullptr;
 
 	enum class PARTS :uint32_t {
 		HULL,
@@ -74,7 +82,10 @@ private:
 	float shipStatus[static_cast<uint32_t>(STATUS::MAX)] = { 0,0,0,0,0 };
 
 	//搭載パーツの各ステータス合計を出す関数
-	void SetShipStatus(STATUS StatusName);
+	void SetShipStatus();
+
+	//船のステータスの初期化
+	void ClearShipStatus();
 
 	/*
 	//-------搭載パーツの合計ステータス

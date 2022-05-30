@@ -14,14 +14,16 @@ ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float En
 	energy = Energy;
 	defence = Defence;
 	speed = Speed;
+	containerAmount = ContainerAmount;
 
 	basicStatus[0] = hp;
 	basicStatus[1] = energy;
 	basicStatus[2] = defence;
 	basicStatus[3] = speed;
+	basicStatus[4] = containerAmount;
 
 	gh = gManager->LoadGraphEx(GhPass);
-	containerAmount = ContainerAmount;
+	
 }
 
 ShipParts::~ShipParts()
