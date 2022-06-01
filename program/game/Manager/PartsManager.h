@@ -43,6 +43,12 @@ public:
 	//パーツデータ取得関数
 	std::shared_ptr<PartsBase>GetParts(int PartsId);
 
+	//ランダムなパーツデータを返す関数
+	std::shared_ptr<PartsBase>GetRandomParts();
+
+	//ランダムなパーツIDを返す関数
+	int GetRandomPartsId();
+
 private:
 	//シングルトンインスタンス
 	static PartsManager* instance;
@@ -55,5 +61,8 @@ private:
 	std::vector<std::vector<std::shared_ptr<ShipParts>>>shipPartsMaster;
 	//武器パーツマスター
 	std::vector<std::vector<std::shared_ptr<WeaponParts>>>weaponPartsMaster;
+
+	//パーツIDのリスト
+	std::vector<int>PartsIdList;
 
 };

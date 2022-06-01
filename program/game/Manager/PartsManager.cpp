@@ -2,6 +2,7 @@
 #include"../ShipParts/PartsBase.h"
 #include"../ShipParts/ShipParts.h"
 #include"../ShipParts/WeaponParts.h"
+#include<random>
 
 
 PartsManager::PartsManager()
@@ -49,6 +50,8 @@ void PartsManager::LoadCsv()
 		//auto parts = std::make_shared<ShipParts>(id, type, loadPartsCsv[i][2], hp, energy, defence, speed, loadPartsCsv[i][7], loadPartsCsv[i][8],amount);
 		auto parts = std::make_shared<ShipParts>(id, type, loadPartsCsv[i][2], hp, energy, defence, speed, loadPartsCsv[i][7], loadPartsCsv[i][8], amount);
 		shipPartsMaster[type].emplace_back(parts);
+
+		PartsIdList.emplace_back(id);
 	}
 
 	//---------------武器パーツのロード-------------------------
@@ -121,4 +124,27 @@ std::shared_ptr<PartsBase> PartsManager::GetParts(int PartsId)
 	auto newParts = std::make_shared<ShipParts>(id, type, name, basicStatus[0], basicStatus[1], basicStatus[2], basicStatus[3], pass, icon, basicStatus[4]);
 
 	return newParts;
+}
+
+std::shared_ptr<PartsBase> PartsManager::GetRandomParts()
+{
+	auto rand = GetRandomPartsId();
+
+	return GetParts(rand);
+}
+
+int PartsManager::GetRandomPartsId()
+{
+	// 非決定的な乱数生成器->初期シードに使う
+	std::random_device rnd;
+	//ランダムな数を求めるための関数名を決める
+	 // メルセンヌ・ツイスタの32ビット版、引数は初期シード
+	std::mt19937 GetRandom(rnd());
+
+	//一定範囲の一様分布乱数取得
+	std::uniform_int_distribution<> Weight(0, PartsIdList.size()-1);
+	//レアリティをランダムで決める
+	int rand = Weight(GetRandom);
+
+	return PartsIdList[rand];
 }

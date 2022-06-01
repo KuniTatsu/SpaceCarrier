@@ -6,6 +6,7 @@
 class PartsBase;
 class ShipParts;
 
+class GraphicUI;
 class PartsManager;
 
 class Inventory
@@ -31,6 +32,8 @@ private:
 	std::list<std::shared_ptr<ShipParts>>inventory;
 
 	PartsManager* pManager = nullptr;
+
+	std::shared_ptr<GraphicUI>back;
 };
 
 

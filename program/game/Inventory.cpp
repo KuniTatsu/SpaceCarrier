@@ -3,6 +3,8 @@
 #include"ShipParts/PartsBase.h"
 #include"../dxlib_ext/dxlib_ext.h"
 #include"Manager/PartsManager.h"
+#include"GraphicUI.h"
+
 
 Inventory::Inventory()
 {
@@ -33,6 +35,10 @@ void Inventory::InventoryDraw(int GuideX, int GuideY, int FrameTopX, int FrameTo
 	//描画範囲を限定する(この範囲内から出たら描画されない)
 	SetDrawArea(FrameTopX, FrameTopY, FrameBottomX, FrameBottomY);
 
+	//描画範囲の背景画像
+	//DrawExtendGraph(FrameTopX, FrameTopY, FrameBottomX, FrameBottomY,)
+
+
 	auto parts = inventory.begin();
 	for (int i = 0; i < inventory.size(); ++i) {
 
@@ -41,13 +47,13 @@ void Inventory::InventoryDraw(int GuideX, int GuideY, int FrameTopX, int FrameTo
 
 
 		//GuideXとGuideYを動かすことで全てのパーツ画像を動かす
-		//偶数なら右側
+		//偶数なら左側
 		if (i % 2 == 0) {
-			(*parts)->DrawPartsIcon(GuideX + 120, y);
+			(*parts)->DrawPartsIcon(GuideX , y);
 		}
-		//奇数なら左側
+		//奇数なら右側
 		else {
-			(*parts)->DrawPartsIcon(GuideX, y);
+			(*parts)->DrawPartsIcon(GuideX + 120, y);
 		}
 		parts++;
 	}

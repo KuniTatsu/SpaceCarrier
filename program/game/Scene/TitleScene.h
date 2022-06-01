@@ -1,10 +1,13 @@
 #pragma once
 #include"Scene.h"
+#include<memory>
 
 class GameManager;
 
 class Ship;
 class Inventory;
+class GraphicUI;
+class PartsManager;
 
 class TitleScene:public BaseScene 
 {
@@ -23,6 +26,7 @@ private:
 
 	int backGroundGh = 0;
 
+	//-----------------------debugtest--------------------------------------//
 	//Ship* testShip = nullptr;
 	Inventory* testInventory = nullptr;
 
@@ -31,4 +35,12 @@ private:
 	int guideX = 100;
 	int guideY = 50;
 
+
+	int backWidth = 0;
+	int backHeight = 0;
+
+	std::shared_ptr<GraphicUI>back;
+
+	PartsManager* pManager = nullptr;
+	//-----------------------debugtest--------------------------------------//
 };
