@@ -42,6 +42,7 @@ void StageSelectScene::Init()
 	uiManager->SetUIList(menu2);
 	uiManager->SetUIList(menu3);
 
+	gManager->CreateModManager();
 }
 
 void StageSelectScene::CreateStage()

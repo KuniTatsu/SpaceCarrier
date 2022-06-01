@@ -14,6 +14,7 @@ class Sound;
 class Object;
 class BulletManager;
 class PartsManager;
+class ModManager;
 class Player;
 class Factory;
 class ObjectFactory;
@@ -145,6 +146,8 @@ public:
 		MAX
 	};
 
+	//ModManager生成
+	void CreateModManager();
 private:
 	//シングルトンインスタンス
 	static GameManager* instance;
@@ -154,6 +157,10 @@ private:
 
 	//PartsManagerインスタンス
 	PartsManager* pManager = nullptr;
+
+	//ModManagerインスタンス
+	ModManager* mManager = nullptr;
+	
 
 	//選択したステージ
 	STAGE mystage = STAGE::SOL;

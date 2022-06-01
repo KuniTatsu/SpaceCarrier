@@ -1,5 +1,9 @@
 #pragma once
+#include<vector>
+#include<memory>
 #include"PartsBase.h"
+
+class Mod;
 
 class ShipParts :public PartsBase
 {
@@ -30,5 +34,9 @@ private:
 
 	//hp,energy,def,speed,container
 	float basicStatus[5] = {};
+
+
+	//所持修飾ステータス
+	std::vector<std::shared_ptr<Mod>>myMods;
 
 };

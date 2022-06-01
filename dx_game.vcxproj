@@ -17,8 +17,10 @@
     <ClCompile Include="program\game\GraphicUI.cpp" />
     <ClCompile Include="program\game\Manager\BulletManager.cpp" />
     <ClCompile Include="program\game\Manager\EnemyManager.cpp" />
+    <ClCompile Include="program\game\Manager\ModManager.cpp" />
     <ClCompile Include="program\game\Manager\PartsManager.cpp" />
     <ClCompile Include="program\game\Manager\UIManager.cpp" />
+    <ClCompile Include="program\game\Mod.cpp" />
     <ClCompile Include="program\game\Scene\CustomizeScene.cpp" />
     <ClCompile Include="program\game\Scene\StageSelectScene.cpp" />
     <ClCompile Include="program\game\Ship.cpp" />
@@ -54,8 +56,10 @@
     <ClInclude Include="program\game\GraphicUI.h" />
     <ClInclude Include="program\game\Manager\BulletManager.h" />
     <ClInclude Include="program\game\Manager\EnemyManager.h" />
+    <ClInclude Include="program\game\Manager\ModManager.h" />
     <ClInclude Include="program\game\Manager\PartsManager.h" />
     <ClInclude Include="program\game\Manager\UIManager.h" />
+    <ClInclude Include="program\game\Mod.h" />
     <ClInclude Include="program\game\Scene\CustomizeScene.h" />
     <ClInclude Include="program\game\Scene\StageSelectScene.h" />
     <ClInclude Include="program\game\Ship.h" />

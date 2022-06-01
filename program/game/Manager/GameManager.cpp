@@ -7,6 +7,7 @@
 #include"../Object/Object.h"
 #include"../Manager/BulletManager.h"
 #include"../Manager/PartsManager.h"
+#include"../Manager/ModManager.h"
 #include"../Object/Player.h"
 #include"../Factory.h"
 #include<time.h>
@@ -178,6 +179,11 @@ bool GameManager::isClickedRect(int MouseX, int MouseY, int RectLeft, int RectTo
 		return true;
 	}
 	return false;
+}
+
+void GameManager::CreateModManager()
+{
+	mManager = ModManager::Instance();
 }
 
 void GameManager::loadItem()
