@@ -18,7 +18,7 @@ Mod::Mod(int Id, int Type, std::string Name, float Hp, float Energy, float Defen
 	basicStatus[3] = speed;
 	basicStatus[4] = containerAmount;
 
-
+	
 }
 
 Mod::~Mod()

@@ -4,6 +4,7 @@
 class GameManager;
 
 class Ship;
+class Inventory;
 
 class TitleScene:public BaseScene 
 {
@@ -22,6 +23,12 @@ private:
 
 	int backGroundGh = 0;
 
-	Ship* testShip = nullptr;
+	//Ship* testShip = nullptr;
+	Inventory* testInventory = nullptr;
+
+	bool init = false;
+
+	int guideX = 100;
+	int guideY = 50;
 
 };

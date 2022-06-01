@@ -41,7 +41,13 @@ private:
 	};
 	//各パーツのポインタ
 	//std::shared_ptr<PartsBase> shipParts[static_cast<uint32_t>(PARTS::MAX)] = { nullptr,nullptr, nullptr, nullptr, nullptr };
+
 	std::vector < std::shared_ptr<PartsBase>>shipParts = { nullptr,nullptr, nullptr, nullptr, nullptr };
+
+	/*std::shared_ptr<PartsBase>* GetPointa() {
+		return shipParts;
+	}*/
+
 	/*
 	//------各パーツのポインタ---------
 	//船体パーツ
@@ -78,7 +84,7 @@ private:
 		CONTAINER,
 		MAX
 	};
-	//搭載パーツの合計ステータス
+	//搭載パーツの合計ステータス hp,energy,defence,speed,container
 	float shipStatus[static_cast<uint32_t>(STATUS::MAX)] = { 0,0,0,0,0 };
 
 	//搭載パーツの各ステータス合計を出す関数
@@ -100,6 +106,9 @@ private:
 	//積載可能量
 	float containerAmount = 0;
 	*/
+
+	//船のパーツを変更する関数
+	void ChangeShipParts(int PartsType, std::shared_ptr<PartsBase> NewParts);
 
 
 	//搭載武器全てで射撃する関数

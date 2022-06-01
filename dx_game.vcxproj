@@ -15,6 +15,7 @@
     <ClCompile Include="program\game\EnemyData.cpp" />
     <ClCompile Include="program\game\Factory.cpp" />
     <ClCompile Include="program\game\GraphicUI.cpp" />
+    <ClCompile Include="program\game\Inventory.cpp" />
     <ClCompile Include="program\game\Manager\BulletManager.cpp" />
     <ClCompile Include="program\game\Manager\EnemyManager.cpp" />
     <ClCompile Include="program\game\Manager\ModManager.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="program\game\EnemyData.h" />
     <ClInclude Include="program\game\Factory.h" />
     <ClInclude Include="program\game\GraphicUI.h" />
+    <ClInclude Include="program\game\Inventory.h" />
     <ClInclude Include="program\game\Manager\BulletManager.h" />
     <ClInclude Include="program\game\Manager\EnemyManager.h" />
     <ClInclude Include="program\game\Manager\ModManager.h" />

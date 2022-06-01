@@ -43,6 +43,7 @@ void Ship::SetShipStatus()
 	for (int i = 0; i < 5; ++i) {
 		//各ステータス
 		for (int k = 0; k < 5; ++k) {
+			if (partsStatus[i] == nullptr)continue;
 			shipStatus[k] += partsStatus[i][k];
 		}
 	}
@@ -54,6 +55,15 @@ void Ship::ClearShipStatus()
 	for (int i = 0; i < 5; ++i) {
 		shipStatus[i] = 0;
 	}
+}
+//-------船のパーツ換装関数---------------//
+void Ship::ChangeShipParts(int PartsType, std::shared_ptr<PartsBase> NewParts)
+{
+	//装備中のパーツを外す
+	shipParts[PartsType] = nullptr;
+
+	//所持している換装対象のパーツを装備する
+	shipParts[PartsType] = NewParts;
 }
 
 void Ship::ShootShipWeapon()

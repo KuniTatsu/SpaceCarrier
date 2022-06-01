@@ -44,10 +44,10 @@ void PartsManager::LoadCsv()
 		float defence = std::stof(loadPartsCsv[i][5]);
 		float speed = std::stof(loadPartsCsv[i][6]);
 
-		float amount = std::stof(loadPartsCsv[i][8]);
+		float amount = std::stof(loadPartsCsv[i][9]);
 
-
-		auto parts = std::make_shared<ShipParts>(id, type, loadPartsCsv[i][2], hp, energy, defence, speed, loadPartsCsv[i][7], amount);
+		//auto parts = std::make_shared<ShipParts>(id, type, loadPartsCsv[i][2], hp, energy, defence, speed, loadPartsCsv[i][7], loadPartsCsv[i][8],amount);
+		auto parts = std::make_shared<ShipParts>(id, type, loadPartsCsv[i][2], hp, energy, defence, speed, loadPartsCsv[i][7], loadPartsCsv[i][8], amount);
 		shipPartsMaster[type].emplace_back(parts);
 	}
 
@@ -88,4 +88,37 @@ void PartsManager::SetProtoTypeWeapon(std::vector<std::shared_ptr<PartsBase>>& W
 {
 	WeaponSet.emplace_back(weaponPartsMaster[0][0]);
 	WeaponSet.emplace_back(weaponPartsMaster[1][1]);
+}
+
+std::shared_ptr<PartsBase> PartsManager::GetParts(int PartsId)
+{
+	std::shared_ptr<ShipParts> selectParts = nullptr;
+	//パーツIdを検索
+	for (auto type : shipPartsMaster) {
+		for (auto parts : type) {
+			//idが一致したら
+			if (parts->GetPartsId() == PartsId) {
+				selectParts = parts;
+				break;
+			}
+		}
+	}
+
+	//パーツデータ取得
+
+	auto [id, type, name, basicStatus] = selectParts->GetAllPartsData();
+	/*int id = selectParts->GetPartsId();
+	int type = selectParts->GetPartsType();*/
+
+	//std::string name = selectParts->GetPartsName();
+	auto pass = selectParts->GetPartsGhPass();
+	auto icon = selectParts->GetIconGhPass();
+
+	//float* basicStatus = {};
+	//basicStatus = selectParts->GetPartsStatus();
+
+	//新規生成
+	auto newParts = std::make_shared<ShipParts>(id, type, name, basicStatus[0], basicStatus[1], basicStatus[2], basicStatus[3], pass, icon, basicStatus[4]);
+
+	return newParts;
 }

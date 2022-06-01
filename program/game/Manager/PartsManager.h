@@ -41,7 +41,7 @@ public:
 	void SetProtoTypeWeapon(std::vector<std::shared_ptr<PartsBase>>& WeaponSet);
 
 	//パーツデータ取得関数
-
+	std::shared_ptr<PartsBase>GetParts(int PartsId);
 
 private:
 	//シングルトンインスタンス

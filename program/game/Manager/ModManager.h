@@ -13,6 +13,9 @@ public:
 
 	//初期化
 	void Init();
+
+	//ウェイトから付与するmodを決定するランダム関数
+	std::unique_ptr<Mod>& GetRandomMod();
 protected:
 	ModManager();
 	~ModManager();
@@ -45,8 +48,7 @@ private:
 	std::vector<int>modWeight;
 
 
-	//ウェイトから付与するmodを決定するランダム関数
-	std::unique_ptr<Mod>GetRandomMod();
+
 
 };
 

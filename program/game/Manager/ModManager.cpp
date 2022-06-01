@@ -65,9 +65,11 @@ void ModManager::LoadModCsv()
 		modWeight.emplace_back(stoi(loadModWeightCsv[i][3]));
 	}
 
+	//test
+	//GetRandomMod();
 }
 
-std::unique_ptr<Mod> ModManager::GetRandomMod()
+std::unique_ptr<Mod>& ModManager::GetRandomMod()
 {
 	//-------------レアリティ決定------------------//
 
@@ -79,11 +81,10 @@ std::unique_ptr<Mod> ModManager::GetRandomMod()
 
 	//レアリティを決定する
 	int rarityTotalWeight = 0;
-
 	int selectedRarity = 0;
 
-	//totalWeightを求める->いずれLevelによって出現するアイテムを変化させ、その場で作ったアイテムリストのweightで計算するようにする
-	for (int i = 0; i < static_cast<uint32_t>(RARITY::MAX) + 1; ++i) {
+	//totalWeightを求める
+	for (int i = 0; i < static_cast<uint32_t>(RARITY::MAX) ; ++i) {
 		rarityTotalWeight += rarityWeight[i];
 	}
 	//一定範囲の一様分布乱数取得
@@ -102,11 +103,30 @@ std::unique_ptr<Mod> ModManager::GetRandomMod()
 		// 次の対象を調べる
 		rand -= rarityWeight[i];
 	}
-
 	//-------------Mod決定------------------//
+	
+	int modTotalWeight = 0;
+	int selectedMod = 0;
 
+	for (int i = 0; i < modWeight.size(); ++i) {
+		modTotalWeight += modWeight[i];
+	}
+	//一定範囲の一様分布乱数取得
+	std::uniform_int_distribution<> ModWeight(0, rarityTotalWeight);
+	//Modをランダムで決める
+	int modRand = ModWeight(GetRandom);
 
+	//抽選
+	for (int i = 0; i < modWeight.size(); i++) {
+		if (modRand < modWeight[i]) {
+			//アイテム決定
+			selectedMod = i;
+			break;
+		}
 
+		// 次の対象を調べる
+		modRand -= modWeight[i];
+	}
 
-	return std::unique_ptr<Mod>();
+	return modMaster[selectedRarity][selectedMod];
 }
