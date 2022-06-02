@@ -21,6 +21,9 @@ public:
 	//ModID‚©‚ç•t—^‚·‚émod‚ğ•Ô‚·ŠÖ”
 	std::unique_ptr<Mod>& GetModFromId(int Id);
 
+	//Mod‚ğV‚µ‚­¶¬‚µ‚Ä•Ô‚·ŠÖ”
+	std::shared_ptr<Mod>CreateNewMod();
+
 protected:
 	ModManager();
 	~ModManager();
@@ -63,6 +66,7 @@ private:
 	//std::vector<int>modWeight;
 	std::vector < std::vector<int>> modWeightList;
 
+	
 
 
 

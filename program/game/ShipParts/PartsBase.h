@@ -2,6 +2,7 @@
 #include<string>
 
 class GameManager;
+class ModManager;
 class PartsBase
 {
 public:
@@ -53,5 +54,8 @@ protected:
 
 	//ゲームマネージャポインタ
 	GameManager* gManager = nullptr;
+
+	//ModManagerポインタ
+	ModManager* mManager = nullptr;
 };
 

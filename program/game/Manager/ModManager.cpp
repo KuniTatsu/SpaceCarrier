@@ -66,6 +66,8 @@ void ModManager::LoadModCsv()
 	//----------------ModWeightCsvì«Ç›çûÇ›-------------------------//
 
 	auto loadModWeightCsv = tnl::LoadCsv("Csv/ModWeight.csv");
+
+	modWeightList.resize(static_cast<uint32_t>(RARITY::MAX));
 	/*for (int i = 1; i < loadModWeightCsv.size(); ++i) {
 		modWeight.emplace_back(stoi(loadModWeightCsv[i][3]));
 	}*/
@@ -164,4 +166,13 @@ std::unique_ptr<Mod>& ModManager::GetModFromId(int Id)
 
 	tnl::WarningMassage("ìKêÿÇ»ModIdÇ≈ÇÕÇ†ÇËÇ‹ÇπÇÒ");
 	return dummyMod;
+}
+
+std::shared_ptr<Mod> ModManager::CreateNewMod()
+{
+	//auto [id, type, name, basicStatus] = modData->GetModData();
+	auto [id, type, name, basicStatus] = GetRandomMod()->GetModData();
+
+	auto newMod = std::make_shared<Mod>(id, type, name, basicStatus[0], basicStatus[1], basicStatus[2], basicStatus[3], basicStatus[4]);
+	return newMod;
 }

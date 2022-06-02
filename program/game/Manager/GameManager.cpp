@@ -191,6 +191,7 @@ int GameManager::GerRandomNumInWeight(const std::vector<int> WeightList)
 	//レアリティをランダムで決める
 	int rand = Weight(GetRandom);
 
+	//--------ここからウェイトを用いた抽選--------//
 	//抽選
 	for (int i = 0; i < WeightList.size(); i++) {
 		if (rand < WeightList[i]) {

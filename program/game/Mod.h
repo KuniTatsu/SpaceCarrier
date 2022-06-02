@@ -2,6 +2,7 @@
 //パーツ名に名前が追加される+能力値が追加される
 #pragma once
 #include<string>
+#include<tuple>
 
 class Mod
 {
@@ -22,6 +23,11 @@ public:
 	//ModId取得関数
 	inline int& GetModId() {
 		return modId;
+	}
+
+	//Modインスタンス生成に必要なデータ全てを渡す関数
+	inline std::tuple<int, int, std::string, float*>GetModData() {
+		return { modId,modType,modName,basicStatus };
 	}
 
 private:
