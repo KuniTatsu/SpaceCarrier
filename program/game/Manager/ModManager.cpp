@@ -2,6 +2,7 @@
 #include"../Mod.h"
 #include"../../dxlib_ext/dxlib_ext.h"
 #include<random>
+#include"GameManager.h"
 
 using namespace std;
 
@@ -15,7 +16,10 @@ ModManager* ModManager::Instance()
 
 void ModManager::Init()
 {
+	gManager = GameManager::Instance();
 	LoadModCsv();
+	//範囲外用returnのためのダミー作成
+	dummyMod = make_unique<Mod>();
 }
 
 ModManager::ModManager()
@@ -56,13 +60,20 @@ void ModManager::LoadModCsv()
 
 	for (int i = 1; i < static_cast<uint32_t>(RARITY::MAX) + 1; ++i) {
 		rarityWeight[i - 1] = stoi(loadRarityCsv[i][1]);
+		rarityWeightList.emplace_back(stoi(loadRarityCsv[i][1]));
 	}
 
 	//----------------ModWeightCsv読み込み-------------------------//
 
 	auto loadModWeightCsv = tnl::LoadCsv("Csv/ModWeight.csv");
-	for (int i = 1; i < loadModWeightCsv.size(); ++i) {
+	/*for (int i = 1; i < loadModWeightCsv.size(); ++i) {
 		modWeight.emplace_back(stoi(loadModWeightCsv[i][3]));
+	}*/
+
+	for (int i = 1; i < loadModWeightCsv.size(); ++i) {
+
+		int rarity = stoi(loadModWeightCsv[i][1]);
+		modWeightList[rarity].emplace_back(stoi(loadModWeightCsv[i][3]));
 	}
 
 	//test
@@ -72,6 +83,14 @@ void ModManager::LoadModCsv()
 std::unique_ptr<Mod>& ModManager::GetRandomMod()
 {
 	//-------------レアリティ決定------------------//
+
+	int rarity = gManager->GerRandomNumInWeight(rarityWeightList);
+	//--------------Mod決定------------------------//
+	int mod = gManager->GerRandomNumInWeight(modWeightList[rarity]);
+
+
+	return modMaster[rarity][mod];
+	/*
 
 	// 非決定的な乱数生成器->初期シードに使う
 	std::random_device rnd;
@@ -84,7 +103,7 @@ std::unique_ptr<Mod>& ModManager::GetRandomMod()
 	int selectedRarity = 0;
 
 	//totalWeightを求める
-	for (int i = 0; i < static_cast<uint32_t>(RARITY::MAX) ; ++i) {
+	for (int i = 0; i < static_cast<uint32_t>(RARITY::MAX); ++i) {
 		rarityTotalWeight += rarityWeight[i];
 	}
 	//一定範囲の一様分布乱数取得
@@ -104,7 +123,7 @@ std::unique_ptr<Mod>& ModManager::GetRandomMod()
 		rand -= rarityWeight[i];
 	}
 	//-------------Mod決定------------------//
-	
+
 	int modTotalWeight = 0;
 	int selectedMod = 0;
 
@@ -128,5 +147,21 @@ std::unique_ptr<Mod>& ModManager::GetRandomMod()
 		modRand -= modWeight[i];
 	}
 
-	return modMaster[selectedRarity][selectedMod];
+	*/
+
+	//return modMaster[selectedRarity][selectedMod];
+}
+
+std::unique_ptr<Mod>& ModManager::GetModFromId(int Id)
+{
+	for (int i = 0; i < modMaster.size(); ++i) {
+		for (int k = 0; k < modMaster[i].size(); ++k) {
+			if (Id == modMaster[i][k]->GetModId()) {
+				return modMaster[i][k];
+			}
+		}
+	}
+
+	tnl::WarningMassage("適切なModIdではありません");
+	return dummyMod;
 }

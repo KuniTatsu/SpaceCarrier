@@ -122,6 +122,10 @@ public:
 	//画面内のランダムなポジションを取得する関数
 	tnl::Vector3 GetRandomPos();
 
+	//メルセンヌ・ツイスターを採用した正規分布ランダム関数
+	int GerRandomNumInWeight(const std::vector<int>WeightList);
+
+
 	//ステージ設定関数
 	void SetMyStage(STAGE stage) {
 		mystage = stage;

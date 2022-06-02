@@ -24,6 +24,7 @@ void Inventory::AddInventory(std::shared_ptr<ShipParts> Parts)
 {
 	inventory.emplace_back(Parts);
 }
+//パーツIDからインベントリにパーツを追加する関数
 void Inventory::AddInventory(int PartsId)
 {
 	auto addParts = std::dynamic_pointer_cast<ShipParts, PartsBase>(pManager->GetParts(PartsId));
@@ -35,10 +36,7 @@ void Inventory::InventoryDraw(int GuideX, int GuideY, int FrameTopX, int FrameTo
 	//描画範囲を限定する(この範囲内から出たら描画されない)
 	SetDrawArea(FrameTopX, FrameTopY, FrameBottomX, FrameBottomY);
 
-	//描画範囲の背景画像
-	//DrawExtendGraph(FrameTopX, FrameTopY, FrameBottomX, FrameBottomY,)
-
-
+	
 	auto parts = inventory.begin();
 	for (int i = 0; i < inventory.size(); ++i) {
 

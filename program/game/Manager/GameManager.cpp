@@ -11,6 +11,7 @@
 #include"../Object/Player.h"
 #include"../Factory.h"
 #include<time.h>
+#include<random>
 
 //#include"Item.h"
 //#include "FadeControl.h"
@@ -167,6 +168,41 @@ tnl::Vector3 GameManager::GetRandomPos()
 	x = static_cast<float>(GetRandEx(200, 900));
 
 	return tnl::Vector3(x, SPAWNPOS.y, 0);
+}
+
+int GameManager::GerRandomNumInWeight(const std::vector<int> WeightList)
+{
+	// 非決定的な乱数生成器->初期シードに使う
+	std::random_device rnd;
+	//ランダムな数を求めるための関数名を決める
+	//メルセンヌ・ツイスタの32ビット版、引数は初期シード
+	std::mt19937 GetRandom(rnd());
+
+	//レアリティを決定する
+	int totalWeight = 0;
+	int selected = 0;
+
+	//totalWeightを求める
+	for (int i = 0; i < WeightList.size(); ++i) {
+		totalWeight += WeightList[i];
+	}
+	//一定範囲の一様分布乱数取得
+	std::uniform_int_distribution<> Weight(0, totalWeight);
+	//レアリティをランダムで決める
+	int rand = Weight(GetRandom);
+
+	//抽選
+	for (int i = 0; i < WeightList.size(); i++) {
+		if (rand < WeightList[i]) {
+			//決定
+			selected = i;
+			break;
+		}
+
+		// 次の対象を調べる
+		rand -= WeightList[i];
+	}
+	return selected;
 }
 
 bool GameManager::isClickedRect(int MouseX, int MouseY, int RectLeft, int RectTop, int RectRight, int RectBottom)

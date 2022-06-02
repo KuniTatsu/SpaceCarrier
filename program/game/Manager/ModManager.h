@@ -4,6 +4,7 @@
 #include<memory>
 
 class Mod;
+class GameManager;
 
 class ModManager
 {
@@ -16,6 +17,10 @@ public:
 
 	//ウェイトから付与するmodを決定するランダム関数
 	std::unique_ptr<Mod>& GetRandomMod();
+
+	//ModIDから付与するmodを返す関数
+	std::unique_ptr<Mod>& GetModFromId(int Id);
+
 protected:
 	ModManager();
 	~ModManager();
@@ -23,6 +28,13 @@ protected:
 private:
 	//シングルトンインスタンス
 	static ModManager* instance;
+
+	//ゲームマネージャインスタンス
+	GameManager* gManager = nullptr;
+
+
+	//ダミー用Mod
+	std::unique_ptr<Mod> dummyMod = nullptr;
 
 	//レアリティ
 	enum class RARITY :uint32_t {
@@ -44,8 +56,12 @@ private:
 	//レアリティのウェイト
 	int rarityWeight[static_cast<uint32_t>(RARITY::MAX)];
 
+	//gamemanagerのランダム関数を使うにはvectorのほうが都合がいい
+	std::vector<int>rarityWeightList;
+
 	//Modのウェイト
-	std::vector<int>modWeight;
+	//std::vector<int>modWeight;
+	std::vector < std::vector<int>> modWeightList;
 
 
 

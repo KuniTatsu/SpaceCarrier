@@ -6,6 +6,7 @@
 class Mod
 {
 public:
+	Mod() {};
 	Mod(int Id,int Type,std::string Name,float Hp,float Energy,float Defence,float Speed,float Container);
 	~Mod();
 
@@ -16,6 +17,11 @@ public:
 	//Mod–¼æ“¾ŠÖ”
 	std::string GetModName() {
 		return modName;
+	}
+
+	//ModIdæ“¾ŠÖ”
+	inline int& GetModId() {
+		return modId;
 	}
 
 private:

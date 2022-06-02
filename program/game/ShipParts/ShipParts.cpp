@@ -6,6 +6,7 @@ ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float En
 {
 	gManager = GameManager::Instance();
 
+	//------------基本データの代入------------------//
 	partsId = Id;
 	partsType = PartsType;
 
@@ -28,6 +29,12 @@ ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float En
 	
 	iconPass = IconPass;
 	iconGh = gManager->LoadGraphEx(IconPass);
+
+	//-------------修飾Modの決定(ありなし含む)------------------//
+	//個数は0~2個
+
+
+
 }
 
 ShipParts::~ShipParts()
