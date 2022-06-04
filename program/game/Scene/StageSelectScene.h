@@ -6,6 +6,7 @@
 
 class GameManager;
 class UIManager;
+class Player;
 
 class StageSelectScene:public BaseScene
 {
@@ -38,5 +39,8 @@ private:
 	//要素番号に対応するステージを作成しシーン遷移する関数
 	void CreateStage();
 	//シーン遷移確認変数
+
+
+	std::shared_ptr<Player>player = nullptr;
 	
 };

@@ -1,3 +1,4 @@
+#include <math.h>
 #include "tnl_util.h"
 #include "tnl_math.h"
 #include "tnl_vector.h"
@@ -11,7 +12,7 @@ namespace tnl {
 	Quaternion Quaternion::RotationAxis(const Vector3& axis, const float rotate) noexcept {
 		XMFLOAT4 f4;		
 		XMStoreFloat4( &f4, XMQuaternionRotationAxis(XMLoadFloat3(&axis), rotate) );
-		return f4; 
+		return static_cast<Quaternion>(f4);
 	}
 
 	Quaternion Quaternion::Subtract(const Quaternion& q1, const Quaternion& q2) noexcept {
@@ -23,7 +24,7 @@ namespace tnl {
 			qd.m128_f32[2] *= -1.0f;
 			qd.m128_f32[3] *= -1.0f;
 		}
-		return qd;
+		return static_cast<Quaternion>(qd);
 	}
 
 	Vector3 Quaternion::getEuler() const noexcept {
@@ -86,5 +87,25 @@ namespace tnl {
 
 	}
 
+	void Quaternion::slerp(const Quaternion& q, const float t) {
+		DirectX::XMStoreFloat4(this, DirectX::XMQuaternionSlerp(DirectX::XMLoadFloat4(this), DirectX::XMLoadFloat4(&q), t));
+	}
+
+	Quaternion Quaternion::LookAt(const Vector3& eye, const Vector3& look, const Vector3& vup) {
+		DirectX::XMMATRIX xm = DirectX::XMMatrixLookAtLH(
+			DirectX::XMLoadFloat3(&eye),
+			DirectX::XMLoadFloat3(&look),
+			DirectX::XMLoadFloat3(&vup));
+		DirectX::XMMATRIX inv = DirectX::XMMatrixInverse(nullptr, xm);
+		XMVECTOR q = XMQuaternionRotationMatrix(inv);
+		return static_cast<Quaternion>(q);
+	}
+
+	Quaternion Quaternion::LookAtAxisY(const Vector3& eye, const Vector3& look) {
+		Vector3 vn = Vector3::Normalize( (look - eye).xz() );
+		float angle = vn.angle({ 0, 0, 1 });
+		float y = (vn.x < 0) ? -1.0f : 1.0f;
+		return RotationAxis({0, y, 0}, angle);
+	}
 
 }

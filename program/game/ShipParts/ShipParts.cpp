@@ -48,7 +48,7 @@ ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float En
 	for (int i = 0; i <= modNum; ++i) {
 		auto mod = mManager->CreateNewMod();
 		myMods.emplace_back(mod);
-		tnl::DebugTrace("CüMod[%s]‚ð•t—^‚µ‚Ü‚µ‚½", mod->GetModName().c_str());
+		tnl::DebugTrace("\nCüMod[%s]‚ð•t—^‚µ‚Ü‚µ‚½\n", mod->GetModName().c_str());
 	}
 
 

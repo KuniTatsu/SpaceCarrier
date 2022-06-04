@@ -186,15 +186,15 @@ namespace tnl {
 		uint32_t sx = (tex_width - str_width) >> 1;
 
 		if (0 == base_thickness) {
-			for (uint32_t y = sy; y < str_height; ++y) {
+			for (uint32_t y = sy; y < static_cast<uint32_t>(str_height); ++y) {
 				for (uint32_t x = sx; x < (str_width + sx); ++x) {
 					uint32_t ary1 = (sy * tex_width) + (y * tex_width) + x;
 					uint32_t ary2 = ((y - sy) * str_width) + (x - sx);
-					if (0 > ary1 && ary1 >= (tex_width * tex_height)) {
-						assert(0);
+					if (0 > ary1 && ary1 >= static_cast<uint32_t>((tex_width * tex_height))) {
+						TNL_DEBUG_ASSERTE("CreateFontTexture error");
 					}
-					if (0 > ary2 && ary2 >= (str_width * str_height)) {
-						assert(0);
+					if (0 > ary2 && ary2 >= static_cast<uint32_t>((str_width * str_height))) {
+						TNL_DEBUG_ASSERTE("CreateFontTexture error");
 					}
 					p_tex_buf[ary1] = base[ary2];
 				}
@@ -210,12 +210,12 @@ namespace tnl {
 				for (auto ws : wstr) {
 					if (0 != wcscmp(pwc, ws.c_str())) continue;
 					uint32_t* rbuf = new uint32_t[tex_width * tex_height];
-					for (uint32_t y = 0; y < tex_height; ++y) {
-						for (uint32_t x = 0; x < tex_width; ++x) {
+					for (uint32_t y = 0; y < static_cast<uint32_t>(tex_height); ++y) {
+						for (uint32_t x = 0; x < static_cast<uint32_t>(tex_width); ++x) {
 							rbuf[(y * tex_width) + (tex_width - 1) - x] = p_tex_buf[(x * tex_height) + y];
 						}
 					}
-					memcpy(p_tex_buf, rbuf, sizeof(uint32_t) * tex_width * tex_height);
+					memcpy(p_tex_buf, rbuf, sizeof(uint32_t) * static_cast<uint32_t>(tex_width * tex_height));
 					delete[] rbuf;
 					break;
 				}
@@ -234,8 +234,8 @@ namespace tnl {
 		uint32_t* frame2 = (uint32_t*)pFrame2;
 		uint32_t* frame3 = (uint32_t*)pFrame3;
 		uint32_t* frame4 = (uint32_t*)pFrame4;
-		for (uint32_t y = 0; y < str_height; ++y) {
-			for (uint32_t x = 0; x < str_width; ++x) {
+		for (uint32_t y = 0; y < static_cast<uint32_t>(str_height); ++y) {
+			for (uint32_t x = 0; x < static_cast<uint32_t>(str_width); ++x) {
 				uint32_t* pbc = &base[(y * str_width) + x];
 				uint32_t* pfc1 = &frame1[(y * str_width) + x];
 				uint32_t* pfc2 = &frame2[(y * str_width) + x];
@@ -290,8 +290,8 @@ namespace tnl {
 			}
 		}
 
-		for (uint32_t y = sy; y < str_height; ++y) {
-			for (uint32_t x = sx; x < (str_width + sx); ++x) {
+		for (uint32_t y = sy; y < static_cast<uint32_t>(str_height); ++y) {
+			for (uint32_t x = sx; x < (static_cast<uint32_t>(str_width) + sx); ++x) {
 				p_tex_buf[(sy * tex_width) + (y * tex_width) + x] = base[((y - sy) * str_width) + (x - sx)];
 			}
 		}
@@ -306,8 +306,8 @@ namespace tnl {
 			for (auto ws : wstr) {
 				if (0 != wcscmp(pwc, ws.c_str())) continue;
 				uint32_t* rbuf = new uint32_t[tex_width * tex_height];
-				for (uint32_t y = 0; y < tex_height; ++y) {
-					for (uint32_t x = 0; x < tex_width; ++x) {
+				for (uint32_t y = 0; y < static_cast<uint32_t>(tex_height); ++y) {
+					for (uint32_t x = 0; x < static_cast<uint32_t>(tex_width); ++x) {
 						rbuf[(y * tex_width) + (tex_width - 1) - x] = p_tex_buf[(x * tex_height) + y];
 					}
 				}

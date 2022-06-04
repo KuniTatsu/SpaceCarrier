@@ -43,6 +43,9 @@ public:
 	//パーツデータ取得関数
 	std::shared_ptr<PartsBase>GetParts(int PartsId);
 
+	//武器データ取得関数
+	std::shared_ptr<PartsBase>GetWeaponParts(int PartsId);
+
 	//ランダムなパーツデータを返す関数
 	std::shared_ptr<PartsBase>GetRandomParts();
 

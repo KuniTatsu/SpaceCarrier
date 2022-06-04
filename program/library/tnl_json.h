@@ -90,7 +90,7 @@ int main()
         inline std::string& getTagName(){ return tag_name_; }
         inline std::string& getText(){ return text_ ; }
         inline int getInt() const { return std::atoi( text_.c_str() ); }
-        inline float getFloat() const { return std::atof( text_.c_str() ) ; }
+        inline float getFloat() const { return static_cast<float>(std::atof( text_.c_str() )) ; }
         
         //---------------------------------------------------------------------------------------------
         // 

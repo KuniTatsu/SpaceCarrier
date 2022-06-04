@@ -1,6 +1,18 @@
+#include <random>
 #include "tnl_math.h"
 
 namespace tnl {
+
+    std::mt19937 g_mersenne ;
+    void SetSeedMersenneTwister32(int seed) {
+        g_mersenne.seed(seed);
+    }
+
+    float GetRandomDistributionFloat(float min, float max) {
+        std::uniform_real_distribution<> param(static_cast<double>(min), static_cast<double>(max));
+        return static_cast<float>(param(g_mersenne));
+    }
+
 
 	int GetSidesPointAndPlane(const Vector3& v, const Vector3& pn, const Vector3& pv)
 	{
@@ -35,6 +47,33 @@ namespace tnl {
 			return 3;
 		}
 	}
+
+
+    int GetXzRegionPointAndOBB(const Vector3& p, const Vector3& op, const Vector3& size, const Quaternion& q) {
+        tnl::Vector3 pv1 = tnl::Vector3::Normalize(size) * 0.5f ;
+        tnl::Vector3 pv2 = {-pv1.x, pv1.y, pv1.z};
+        tnl::Vector3 pn1 = tnl::Vector3::Normalize( tnl::Vector3::Cross(pv1, pv1.xz()) );
+        tnl::Vector3 pn2 = tnl::Vector3::Normalize( tnl::Vector3::Cross(pv2, pv2.xz()) );
+        pv1 = op + tnl::Vector3::TransformCoord(pv1, q);
+        pv2 = op + tnl::Vector3::TransformCoord(pv2, q);
+        pn1 = tnl::Vector3::TransformCoord(pn1, q);
+        pn2 = tnl::Vector3::TransformCoord(pn2, q);
+
+        int s1 = tnl::GetSidesPointAndPlane(p, pn1, pv1);
+        int s2 = tnl::GetSidesPointAndPlane(p, pn2, pv2);
+        if (s1 >= 0 && s2 >= 0) {
+            return 1;
+        }
+        else if (s1 >= 0 && s2 <= 0) {
+            return 2;
+        }
+        else if (s1 <= 0 && s2 >= 0) {
+            return 0;
+        }
+        else {
+            return 3;
+        }
+    }
 
 
 	tnl::Vector3 GetNearestRectPoint(const tnl::Vector3& rect_pos, float w, float h, const tnl::Vector3 &point) {
@@ -87,7 +126,7 @@ namespace tnl {
 
     CubicSpline::CubicSpline(const std::vector<tnl::Vector3>& v) {
 
-        int n = v.size() - 1;
+        int n = static_cast<int>(v.size()) - 1;
 
         for (int i = 0; i <= n; ++i) {
             a_.emplace_back(v[i]);
@@ -114,9 +153,9 @@ namespace tnl {
                 w_.emplace_back(tnl::Vector3{ 0, 0, 0 });
             }
             else {
-                float x = 4.0 - w_[i - 1].x;
-                float y = 4.0 - w_[i - 1].y;
-                float z = 4.0 - w_[i - 1].z;
+                float x = 4.0f - w_[i - 1].x;
+                float y = 4.0f - w_[i - 1].y;
+                float z = 4.0f - w_[i - 1].z;
                 c_[i].x = (c_[i].x - c_[i - 1].x) / x;
                 c_[i].y = (c_[i].y - c_[i - 1].y) / y;
                 c_[i].z = (c_[i].z - c_[i - 1].z) / z;

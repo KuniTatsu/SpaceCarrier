@@ -5,6 +5,8 @@
 
 class GameManager;
 class Factory;
+class Inventory;
+class Ship;
 
 class Player final :public Object
 {
@@ -12,15 +14,29 @@ public:
 	Player();
 	~Player();
 
+	//フレームで更新する関数
 	void Update()override;
+	//描画関数
 	void Draw()override;
+	//初期化関数
 	void Init()override;
+	//生死判定関数
 	void CheckIsLive()override;
+
 	//弾発射関数
 	void ShootBullet();
 
+	//船の初期化関数
+	void ShipInit();
+
 	//特定の敵をターゲットする関数
 	void SetMyTarget(std::shared_ptr<Object> Target);
+
+	//ターゲットしている対象があるかどうか確かめる関数
+	inline bool haveTarget() {
+		if (myTarget == nullptr)return false;
+		return true;
+	}
 	//ターゲットを初期化する関数
 	inline void	CleanTarget() {
 		myTarget = nullptr;
@@ -38,12 +54,12 @@ public:
 		return autoTargetMode;
 	}
 
-	//特定の目標に向かって射撃する関数
-	void AimShootBullet();
-	void AimShootBullet(std::shared_ptr<Object>Target);
+	////特定の目標に向かって射撃する関数
+	//void AimShootBullet();
+	//void AimShootBullet(std::shared_ptr<Object>Target);
 
-	//誘導ミサイル
-	void ShootMissile();
+	////誘導ミサイル
+	//void ShootMissile();
 
 	//MyTargetが設定されているか確認する関数 true:設定されている,false:設定されていない
 	inline bool isSetTarget() {
@@ -64,10 +80,32 @@ public:
 	inline const float GetCapaciryRate() {
 		return (haveCapacity / maxCapacity);
 	}
+
+	//パーツのインベントリを取得する
+	inline std::shared_ptr<Inventory>& GetPlayerInventory() {
+		return partsInventory;
+	}
+	//インベントリのスクロール
+	void InventoryMove();
+	//船改造画面でのインベントリ描画関数
+	void DrawInventory();
+
 private:
 
 	void Move();
 
+	//----------------ポインタ関係--------------------//
+
+	//objファクトリーポインタ
+	Factory* fac = nullptr;
+	//所持パーツを格納するインベントリ
+	std::shared_ptr<Inventory>partsInventory = nullptr;
+
+	//playerの乗る宇宙船
+	std::shared_ptr<Ship>myShip = nullptr;
+
+
+	//---------------キー関係----------------------//
 	//矢印キーの配列
 	const tnl::Input::eKeys arrowKeys[static_cast<int>(DIR::MAX)] = { tnl::Input::eKeys::KB_UP,tnl::Input::eKeys::KB_RIGHT,
 																		tnl::Input::eKeys::KB_DOWN, tnl::Input::eKeys::KB_LEFT };
@@ -98,16 +136,16 @@ private:
 	//---------------------------------------------------//
 
 	//---------------射撃関係---------------------------//
-	//弾発射間隔
-	const float SHOOTCOOLDOWN = 0.1f;
-	//弾発射タイマー
-	float shootTimer = 0.0f;
+	////弾発射間隔
+	//const float SHOOTCOOLDOWN = 0.1f;
+	////弾発射タイマー
+	//float shootTimer = 0.0f;
 
-	//Missileクールダウン
-	const float MISSILECOOLDOWN = 1.0f;
+	////Missileクールダウン
+	//const float MISSILECOOLDOWN = 1.0f;
 
-	//Missile発射タイマー
-	float missileTimer = 0.0f;
+	////Missile発射タイマー
+	//float missileTimer = 0.0f;
 
 	//弾発射ポイント補正
 	const float INITPOSY = 25.0f;
@@ -124,6 +162,9 @@ private:
 	//航行スピード ステージ内をゴールへ向かうスピード
 	float CruizeSpeed = 0;
 
+	//全ての武器のクールダウン表示
+	void DrawWeaponCoolDown();
+
 	//---------------荷重関係---------------------------//
 	//荷重最大量 荷重量がこれを超えると航行スピードにペナルティが付く
 	float maxCapacity = 0;
@@ -131,12 +172,11 @@ private:
 	float haveCapacity = 0;
 
 	//--------------------------------------------------//
-	
+
 	//-----------------画像関係---------------//
 	//オートターゲット標準gh
 	int targetingCircle = 0;
 
-	//objファクトリーポインタ
-	Factory* fac = nullptr;
+
 };
 

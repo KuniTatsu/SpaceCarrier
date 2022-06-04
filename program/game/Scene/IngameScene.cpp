@@ -9,6 +9,7 @@
 #include"../Factory.h"
 #include<time.h>
 #include"../Animation.h"
+#include"../Observer.h"
 
 InGameScene::InGameScene()
 {
@@ -30,8 +31,8 @@ void InGameScene::Update()
 void InGameScene::Draw()
 {
 	//一枚目の背景画像
-	DrawRotaGraph(backGroundPos.x, backGroundPos.y, 2, 0, backGroundGh, false);
-	DrawRotaGraph(backGroundPos.x, backGroundPos.y - SIZEY, 2, 0, testGh, false);
+	//DrawRotaGraph(backGroundPos.x, backGroundPos.y, 2, 0, backGroundGh, false);
+	//DrawRotaGraph(backGroundPos.x, backGroundPos.y - SIZEY, 2, 0, testGh, false);
 
 	auto objectList = gManager->GetObjectList();
 	auto itr = objectList.begin();
@@ -67,9 +68,9 @@ void InGameScene::Init()
 	backGroundPos = { gManager->Center.x,gManager->Center.y,0 };
 
 	//プレイヤーの生成
-	player = std::make_shared<Player>();
+	//player = std::make_shared<Player>();
+	player = gManager->GetPlayer();
 	player->SetList();
-	gManager->SetPlayer(player);
 
 	//プレイヤーの巡航速度を取得
 	PlayerSpeed = player->GetCruizeSpeed();
@@ -104,7 +105,7 @@ bool InGameScene::SeqCruize(const float deltatime)
 		return true;
 	}
 
-	//敵の生成　いずれEnemyManagerを介してマスターデータからEnemyの種類を決定,生成する eManager->CreateEnemy("NORMAL",startpos,vpos);
+	//敵の生成　
 	if (GetRand(100) % 100 > 98) {
 		/*auto enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(),
 			tnl::Vector3(0, 2, 0), Factory::MOVETYPE::STOPPOS , Factory::SHOOTTYPE::STRAIGHT));*/
@@ -112,6 +113,7 @@ bool InGameScene::SeqCruize(const float deltatime)
 		auto enemy = eManager->CreateEnemy(EnemyManager::ENEMYTYPE::NORMAL, gManager->GetRandomPos(), tnl::Vector3(0, 2, 0));
 		enemy->SetList();
 		enemy->SetEnemyList();
+		enemy->notify();
 
 	}
 
@@ -124,16 +126,15 @@ bool InGameScene::SeqCruize(const float deltatime)
 	}
 	//ターゲットが設定されていればオートターゲット射撃が可能
 	//spaceキーを押したら弾を発射する
+//0	DrawStringEx(200, 200, -1, "SPACE");
 	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_SPACE)) {
-		if (player->isAutoTargetMode()) {
-			player->AimShootBullet();
-		}
+		DrawStringEx(200, 200, -1, "SPACE");
 		player->ShootBullet();
 	}
 
-	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_1)) {
+	/*if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_1)) {
 		player->ShootMissile();
-	}
+	}*/
 
 	//オブジェクトリストのアップデート
 	{

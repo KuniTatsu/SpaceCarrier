@@ -33,7 +33,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	// キー入力制御の初期化
 	HWND hWnd = GetMainWindowHandle();
-	tnl::Input::Initialize(hWnd);
+	tnl::Input::Initialize(hInstance,hWnd);
 
 	// メッセージループ
 	while( 1 )

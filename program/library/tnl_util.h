@@ -10,7 +10,6 @@
 
 namespace tnl{
 
-	#define SafeDelete( p ){ if(p){ delete p ; p = nullptr ; } }
 	inline int ARGB8( uint8_t a, uint8_t r, uint8_t g, uint8_t b ) { return ( a << 24 | r << 16 | g << 8 | b ); }
 	inline int RGBA8( uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255 ) { return ( r << 24 | g << 16 | b << 8 | a ); }
 	inline int ABGR8( uint8_t a, uint8_t b, uint8_t g, uint8_t r ) { return (a << 24 | b << 16 | g << 8 | r); }
@@ -22,6 +21,18 @@ namespace tnl{
 	// for_with_index( it, xxx, i, 0, ++ ){
 	// }
 	#define for_with_index( it, data, idx, start_idx, fluct ) for( auto[it, idx] = std::pair{ (data).begin(), (start_idx) }; (it) != (data).end(); (it)++, (idx)fluct )
+
+
+	//----------------------------------------------------------------------------------------------
+	// 列挙型ビットフラグ
+	// enum class Test{
+	//		TNL_ENUM_BIT_FLAG(A),	// Test::A == 1 << 0
+	//		TNL_ENUM_BIT_FLAG(B),	// Test::B == 1 << 1
+	//		TNL_ENUM_BIT_FLAG(C),	// Test::C == 1 << 2
+	//		TNL_ENUM_BIT_FLAG(D),	// Test::D == 1 << 3
+	// } ;
+	#define TNL_ENUM_BIT_FLAG(f) prefix_##f, f = (prefix_##f < 1)? 1 : ((prefix_##f)-1) << 1
+
 
 	//----------------------------------------------------------------------------------------------
 	// ファイルサイズの取得
@@ -50,6 +61,11 @@ namespace tnl{
 	//----------------------------------------------------------------------------------------------
 	// デバッグコンソールへの出力
 	inline void DebugTrace(const char* _str, ...);
+
+
+	//----------------------------------------------------------------------------------------------
+	// ASSERT
+#define TNL_DEBUG_ASSERTE( msg ) {}
 
 	//----------------------------------------------------------------------------------------------
 	// 警告出力
@@ -89,3 +105,5 @@ namespace tnl{
 	bool LeastBit64(const uint64_t value, int& out);
 
 }
+
+

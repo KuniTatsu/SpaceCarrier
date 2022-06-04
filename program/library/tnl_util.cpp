@@ -14,16 +14,16 @@ namespace tnl {
 	void DebugTrace(const char* _str, ...) {
 #if _DEBUG
 #ifdef UNICODE
-		char buff[255] = { 0 };
-		WCHAR wbuff[255] = { 0 };
+		char buff[2048] = { 0 };
+		WCHAR wbuff[2048] = { 0 };
 		va_list argptr;
 		va_start(argptr, _str);
 		vsprintf_s(buff, sizeof(buff), _str, argptr);
 		va_end(argptr);
-		ToWChara(wbuff, buff, 255);
+		ToWChara(wbuff, buff, 2048);
 		OutputDebugString(wbuff);
 #else
-		char buff[255] = { 0 };
+		char buff[2048] = { 0 };
 		va_list argptr;
 		va_start(argptr, _str);
 		vsprintf_s(buff, _str, argptr);
@@ -39,23 +39,22 @@ namespace tnl {
 #if _DEBUG
 #ifdef UNICODE
 		OutputDebugString(L"\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-		tnl::DebugTrace("FILE : %s\n", __FILE__);
-		tnl::DebugTrace("LINE : %d\n", __LINE__);
+		tnl::DebugTrace("");
 
-		char buff[255] = { 0 };
-		WCHAR wbuff[255] = { 0 };
+		char buff[2048] = { 0 };
+		WCHAR wbuff[2048] = { 0 };
 		va_list argptr;
 		va_start(argptr, _str);
 		vsprintf_s(buff, sizeof(buff), _str, argptr);
 		va_end(argptr);
-		ToWChara(wbuff, buff, 255);
+		ToWChara(wbuff, buff, 2048);
 		OutputDebugString(wbuff);
 		OutputDebugString(L"\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n");
 #else
 		OutputDebugString("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 		tnl::DebugTrace("FILE : %s\n", __FILE__);
 		tnl::DebugTrace("LINE : %d\n", __LINE__);
-		char buff[255] = { 0 };
+		char buff[2048] = { 0 };
 		va_list argptr;
 		va_start(argptr, _str);
 		vsprintf_s(buff, _str, argptr);
@@ -89,13 +88,13 @@ namespace tnl {
 	std::tuple<std::string, std::string, std::string> 
 		DetachmentFilePath(const std::string& file_path) {
 
-		uint32_t n1 = file_path.find_last_of("/");
+		uint32_t n1 = static_cast<uint32_t>(file_path.find_last_of("/"));
 		std::string path = file_path.substr(0, n1);
 
-		uint32_t n2 = file_path.find_last_of(".");
+		uint32_t n2 = static_cast<uint32_t>(file_path.find_last_of("."));
 		std::string file = file_path.substr( n1 + 1, n2 - path.length() - 1 );
 
-		uint32_t n3 = file_path.length() - n2;
+		uint32_t n3 = static_cast<uint32_t>(file_path.length()) - n2;
 		std::string ext = file_path.substr(n2+1, n3);
 
 		return std::make_tuple(path, file, ext);
@@ -135,11 +134,11 @@ namespace tnl {
 		if (wstrDest == NULL || strSrc == NULL || length < 1) assert(0);
 		int nResult = MultiByteToWideChar(CP_ACP, 0, strSrc, -1, wstrDest, length);
 		wstrDest[length - 1] = 0;
-		if (nResult == 0) return assert(0);
+		if (nResult == 0) TNL_DEBUG_ASSERTE("toWChara error");
 	}
 
 	void ToWChara(wchar_t* wstrDest, uint32_t wstr_lenght, const std::string& src) {
-		uint32_t size = src.length() + 1;
+		uint32_t size = static_cast<uint32_t>(src.length()) + 1;
 		char* buff = new char[src.length() + 1];
 		memset(buff, 0, size);
 		sprintf_s( buff, sizeof(char)*size, "%s", src.c_str() );

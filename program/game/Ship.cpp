@@ -1,6 +1,8 @@
 #include "Ship.h"
 #include"ShipParts/ShipParts.h"
+#include"ShipParts/WeaponParts.h"
 #include"Manager/PartsManager.h"
+#include"Manager/GameManager.h"
 
 Ship::Ship()
 {
@@ -11,18 +13,27 @@ Ship::~Ship()
 {
 }
 
+void Ship::SetProtoParts(std::shared_ptr<ShipParts>Parts)
+{
+	shipParts.emplace_back(Parts);
+}
+
+void Ship::SetProtoWeapon(std::shared_ptr<WeaponParts> Weapon)
+{
+	weapones.emplace_back(Weapon);
+}
+
 void Ship::ShipInit()
 {
 	//パーツマネージャ取得
 	pManager = PartsManager::Instance();
-
+	gManager = GameManager::Instance();
+	/*
 	//船の初期パーツを登録する
 	pManager->SetProtoTypeParts(shipParts);
 	//船の初期武器を登録する
 	pManager->SetProtoTypeWeapon(weapones);
-
-	//船のステータス各種合計を取得
-	SetShipStatus();
+	*/
 }
 
 void Ship::SetShipStatus()
@@ -68,4 +79,19 @@ void Ship::ChangeShipParts(int PartsType, std::shared_ptr<PartsBase> NewParts)
 
 void Ship::ShootShipWeapon()
 {
+	for (auto weapon: weapones) {
+		weapon->ShootBullet(gManager->deltatime);
+	}
+}
+
+void Ship::AllWeaponCoolDawnUpdate()
+{
+	for (auto weapon : weapones) {
+		weapon->WeaponUpdate();
+	}
+}
+
+float Ship::GetCoolDown(int WeaponNum)
+{
+	return weapones[WeaponNum]->GetWeaponCoolDawn();
 }

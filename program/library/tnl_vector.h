@@ -9,15 +9,16 @@ namespace tnl {
 
 		Vector3() noexcept :DirectX::XMFLOAT3(0, 0, 0) {}
 		Vector3(const float xx, const float yy, const float zz) noexcept : DirectX::XMFLOAT3(xx, yy, zz) {}
-		Vector3(DirectX::XMVECTOR& v) noexcept { DirectX::XMStoreFloat3(this, v); }
-		Vector3(DirectX::XMFLOAT3& v) noexcept : DirectX::XMFLOAT3(v.x, v.y, v.z) {}
+		explicit Vector3(const float xyz) noexcept : DirectX::XMFLOAT3(xyz, xyz, xyz) {}
+		explicit Vector3(DirectX::XMVECTOR& v) noexcept { DirectX::XMStoreFloat3(this, v); }
+		explicit Vector3(DirectX::XMFLOAT3& v) noexcept : DirectX::XMFLOAT3(v.x, v.y, v.z) {}
 
 		static const Vector3 front ;
 		static const Vector3 back;
 		static const Vector3 left;
 		static const Vector3 right;
 		static const Vector3 up;
-		static const Vector3 donw;
+		static const Vector3 down;
 		enum class eAxis : uint32_t { FRONT, BACK, LEFT, RIGHT, UP, DOWN, MAX };
 		enum class fAxis : uint32_t { 
 			FRONT	= (1 << static_cast<uint32_t>(eAxis::FRONT)),
@@ -69,7 +70,11 @@ namespace tnl {
 		float	angle(const Vector3& v) const noexcept;
 		void	normalize()				noexcept;
 		Vector3	cross(const Vector3& v) const noexcept;
-		float	length()				noexcept;
+		float	length()				const noexcept;
+		Vector3	xy()					const noexcept;
+		Vector3	xz()					const noexcept;
+		Vector3	yz()					const noexcept;
+		DirectX::XMFLOAT4 float4()		const noexcept;
 
 		//-----------------------------------------------------------------------------------------------------
 		//
@@ -91,6 +96,7 @@ namespace tnl {
 		static Vector3 TransformCoord(const Vector3 &v, const Quaternion &q) noexcept ;
 		static Vector3 CreateScreenRay(const int screen_x, const int screen_y, const int screen_w, const int screen_h, const tnl::Matrix& view, const tnl::Matrix& proj) noexcept ;
 		static Vector3 CovertToScreen(const Vector3& v, const float screen_w, const float screen_h, const Matrix& view, const Matrix& proj) noexcept;
+		static Vector3 Random( const float min_x, const float max_x, const float min_y, const float max_y, const float min_z, const float max_z ) noexcept;
 
 	private:
 		static const Vector3 axis[static_cast<uint32_t>(eAxis::MAX)];
@@ -122,7 +128,7 @@ namespace tnl {
 		DirectX::XMVECTOR v = DirectX::XMVectorMultiply(l, r);
 		DirectX::XMFLOAT3 f3;
 		DirectX::XMStoreFloat3(&f3, v);
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 	//-----------------------------------------------------------------------------------------------------
 	inline Vector3 Vector3::operator * (const float other) const noexcept {
@@ -132,7 +138,7 @@ namespace tnl {
 		DirectX::XMVECTOR v = DirectX::XMVectorMultiply(l, r);
 		DirectX::XMFLOAT3 f3;
 		DirectX::XMStoreFloat3(&f3, v);
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 	//-----------------------------------------------------------------------------------------------------
 	inline Vector3& Vector3::operator *= (const float other) noexcept {
@@ -153,7 +159,7 @@ namespace tnl {
 		DirectX::XMVECTOR v = DirectX::XMVectorDivide(l, r);
 		DirectX::XMFLOAT3 f3;
 		DirectX::XMStoreFloat3(&f3, v);
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 	//-----------------------------------------------------------------------------------------------------
 	inline Vector3 Vector3::operator / (const Vector3& other) const noexcept {
@@ -162,7 +168,7 @@ namespace tnl {
 		DirectX::XMVECTOR v = DirectX::XMVectorDivide(l, r);
 		DirectX::XMFLOAT3 f3;
 		DirectX::XMStoreFloat3(&f3, v);
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 	//-----------------------------------------------------------------------------------------------------
 	inline Vector3& Vector3::operator /= (const float other) noexcept {
@@ -177,7 +183,7 @@ namespace tnl {
 	//-----------------------------------------------------------------------------------------------------
 	inline Vector3 Vector3::operator + (const Vector3& other) const noexcept {
 		DirectX::XMFLOAT3 f3(this->x + other.x, this->y + other.y, this->z + other.z);
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 	//-----------------------------------------------------------------------------------------------------
 	inline Vector3& Vector3::operator += (const Vector3& other) noexcept {
@@ -187,7 +193,7 @@ namespace tnl {
 	//-----------------------------------------------------------------------------------------------------
 	inline Vector3 Vector3::operator - (const Vector3& other) const noexcept {
 		DirectX::XMFLOAT3 f3(this->x - other.x, this->y - other.y, this->z - other.z);
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 	//-----------------------------------------------------------------------------------------------------
 	inline Vector3& Vector3::operator -= (const Vector3& other) noexcept {
@@ -215,19 +221,25 @@ namespace tnl {
 	inline Vector3 Vector3::cross(const Vector3& v) const noexcept {
 		XMFLOAT3 f3;
 		DirectX::XMStoreFloat3(&f3, DirectX::XMVector3Cross(DirectX::XMLoadFloat3(this), DirectX::XMLoadFloat3(&v)));
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 	//-----------------------------------------------------------------------------------------------------
-	inline float Vector3::length() noexcept {
+	inline float Vector3::length() const noexcept {
 		return DirectX::XMVector3Length(DirectX::XMLoadFloat3(this)).m128_f32[0];
 	}
+	//-----------------------------------------------------------------------------------------------------
+	inline Vector3 Vector3::xz() const noexcept { return { x, 0, z }; }
+	inline Vector3 Vector3::xy() const noexcept { return { x, y, 0 }; }
+	inline Vector3 Vector3::yz() const noexcept { return { 0, y, z }; }
 
+	//-----------------------------------------------------------------------------------------------------
+	inline DirectX::XMFLOAT4 Vector3::float4() const noexcept { return { x, y, z, 1.0f }; }
 
 	//-----------------------------------------------------------------------------------------------------
 	inline Vector3 Vector3::Normalize(const Vector3& v) noexcept {
 		XMFLOAT3 f3;
 		DirectX::XMStoreFloat3(&f3, DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&v)));
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 	//-----------------------------------------------------------------------------------------------------
 	inline Vector3 Vector3::Lerp(const tnl::Vector3& s, const tnl::Vector3& e, float t) noexcept {
@@ -241,7 +253,7 @@ namespace tnl {
 	inline Vector3 Vector3::Cross(const tnl::Vector3& v1, const tnl::Vector3& v2) noexcept {
 		XMFLOAT3 f3;
 		DirectX::XMStoreFloat3(&f3, DirectX::XMVector3Cross(DirectX::XMLoadFloat3(&v1), DirectX::XMLoadFloat3(&v2)));
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 	//-----------------------------------------------------------------------------------------------------
 	inline Vector3 Vector3::Rot2D(const tnl::Vector3 v, float sin, float cos) noexcept {

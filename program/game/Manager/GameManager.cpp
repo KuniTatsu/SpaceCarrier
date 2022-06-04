@@ -5,11 +5,13 @@
 #include"../Object/Player.h"
 #include"../Object/Bullet.h"
 #include"../Object/Object.h"
+#include"../Object/Enemy.h"
 #include"../Manager/BulletManager.h"
 #include"../Manager/PartsManager.h"
 #include"../Manager/ModManager.h"
 #include"../Object/Player.h"
 #include"../Factory.h"
+#include"../Observer.h"
 #include<time.h>
 #include<random>
 
@@ -34,7 +36,8 @@ GameManager* GameManager::Instance()
 
 GameManager::~GameManager()
 {
-
+	delete objFac;
+	delete enemyChecker;
 }
 
 void GameManager::Update(const float Deltatime)
@@ -87,6 +90,8 @@ void GameManager::initGameManager()
 	//BulletManagerインスタンス確保
 	bManager = BulletManager::Instance();
 	pManager = PartsManager::Instance();
+
+	enemyChecker = new Observer();
 
 }
 
@@ -222,6 +227,7 @@ void GameManager::CreateModManager()
 {
 	mManager = ModManager::Instance();
 }
+
 
 void GameManager::loadItem()
 {

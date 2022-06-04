@@ -1,7 +1,9 @@
 #include "Player.h"
 #include"../Manager/GameManager.h"
 #include"Bullet.h"
+#include"../Inventory.h"
 #include"../Factory.h"
+#include"../Ship.h"
 
 Player::Player()
 {
@@ -18,11 +20,12 @@ void Player::Update()
 {
 	//移動
 	Move();
+	//武器のクールダウン更新
+	myShip->AllWeaponCoolDawnUpdate();
+	////弾発射タイマー更新
+	//shootTimer += gManager->deltatime;
 
-	//弾発射タイマー更新
-	shootTimer += gManager->deltatime;
-
-	missileTimer += gManager->deltatime;
+	//missileTimer += gManager->deltatime;
 }
 
 void Player::Draw()
@@ -35,6 +38,10 @@ void Player::Draw()
 		DrawRotaGraph(myTarget->GetPos().x, myTarget->GetPos().y, 1, 0, targetingCircle, true);
 	}
 	else DrawStringEx(200, 200, -1, "オートターゲットOFF");
+
+	//全武器のクールダウン表示
+	DrawWeaponCoolDown();
+
 
 
 }
@@ -61,6 +68,16 @@ void Player::CheckIsLive()
 {
 }
 
+void Player::InventoryMove()
+{
+	partsInventory->InventoryMove();
+}
+
+void Player::DrawInventory()
+{
+	partsInventory->InventoryDraw(partsInventory->guideX - 70, 30, partsInventory->guideX + 190, 340);
+}
+
 void Player::Move()
 {
 	/*
@@ -78,6 +95,7 @@ void Player::Move()
 	//上下キー感知
 	if (tnl::Input::IsKeyDown(arrowKeys[static_cast<int>(DIR::UP)])) {
 		moveY += MOVEAMOUNT[static_cast<int>(DIR::UP)];
+		DrawStringEx(200, 300, -1, "UP");
 	}
 	if (tnl::Input::IsKeyDown(arrowKeys[static_cast<int>(DIR::DOWN)])) {
 		moveY += MOVEAMOUNT[static_cast<int>(DIR::DOWN)];
@@ -89,6 +107,7 @@ void Player::Move()
 	}
 	if (tnl::Input::IsKeyDown(arrowKeys[static_cast<int>(DIR::LEFT)])) {
 		moveX += MOVEAMOUNT[static_cast<int>(DIR::LEFT)];
+		DrawStringEx(200, 400, -1, "LEFT");
 	}
 
 	//移動量が0でなければベクトルを正規化して移動させる
@@ -112,8 +131,52 @@ void Player::Move()
 	}
 }
 
+void Player::DrawWeaponCoolDown()
+{
+	for (int i = 0; i < myShip->GetWeaponNum(); ++i) {
+		auto coolDawn = myShip->GetCoolDown(i);
+		DrawStringEx(200 + i * 30, 600, -1, "%0.0f", coolDawn);
+	}
+}
+
+void Player::ShipInit()
+{
+	//パーツを入れるインベントリを生成
+	partsInventory = std::make_shared<Inventory>();
+
+	//初期パーツをインベントリに追加
+	partsInventory->AddInventory(100);
+	partsInventory->AddInventory(102);
+	partsInventory->AddInventory(104);
+	partsInventory->AddInventory(106);
+	partsInventory->AddInventory(109);
+
+	partsInventory->AddWeaponInventory(200);
+	partsInventory->AddWeaponInventory(205);
+
+	//船を生成
+	myShip = std::make_shared<Ship>();
+
+	//船のパーツリストの取得
+	auto list = partsInventory->GetPartsInventory();
+	//船の初期パーツの登録
+	for (auto parts : list) {
+		myShip->SetProtoParts(parts);
+	}
+	//船のステータス合計を計算
+	myShip->SetShipStatus();
+
+	//船の初期武器の登録
+	auto weaponList = partsInventory->GetWeaponInventory();
+	for (auto weapon : weaponList) {
+		myShip->SetProtoWeapon(weapon);
+	}
+}
+
 void Player::ShootBullet()
 {
+	myShip->ShootShipWeapon();
+	/*
 	//クールダウン中なら発射しない
 	if (shootTimer < SHOOTCOOLDOWN)return;
 	//クールダウンセット
@@ -133,6 +196,7 @@ void Player::ShootBullet()
 	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, vec, Factory::MOVETYPE::STRAIGHT));
 	bullet->SetList();
 	bullet->SetBulletList();
+	*/
 
 }
 void Player::SetMyTarget(std::shared_ptr<Object> Target)
@@ -140,6 +204,8 @@ void Player::SetMyTarget(std::shared_ptr<Object> Target)
 	myTarget = Target;
 }
 
+
+/*
 //Playerに設定されたターゲットに向かって撃つオートターゲット射撃関数
 void Player::AimShootBullet()
 {
@@ -213,10 +279,11 @@ void Player::ShootMissile()
 
 	auto shootPoint = pos + initPos;
 
-	tnl::Vector3 vPos = tnl::Vector3(0,-8.0f,0);
+	tnl::Vector3 vPos = tnl::Vector3(0, -8.0f, 0);
 
 	//弾の生成
 	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, vPos, Factory::MOVETYPE::TRACKING));
 	bullet->SetList();
 	bullet->SetBulletList();
 }
+*/

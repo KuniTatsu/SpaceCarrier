@@ -32,5 +32,15 @@ void gameMain(float delta_time) {
 	gManager->Update(delta_time);
 	gManager->Draw(delta_time);
 
+	/*if (tnl::Input::IsKeyDown(eKeys::KB_UP)) {
+		DrawStringEx(100, 50, -1, "up");
+	}
+	if (tnl::Input::IsKeyDown(eKeys::KB_LEFT)) {
+		DrawStringEx(100, 70, -1, "left");
+	}
+	if (tnl::Input::IsKeyDown(eKeys::KB_SPACE)) {
+		DrawStringEx(100, 90, -1, "space");
+	}*/
+
 }
 

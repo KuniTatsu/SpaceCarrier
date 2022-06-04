@@ -15,7 +15,7 @@ namespace tnl {
 		DirectX::XMMATRIX xm = DirectX::XMMatrixRotationQuaternion(v);
 		DirectX::XMFLOAT4X4 f4x4;
 		XMStoreFloat4x4(&f4x4, xm);
-		return f4x4;
+		return static_cast<Matrix>(f4x4);
 	}
 
 

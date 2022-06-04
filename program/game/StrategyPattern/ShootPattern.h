@@ -3,6 +3,7 @@
 #include<memory>
 class Factory;
 class GameManager;
+class Bullet;
 
 //----------移動方法のベースクラス------------
 class ShootBase
@@ -11,7 +12,17 @@ public:
 	ShootBase();
 	virtual~ShootBase();
 	//移動関数 仮想関数
-	virtual bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime) = 0;
+	//virtual bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime) = 0;
+	virtual std::shared_ptr<Bullet> Shoot(tnl::Vector3 Pos, int Radius, float Deltatime) = 0;
+
+	//クールダウン更新関数
+	void CoolDawnUpdate(const float Deltatime);
+
+	//クールダウン取得関数
+	inline float GetCoolDawn() {
+		if (coolDown < COOLTIME)return (COOLTIME - coolDown);
+		else return 0.0f;
+	}
 protected:
 
 	Factory* fac = nullptr;
@@ -34,7 +45,8 @@ public:
 	StraightShoot(tnl::Vector3 VecSpeed, float CoolDawn);
 	~StraightShoot()override;
 
-	bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
+	//bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
+	std::shared_ptr<Bullet> Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
 };
 //------------撃つタイミングでプレイヤーがいた方向に放つクラス-----------
 class FocusShoot :public ShootBase
@@ -43,7 +55,8 @@ public:
 	FocusShoot(tnl::Vector3 VecSpeed, float CoolDawn);
 	~FocusShoot()override;
 
-	bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
+	//bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
+	std::shared_ptr<Bullet> Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
 };
 //------------クールダウンが短く弾速がだんだん早くなるクラス------------
 class FastShoot :public ShootBase
@@ -52,7 +65,8 @@ public:
 	FastShoot(tnl::Vector3 VecSpeed, float CoolDawn);
 	~FastShoot()override;
 
-	bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
+	//bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
+	std::shared_ptr<Bullet> Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
 };
 
 //------------追尾する弾のクラス------------
@@ -62,5 +76,6 @@ public:
 	TrackShoot(tnl::Vector3 VecSpeed, float CoolDawn);
 	~TrackShoot()override;
 
-	bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
+	//bool Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
+	std::shared_ptr<Bullet> Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)override;
 };

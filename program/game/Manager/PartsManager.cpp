@@ -66,7 +66,7 @@ void PartsManager::LoadCsv()
 		float coolTime = std::stof(loadWeaponPartsCsv[i][4]);
 
 		//int Id, int PartsType, std::string Name, float Attack, float CoolDawn, std::string ShootType, std::string GhPass);
-		auto parts = std::make_shared<WeaponParts>(id, type, loadWeaponPartsCsv[i][2], attack, coolTime, loadWeaponPartsCsv[i][5], loadWeaponPartsCsv[i][6]);
+		auto parts = std::make_shared<WeaponParts>(id, type, loadWeaponPartsCsv[i][2], attack, coolTime, loadWeaponPartsCsv[i][5], loadWeaponPartsCsv[i][6], loadWeaponPartsCsv[i][7]);
 		weaponPartsMaster[type].emplace_back(parts);
 	}
 
@@ -126,6 +126,31 @@ std::shared_ptr<PartsBase> PartsManager::GetParts(int PartsId)
 	return newParts;
 }
 
+std::shared_ptr<PartsBase> PartsManager::GetWeaponParts(int PartsId)
+{
+	std::shared_ptr<WeaponParts> selectParts = nullptr;
+	//パーツIdを検索
+	for (auto type : weaponPartsMaster) {
+		for (auto parts : type) {
+			//idが一致したら
+			if (parts->GetPartsId() == PartsId) {
+				selectParts = parts;
+				break;
+			}
+		}
+	}
+
+	//データ取得
+
+	auto [id, type, name, attack, coolDown, myShoot, ghPass] = selectParts->GetAllWeaponData();
+
+	auto icon = selectParts->GetIconGhPass();
+	//新規生成
+	////id(int)	PartsType(int)	Parts_Name	Atack(int)	CoolDawn(float)	BulletType(enum) Gh(std::string)
+	auto newWeapon = std::make_shared<WeaponParts>(id, type, name, attack, coolDown, myShoot, ghPass, icon);
+	return newWeapon;
+}
+
 std::shared_ptr<PartsBase> PartsManager::GetRandomParts()
 {
 	auto rand = GetRandomPartsId();
@@ -142,7 +167,7 @@ int PartsManager::GetRandomPartsId()
 	std::mt19937 GetRandom(rnd());
 
 	//一定範囲の一様分布乱数取得
-	std::uniform_int_distribution<> Weight(0, PartsIdList.size()-1);
+	std::uniform_int_distribution<> Weight(0, PartsIdList.size() - 1);
 	//レアリティをランダムで決める
 	int rand = Weight(GetRandom);
 

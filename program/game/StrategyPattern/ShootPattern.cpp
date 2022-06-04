@@ -14,10 +14,15 @@ ShootBase::~ShootBase()
 {
 }
 
+void ShootBase::CoolDawnUpdate(const float Deltatime)
+{
+	coolDown += Deltatime;
+}
+
 bool ShootBase::CheckCoolDawn(const float Deltatime)
 {
-	//クールダウンタイムの更新
-	coolDown += Deltatime;
+	////クールダウンタイムの更新
+	//coolDown += Deltatime;
 	//クールダウン解消前なら撃てない
 	if (coolDown < COOLTIME)return false;
 	return true;
@@ -38,14 +43,14 @@ StraightShoot::~StraightShoot()
 }
 
 //-------------------------------------------------------//
-bool StraightShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
+std::shared_ptr<Bullet> StraightShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
 {
 	////クールダウンタイムの更新
 	//coolDown += Deltatime;
 	////クールダウン解消前なら撃てない
 	//if (coolDown < COOLTIME)return false;
 
-	if (!CheckCoolDawn(Deltatime))return false;
+	if (!CheckCoolDawn(Deltatime))return nullptr;
 
 	//クールダウン初期化
 	coolDown = 0;
@@ -59,9 +64,9 @@ bool StraightShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
 	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, vecSpeed, Factory::MOVETYPE::STRAIGHT));
 	bullet->SetList();
 	//bullet->SetBulletList();
-	bullet->SetEnemyBulletList();
+	//bullet->SetEnemyBulletList();
 
-	return true;
+	return bullet;
 }
 //------------------精密射撃----------------------------//
 FocusShoot::FocusShoot(tnl::Vector3 VecSpeed, float CoolDawn)
@@ -74,14 +79,14 @@ FocusShoot::~FocusShoot()
 {
 }
 
-bool FocusShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
+std::shared_ptr<Bullet> FocusShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
 {
 	////クールダウンタイムの更新
 	//coolDown += Deltatime;
 	////クールダウン解消前なら撃てない
 	//if (coolDown < COOLTIME)return false;
 
-	if (!CheckCoolDawn(Deltatime))return false;
+	if (!CheckCoolDawn(Deltatime))return nullptr;
 
 	//クールダウン初期化
 	coolDown = 0;
@@ -94,9 +99,9 @@ bool FocusShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
 	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, vecSpeed, Factory::MOVETYPE::STOPPOS));
 	bullet->SetList();
 	//bullet->SetBulletList();
-	bullet->SetEnemyBulletList();
+	//bullet->SetEnemyBulletList();
 
-	return true;
+	return bullet;
 }
 //------------------高速射撃----------------------------//
 FastShoot::FastShoot(tnl::Vector3 VecSpeed, float CoolDawn)
@@ -109,9 +114,9 @@ FastShoot::~FastShoot()
 {
 }
 
-bool FastShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
+std::shared_ptr<Bullet> FastShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
 {
-	if (!CheckCoolDawn(Deltatime))return false;
+	if (!CheckCoolDawn(Deltatime))return nullptr;
 
 	//クールダウン初期化
 	coolDown = 0;
@@ -123,9 +128,9 @@ bool FastShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
 	//弾の生成
 	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, vecSpeed, Factory::MOVETYPE::ACCEL));
 	bullet->SetList();
-	bullet->SetEnemyBulletList();
+	//bullet->SetEnemyBulletList();
 
-	return true;
+	return bullet;
 }
 
 TrackShoot::TrackShoot(tnl::Vector3 VecSpeed, float CoolDawn)
@@ -138,9 +143,9 @@ TrackShoot::~TrackShoot()
 {
 }
 
-bool TrackShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
+std::shared_ptr<Bullet> TrackShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
 {
-	if (!CheckCoolDawn(Deltatime))return false;
+	if (!CheckCoolDawn(Deltatime))return nullptr;
 
 	//クールダウン初期化
 	coolDown = 0;
@@ -154,5 +159,7 @@ bool TrackShoot::Shoot(tnl::Vector3 Pos, int Radius, float Deltatime)
 	//弾の生成
 	auto bullet = std::dynamic_pointer_cast<Bullet, Object>(fac->create("Bullet", shootPoint, vecSpeed, Factory::MOVETYPE::TRACKING));
 	bullet->SetList();
-	bullet->SetBulletList();
+	//bullet->SetBulletList();
+
+	return bullet;
 }

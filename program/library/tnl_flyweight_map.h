@@ -62,7 +62,7 @@ namespace tnl {
 				ptr = management_map_.at(key);
 			}
 			catch (std::out_of_range&) {
-				assert(0);
+				//TNL_DEBUG_ASSERTE("fly weight map get error");
 			}
 			return ptr;
 		}

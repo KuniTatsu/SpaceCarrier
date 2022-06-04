@@ -134,6 +134,12 @@ ToTargetMove::~ToTargetMove()
 tnl::Vector3 ToTargetMove::Move(tnl::Vector3 Pos)
 {
 
+	//もしtargetがnullptrなら直進させる
+	if (target == nullptr) {
+		return Pos + vecSpeed;
+	}
+
+
 	//弾からみてターゲットの位置が右か左かを求める
 	//ターゲットへの方向ベクトル
 	tnl::Vector3 dirVec = target->GetPos() - Pos;

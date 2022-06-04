@@ -18,6 +18,7 @@ class ModManager;
 class Player;
 class Factory;
 class ObjectFactory;
+class Observer;
 
 class GameManager {
 
@@ -89,7 +90,7 @@ public:
 		return objects;
 	}
 	//プレイヤーの取得
-	inline std::shared_ptr<Player> GetPlayer() {
+	inline std::shared_ptr<Player>& GetPlayer() {
 		return player;
 	}
 	//プレイヤーの設定
@@ -152,6 +153,13 @@ public:
 
 	//ModManager生成
 	void CreateModManager();
+
+	//Observer取得
+
+	inline Observer* GetObserver() {
+		return enemyChecker;
+	}
+
 private:
 	//シングルトンインスタンス
 	static GameManager* instance;
@@ -164,7 +172,11 @@ private:
 
 	//ModManagerインスタンス
 	ModManager* mManager = nullptr;
+
 	
+	
+	//オブザーバインスタンス
+	Observer* enemyChecker = nullptr;
 
 	//選択したステージ
 	STAGE mystage = STAGE::SOL;

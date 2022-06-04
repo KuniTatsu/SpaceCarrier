@@ -5,6 +5,7 @@ class MovementBase;
 class ShootBase;
 class GameManager;
 class EnemyManager;
+class Observer;
 
 class Enemy :public Object
 {
@@ -34,10 +35,26 @@ public:
 		return shootType;
 	}
 
+	//変化したらオブザーバの関数を呼ぶ
+	void notify();
+
 protected:
+	//エネミーマネージャポインタ
 	EnemyManager* eManager = nullptr;
 
+	//オブザーバ
+	Observer* enemyChecker = nullptr;
 
+	//オブザーバ登録関数
+	void SetObserver(Observer* EnemyChecker);
+
+	//オブザーバ抹消関数
+	inline void CleanObserver() {
+		enemyChecker = nullptr;
+	}
+	
+
+	//Movetypeで動く関数
 	void Move();
 
 	/*enum class MOVETYPE {

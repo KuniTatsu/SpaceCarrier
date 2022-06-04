@@ -61,7 +61,7 @@ namespace tnl {
 
             // json ÇÃÉpÅ[ÉXÇ…é∏îs
             if (!err.empty()) {
-                assert(0);
+                TNL_DEBUG_ASSERTE("json parse errror");
             }
         }
 

@@ -3,6 +3,8 @@
 #include"../StrategyPattern/ShootPattern.h"
 #include"../Manager/GameManager.h"
 #include"../Manager/EnemyManager.h"
+#include"../Observer.h"
+#include"../Object/Bullet.h"
 
 Enemy::Enemy(tnl::Vector3 StartPos)
 {
@@ -31,6 +33,8 @@ Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, MovementBase* MoveType, Shoo
 	shootType = ShootType;
 
 	eManager = EnemyManager::Instance();
+	//ƒIƒuƒU[ƒo“o˜^
+	SetObserver(gManager->GetObserver());
 }
 
 Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, float Defence, float Speed, MovementBase* MoveType, ShootBase* ShootType)
@@ -59,6 +63,8 @@ Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, floa
 	vecSpeed = moveType->GetVecSpeed();
 
 	eManager = EnemyManager::Instance();
+	//ƒIƒuƒU[ƒo“o˜^
+	SetObserver(gManager->GetObserver());
 }
 
 Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, float Defence, float Speed, MovementBase* MoveType, ShootBase* ShootType, ShootBase* ExShootType)
@@ -85,6 +91,9 @@ Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, floa
 	exShootType = ExShootType;
 
 	eManager = EnemyManager::Instance();
+
+	//ƒIƒuƒU[ƒo“o˜^
+	SetObserver(gManager->GetObserver());
 }
 
 Enemy::~Enemy()
@@ -98,12 +107,16 @@ Enemy::~Enemy()
 void Enemy::Update()
 {
 	Move();
-	shootType->Shoot(pos, radius, gManager->deltatime);
+	shootType->CoolDawnUpdate(gManager->deltatime);
+	auto bullet = shootType->Shoot(pos, radius, gManager->deltatime);
+
+	if (bullet != nullptr)bullet->SetEnemyBulletList();
 	CheckIsLive();
 }
 
 void Enemy::Draw()
 {
+	enemyChecker->DebugPlayer();
 	DrawRotaGraph(pos.x, pos.y, 1, 0, gh, true);
 }
 
@@ -123,6 +136,17 @@ void Enemy::SetEnemyList()
 	eManager->AddEnemyList(std::dynamic_pointer_cast<Enemy, Object>(shared_from_this()));
 }
 
+void Enemy::SetObserver(Observer* EnemyChecker)
+{
+	enemyChecker = EnemyChecker;
+	tnl::DebugTrace("\nObserver‚ª“o˜^‚³‚ê‚Ü‚µ‚½\n");
+}
+
+void Enemy::notify()
+{
+	enemyChecker->Update(std::dynamic_pointer_cast<Enemy, Object>(shared_from_this()));
+}
+
 void Enemy::Move()
 {
 	pos = moveType->Move(pos);
@@ -132,5 +156,6 @@ void Enemy::DeleteMemory()
 {
 	delete moveType;
 	delete shootType;
+	//delete enemyChecker;
 	if (exShootType != nullptr)delete exShootType;
 }

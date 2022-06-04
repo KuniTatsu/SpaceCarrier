@@ -52,7 +52,9 @@ std::shared_ptr<Object> ObjectFactory::CreateObject(std::string type, const tnl:
 		}
 		else if (Move == MOVETYPE::TRACKING) {
 			std::shared_ptr<Player>player = gManager->GetPlayer();
+			//playerの持っているターゲットの情報を取得
 			auto target = player->GetMyTarget();
+			//動き方を生成
 			MovementBase* track = new ToTargetMove(VPos, target);
 
 			return std::make_shared<Bullet>(StartPos, track);

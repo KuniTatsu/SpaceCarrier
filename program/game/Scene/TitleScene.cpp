@@ -18,7 +18,7 @@ TitleScene::TitleScene()
 	//testShip = new Ship();
 	pManager = PartsManager::Instance();
 	testInventory = new Inventory();
-	//-----------------------debugtest--------------------------------------//
+	//----------------------------------------------------------------------//
 }
 
 TitleScene::~TitleScene()
@@ -42,12 +42,12 @@ void TitleScene::Update()
 
 		init = true;
 	}
-	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_UP)) {
+	/*if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_UP)) {
 		guideY -= 10;
 	}
 	else if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_DOWN)) {
 		guideY += 10;
-	}
+	}*/
 
 	if (tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_P)) {
 		auto newPartsId = pManager->GetRandomPartsId();
@@ -55,7 +55,7 @@ void TitleScene::Update()
 	}
 
 
-	//-----------------------debugtest--------------------------------------//
+	//---------------------------------------------------------------------//
 
 	if (tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_RETURN)) {
 		SceneManager::ChangeScene(SceneManager::SCENE::SELECT);
@@ -71,7 +71,7 @@ void TitleScene::Draw()
 	//-----------------------debugtest--------------------------------------//
 	back->Draw();
 
-	testInventory->InventoryDraw(guideX, guideY, guideX - 70, 30, guideX + 190, 340);
+	testInventory->InventoryDraw(testInventory->guideX - 70, 30, testInventory->guideX + 190, 340);
 
 	/*const float* test = testShip->GetShipStatus();
 
@@ -79,5 +79,5 @@ void TitleScene::Draw()
 		DrawStringEx(200, 200 + (50 * i), GetColor(0,0,0), "%f", test[i]);
 	}*/
 
-	//-----------------------debugtest--------------------------------------//
+	//---------------------------------------------------------------------//
 }

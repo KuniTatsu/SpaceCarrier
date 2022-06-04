@@ -3,6 +3,8 @@
 #include"../Manager/UIManager.h"
 #include"../GraphicUI.h"
 #include"../Manager/SceneManager.h"
+#include"../Object/Player.h"
+#include"../Observer.h"
 
 StageSelectScene::StageSelectScene()
 {
@@ -15,6 +17,8 @@ StageSelectScene::~StageSelectScene()
 
 void StageSelectScene::Update()
 {
+
+
 	//UI‚ÌˆÚ“®,Œˆ’èŠ´’m
 	uiManager->UpdateUI(selectNum);
 	//ƒƒjƒ…[Œˆ’èŒã‚È‚ç
@@ -22,11 +26,13 @@ void StageSelectScene::Update()
 		CreateStage();
 		return;
 	}
+	player->InventoryMove();
 }
 
 void StageSelectScene::Draw()
 {
 	uiManager->DrawUI();
+	player->DrawInventory();
 }
 
 void StageSelectScene::Init()
@@ -42,7 +48,18 @@ void StageSelectScene::Init()
 	uiManager->SetUIList(menu2);
 	uiManager->SetUIList(menu3);
 
+	//ModManager¶¬
 	gManager->CreateModManager();
+	//Player¶¬
+	player = std::make_shared<Player>();
+	//GameManager‚É“o˜^
+	gManager->SetPlayer(player);
+	//‘D‚ğ¶¬
+	player->ShipInit();
+
+	//Observer‚Éplayer‚ğ“o˜^
+	auto observer = gManager->GetObserver();
+	observer->SetPlayer(player);
 }
 
 void StageSelectScene::CreateStage()

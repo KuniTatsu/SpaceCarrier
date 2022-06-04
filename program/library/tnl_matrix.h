@@ -14,8 +14,8 @@ namespace tnl{
 				0,0,1,0,
 				0,0,0,1)
 		{}
-		Matrix(DirectX::XMMATRIX& m) noexcept { DirectX::XMStoreFloat4x4(this, m); }
-		Matrix(DirectX::XMFLOAT4X4& m) noexcept : DirectX::XMFLOAT4X4(m) {}
+		explicit Matrix(DirectX::XMMATRIX& m) noexcept { DirectX::XMStoreFloat4x4(this, m); }
+		explicit Matrix(DirectX::XMFLOAT4X4& m) noexcept : DirectX::XMFLOAT4X4(m) {}
 
 
 		//-----------------------------------------------------------------------------------------------------
@@ -100,8 +100,8 @@ namespace tnl{
 		static inline Matrix Translation(const float x, const float y, const float z) noexcept {
 			DirectX::XMMATRIX xm = DirectX::XMMatrixTranslation(x, y, z);
 			DirectX::XMFLOAT4X4 f4x4;
-			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			XMStoreFloat4x4(&f4x4, xm);			
+			return static_cast<Matrix>(f4x4);
 		}
 		static inline Matrix Translation(const tnl::Vector3& v) noexcept {
 			return Translation(v.x, v.y, v.z);
@@ -111,7 +111,7 @@ namespace tnl{
 			DirectX::XMMATRIX xm = DirectX::XMMatrixScaling(x, y, z);
 			DirectX::XMFLOAT4X4 f4x4;
 			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			return static_cast<Matrix>(f4x4);
 		}
 		static inline Matrix Scaling(const tnl::Vector3& v) noexcept {
 			return Scaling(v.x, v.y, v.z);
@@ -120,49 +120,49 @@ namespace tnl{
 			DirectX::XMMATRIX xm = DirectX::XMMatrixRotationX(radian);
 			DirectX::XMFLOAT4X4 f4x4;
 			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			return static_cast<Matrix>(f4x4);
 		}
 		static inline Matrix RotationY(const float radian) noexcept {
 			DirectX::XMMATRIX xm = DirectX::XMMatrixRotationY(radian);
 			DirectX::XMFLOAT4X4 f4x4;
 			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			return static_cast<Matrix>(f4x4);
 		}
 		static inline Matrix RotationZ(const float radian) noexcept {
 			DirectX::XMMATRIX xm = DirectX::XMMatrixRotationZ(radian);
 			DirectX::XMFLOAT4X4 f4x4;
 			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			return static_cast<Matrix>(f4x4);
 		}
 		static inline Matrix RotationPitchYawRoll( const float pitch, const float yaw, const float roll ) noexcept {
 			DirectX::XMMATRIX xm = DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
 			DirectX::XMFLOAT4X4 f4x4;
 			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			return static_cast<Matrix>(f4x4);
 		}
 		static inline Matrix RotationPitchYawRoll(const Vector3& rot) noexcept {
 			DirectX::XMMATRIX xm = DirectX::XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
 			DirectX::XMFLOAT4X4 f4x4;
 			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			return static_cast<Matrix>(f4x4);
 		}
 		static inline Matrix RotationAxis(const Vector3& v, const float radian) noexcept {
 			DirectX::XMMATRIX xm = DirectX::XMMatrixRotationAxis(DirectX::XMLoadFloat3(&v), radian);
 			DirectX::XMFLOAT4X4 f4x4;
 			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			return static_cast<Matrix>(f4x4);
 		}
 		static inline Matrix Inverse(const Matrix& m) noexcept {
 			DirectX::XMMATRIX xm = DirectX::XMMatrixInverse(nullptr, DirectX::XMLoadFloat4x4(&m));
 			DirectX::XMFLOAT4X4 f4x4;
 			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			return static_cast<Matrix>(f4x4);
 		}
 		static inline Matrix Transpose(const Matrix& m) noexcept {
 			DirectX::XMMATRIX xm = DirectX::XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m));
 			DirectX::XMFLOAT4X4 f4x4;
 			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			return static_cast<Matrix>(f4x4);
 		}
 
 		static inline Matrix LookAtLH(const Vector3& eye, const Vector3& look, const Vector3& vup) noexcept {
@@ -172,21 +172,21 @@ namespace tnl{
 				DirectX::XMLoadFloat3(&vup));
 			DirectX::XMFLOAT4X4 f4x4;
 			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			return static_cast<Matrix>(f4x4);
 		}
 
 		static inline Matrix PerspectiveFovLH(const float angle, const float aspect, const float near_z, const float far_z) noexcept {
 			DirectX::XMMATRIX xm = DirectX::XMMatrixPerspectiveFovLH(angle, aspect, near_z, far_z);
 			DirectX::XMFLOAT4X4 f4x4;
 			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			return static_cast<Matrix>(f4x4);
 		}
 
 		static inline Matrix OrthoLH( const float width, const float height, const float near_z, const float far_z ) noexcept {
 			DirectX::XMMATRIX xm = DirectX::XMMatrixOrthographicLH(width, height, near_z, far_z);
 			DirectX::XMFLOAT4X4 f4x4;
 			XMStoreFloat4x4(&f4x4, xm);
-			return f4x4;
+			return static_cast<Matrix>(f4x4);
 		}
 
 		static inline Matrix Billboard(const Vector3& eye, const Vector3& look, const Vector3& vup) noexcept {
@@ -223,7 +223,7 @@ namespace tnl{
 		DirectX::XMMATRIX xm3 = DirectX::XMMatrixMultiply(xm1, xm2);
 		DirectX::XMFLOAT4X4 f4x4;
 		DirectX::XMStoreFloat4x4(&f4x4, xm3);
-		return f4x4;
+		return static_cast<Matrix>(f4x4);
 	}
 
 	inline Matrix& Matrix::operator *= (const Matrix& other) noexcept {

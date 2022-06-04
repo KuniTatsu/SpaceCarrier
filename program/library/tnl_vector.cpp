@@ -1,3 +1,4 @@
+#include "tnl_math.h"
 #include "tnl_vector.h"
 #include "tnl_quaternion.h"
 #include "tnl_matrix.h"
@@ -11,7 +12,7 @@ namespace tnl {
 	const Vector3 Vector3::left		= {-1,  0,  0 };
 	const Vector3 Vector3::right	= { 1,  0,  0 };
 	const Vector3 Vector3::up		= { 0,  1,  0 };
-	const Vector3 Vector3::donw		= { 0, -1,  0 };
+	const Vector3 Vector3::down		= { 0, -1,  0 };
 
 	const Vector3 Vector3::axis[static_cast<uint32_t>(eAxis::MAX)] = {
 		Vector3::front,
@@ -19,7 +20,7 @@ namespace tnl {
 		Vector3::left,
 		Vector3::right,
 		Vector3::up,
-		Vector3::donw
+		Vector3::down
 	};
 
 	//-----------------------------------------------------------------------------------------------------
@@ -34,26 +35,26 @@ namespace tnl {
 		XMVECTOR xv = XMVector3Rotate( XMLoadFloat3(&v), XMLoadFloat4(&q));
 		XMFLOAT3 f3;
 		XMStoreFloat3(&f3, xv); 
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 
 	//-----------------------------------------------------------------------------------------------------
 	Vector3 Vector3::TransformCoord(const Vector3& v, const tnl::Matrix& m) noexcept {
 		XMFLOAT3 f3;
 		DirectX::XMStoreFloat3(&f3, DirectX::XMVector3TransformCoord(DirectX::XMLoadFloat3(&v), DirectX::XMLoadFloat4x4(&m)));
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 
 	//-----------------------------------------------------------------------------------------------------
 	Vector3 Vector3::Transform(const tnl::Vector3& v, const tnl::Matrix& m) noexcept {
 		XMFLOAT3 f3;
 		DirectX::XMStoreFloat3(&f3, DirectX::XMVector3Transform(DirectX::XMLoadFloat3(&v), DirectX::XMLoadFloat4x4(&m)));
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 	Vector3 Vector3::TransformNormal(const tnl::Vector3& v, const tnl::Matrix& m) noexcept {
 		XMFLOAT3 f3;
 		DirectX::XMStoreFloat3(&f3, DirectX::XMVector3TransformNormal(DirectX::XMLoadFloat3(&v), DirectX::XMLoadFloat4x4(&m)));
-		return f3;
+		return static_cast<Vector3>(f3);
 	}
 
 
@@ -114,6 +115,19 @@ namespace tnl {
 		rv.y = (w - (w * wkMtx._14));
 		return v;
 	}
+
+	Vector3 Vector3::Random(
+		const float min_x, const float max_x,
+		const float min_y, const float max_y,
+		const float min_z, const float max_z) noexcept{
+		Vector3 v = {
+			tnl::GetRandomDistributionFloat(min_x, max_x),
+			tnl::GetRandomDistributionFloat(min_y, max_y),
+			tnl::GetRandomDistributionFloat(min_z, max_z)
+		};
+		return v;
+	}
+
 
 }
 

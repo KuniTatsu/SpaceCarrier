@@ -84,6 +84,7 @@
     <ClCompile Include="program\game\Mod.cpp" />
     <ClCompile Include="program\game\Manager\ModManager.cpp" />
     <ClCompile Include="program\game\Inventory.cpp" />
+    <ClCompile Include="program\game\Observer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\game\game_main.h">
@@ -180,5 +181,6 @@
     <ClInclude Include="program\game\Mod.h" />
     <ClInclude Include="program\game\Manager\ModManager.h" />
     <ClInclude Include="program\game\Inventory.h" />
+    <ClInclude Include="program\game\Observer.h" />
   </ItemGroup>
 </Project>

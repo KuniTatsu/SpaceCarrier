@@ -74,7 +74,7 @@ void gameMain(float delta_time) {
 			sum_time_ += delta_time;
 			if ( sum_time_ < regulation_time_ ) return false;
 			function_(object_, delta_time);
-			sum_time_ = 0;
+			sum_time_ -= regulation_time_;
 			return true;
 		}
 	};
