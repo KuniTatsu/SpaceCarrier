@@ -29,6 +29,11 @@ public:
 		return{ partsId, partsType, partsName, basicStatus };
 	}
 
+	//描画パーツ名の取得関数
+	inline std::string GetFactName() {
+		return factName;
+	}
+
 private:
 	//パーツの追加体力
 	float hp = 0;
@@ -44,6 +49,8 @@ private:
 	//hp,energy,def,speed,container
 	float basicStatus[5] = {};
 
+	//修飾ステータスを含めたパーツ名
+	std::string factName = "";
 
 	//所持修飾ステータス
 	std::vector<std::shared_ptr<Mod>>myMods;

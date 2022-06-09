@@ -13,6 +13,13 @@ Ship::~Ship()
 {
 }
 
+void Ship::DrawShipParts()
+{
+	for (auto parts : shipParts) {
+		parts->DrawParts(gManager->Center.x + 50, gManager->Center.y);
+	}
+}
+
 void Ship::SetProtoParts(std::shared_ptr<ShipParts>Parts)
 {
 	shipParts.emplace_back(Parts);
@@ -79,7 +86,7 @@ void Ship::ChangeShipParts(int PartsType, std::shared_ptr<PartsBase> NewParts)
 
 void Ship::ShootShipWeapon()
 {
-	for (auto weapon: weapones) {
+	for (auto weapon : weapones) {
 		weapon->ShootBullet(gManager->deltatime);
 	}
 }

@@ -52,6 +52,9 @@ protected:
 	//iconGh
 	int iconGh = 0;
 
+	//iconBackGh
+	int iconBachGh = 0;
+
 	//ゲームマネージャポインタ
 	GameManager* gManager = nullptr;
 

@@ -74,8 +74,13 @@ void Player::InventoryMove()
 }
 
 void Player::DrawInventory()
+{		//380x465
+	partsInventory->InventoryDraw(partsInventory->guideX - 95, 30, partsInventory->guideX + 290, 495);
+}
+
+void Player::DrawShip()
 {
-	partsInventory->InventoryDraw(partsInventory->guideX - 70, 30, partsInventory->guideX + 190, 340);
+	myShip->DrawShipParts();
 }
 
 void Player::Move()

@@ -33,6 +33,8 @@ ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float En
 	iconPass = IconPass;
 	iconGh = gManager->LoadGraphEx(IconPass);
 
+	iconBachGh = gManager->LoadGraphEx("graphics/ShipParts/Icon_Back_fix.png");
+
 	//-------------CüMod‚ÌŒˆ’è(‚ ‚è‚È‚µŠÜ‚Þ)------------------//
 	//ŒÂ”‚Í0~2ŒÂ
 	//0:1:2=40:50:10%
@@ -50,8 +52,8 @@ ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float En
 		myMods.emplace_back(mod);
 		tnl::DebugTrace("\nCüMod[%s]‚ð•t—^‚µ‚Ü‚µ‚½\n", mod->GetModName().c_str());
 	}
-
-
+	//‚P‚Â–Ú‚ÌMod‚Ì–¼‘O‚ðƒp[ƒc‚Ì–¼‘O‚É‰Á‚¦‚Ä•\Ž¦‚·‚é
+	factName = myMods[0]->GetModName() + partsName;
 }
 
 ShipParts::~ShipParts()
@@ -65,5 +67,6 @@ void ShipParts::DrawParts(int X, int Y)
 
 void ShipParts::DrawPartsIcon(int X, int Y)
 {
-	DrawRotaGraph(X, Y, 1, 0, iconGh, true);
+	DrawRotaGraph(X, Y, 1.5, 0, iconBachGh, true);
+	DrawRotaGraph(X, Y, 1.5, 0, iconGh, false);
 }

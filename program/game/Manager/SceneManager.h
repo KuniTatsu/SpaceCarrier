@@ -14,6 +14,7 @@ public:
 	enum class SCENE {
 		TITLE,
 		SELECT,
+		CUSTOM,
 		INGAME
 	};
 

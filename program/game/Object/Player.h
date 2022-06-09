@@ -90,6 +90,9 @@ public:
 	//船改造画面でのインベントリ描画関数
 	void DrawInventory();
 
+	//船改造画面での現在の船の画像描画関数
+	void DrawShip();
+
 private:
 
 	void Move();
@@ -157,7 +160,7 @@ private:
 	std::shared_ptr<Object> myTarget = nullptr;
 
 	//オートターゲットモード
-	bool autoTargetMode = false;
+	bool autoTargetMode = true;
 
 	//航行スピード ステージ内をゴールへ向かうスピード
 	float CruizeSpeed = 0;

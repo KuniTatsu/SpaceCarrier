@@ -21,6 +21,9 @@ public:
 		return shipStatus;
 	}
 
+	//船のパーツの描画関数
+	void DrawShipParts();
+
 	//船の初期パーツ登録関数
 	void SetProtoParts(std::shared_ptr<ShipParts>Parts);
 

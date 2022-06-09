@@ -117,6 +117,7 @@ bool InGameScene::SeqCruize(const float deltatime)
 
 	}
 
+	/* ----------------ミサイルの装備実装により常にオートターゲットにする-------------------//
 	//TABを押したら一番近くの敵をオートターゲットする
 	if (tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_TAB)) {
 		//playerから一番近い敵をオートターゲット目標として登録
@@ -124,11 +125,12 @@ bool InGameScene::SeqCruize(const float deltatime)
 		//オートターゲットの更新を有効にする
 		player->ChageAutoTargerMode();
 	}
+
+	*/
 	//ターゲットが設定されていればオートターゲット射撃が可能
 	//spaceキーを押したら弾を発射する
 //0	DrawStringEx(200, 200, -1, "SPACE");
 	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_SPACE)) {
-		DrawStringEx(200, 200, -1, "SPACE");
 		player->ShootBullet();
 	}
 

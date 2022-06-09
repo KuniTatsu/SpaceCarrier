@@ -17,8 +17,6 @@ StageSelectScene::~StageSelectScene()
 
 void StageSelectScene::Update()
 {
-
-
 	//UIの移動,決定感知
 	uiManager->UpdateUI(selectNum);
 	//メニュー決定後なら
@@ -26,13 +24,18 @@ void StageSelectScene::Update()
 		CreateStage();
 		return;
 	}
-	player->InventoryMove();
+
+	if (tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_C)) {
+		SceneManager::ChangeScene(SceneManager::SCENE::CUSTOM);
+		return;
+	}
+
 }
 
 void StageSelectScene::Draw()
 {
 	uiManager->DrawUI();
-	player->DrawInventory();
+	DrawStringEx(700, 150, -1, "Cキーでカスタマイズシーンに移動する");
 }
 
 void StageSelectScene::Init()

@@ -9,6 +9,7 @@ class WeaponParts;
 
 class GraphicUI;
 class PartsManager;
+class GameManager;
 
 class Inventory
 {
@@ -49,16 +50,21 @@ public:
 
 	//インベントリ内の画像の基準点画像
 	int guideX = 100;
-	int guideY = 50;
+	int guideY = 80;
 
 private:
 	//船のパーツのインベントリ
 	std::list<std::shared_ptr<ShipParts>>inventory;
 
+	//inventoryの枠の画像ハンドル
+	int inventoryFrameGh = 0;
+
 	//武器パーツのインベントリ
 	std::list<std::shared_ptr<WeaponParts>>weaponInventory;
 
 	PartsManager* pManager = nullptr;
+
+	GameManager* gManager = nullptr;
 	//インベントリの背景画像
 	std::shared_ptr<GraphicUI>back;
 

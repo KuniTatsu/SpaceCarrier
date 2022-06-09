@@ -3,6 +3,7 @@
 #include"DxLib.h"
 #include"../Scene/TitleScene.h"
 #include"../Scene/InGameScene.h"
+#include"../Scene/CustomizeScene.h"
 #include"../Scene/StageSelectScene.h"
 
 
@@ -23,6 +24,9 @@ void SceneManager::ChangeScene(SCENE Scene) {
         break;
     case SCENE::SELECT:
         nowScene = new StageSelectScene();     //ステージセレクトシーンを現在のシーンにする
+        break;
+    case SCENE::CUSTOM:
+        nowScene = new CustomizeScene();        //カスタマイズシーンを現在のシーンにする
     default:
         break;
     }
