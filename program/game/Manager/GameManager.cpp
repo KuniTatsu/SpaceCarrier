@@ -91,6 +91,9 @@ void GameManager::initGameManager()
 	bManager = BulletManager::Instance();
 	pManager = PartsManager::Instance();
 
+	//マスター読み込みフラグ更新
+	SetLoadedFlag();
+
 	enemyChecker = new Observer();
 
 }

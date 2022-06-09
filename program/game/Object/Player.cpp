@@ -68,9 +68,10 @@ void Player::CheckIsLive()
 {
 }
 
-void Player::InventoryMove()
+void Player::InventoryUpdate()
 {
 	partsInventory->InventoryMove();
+	partsInventory->InventorySelect();
 }
 
 void Player::DrawInventory()

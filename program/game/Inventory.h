@@ -44,13 +44,16 @@ public:
 	//インベントリ内のアイコンリストをスクロールする関数
 	void InventoryMove();
 
+	//インベントリ内のパーツがクリックされたか感知する関数
+	void InventorySelect();
+
 	//インベントリ内のアイコン画像を描画する関数
 	void InventoryDraw(int FrameTopX, int FrameTopY, int FrameBottomX, int FrameBottomY);
 
 
 	//インベントリ内の画像の基準点画像
 	int guideX = 100;
-	int guideY = 80;
+	int guideY = 145;
 
 private:
 	//船のパーツのインベントリ

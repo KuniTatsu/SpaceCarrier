@@ -54,6 +54,7 @@ void PartsManager::LoadCsv()
 		PartsIdList.emplace_back(id);
 	}
 
+
 	//---------------武器パーツのロード-------------------------
 
 	loadWeaponPartsCsv = tnl::LoadCsv("Csv/WeaponPartsMaster.csv");

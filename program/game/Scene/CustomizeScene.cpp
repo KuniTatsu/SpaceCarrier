@@ -14,7 +14,7 @@ CustomizeScene::~CustomizeScene()
 
 void CustomizeScene::Update()
 {
-	player->InventoryMove();
+	player->InventoryUpdate();
 
 	if (tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_R)) {
 		SceneManager::ChangeScene(SceneManager::SCENE::SELECT);

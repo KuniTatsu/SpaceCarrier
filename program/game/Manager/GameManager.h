@@ -160,6 +160,15 @@ public:
 		return enemyChecker;
 	}
 
+	//パーツマネージャ読み込み終了フラグ取得
+	inline bool GetLoadedFlag() {
+		return isLoaded;
+	}
+	//パーツマネージャ読み込み終了フラグセット
+	inline void SetLoadedFlag(){
+		isLoaded = true;
+	}
+
 private:
 	//シングルトンインスタンス
 	static GameManager* instance;
@@ -169,6 +178,9 @@ private:
 
 	//PartsManagerインスタンス
 	PartsManager* pManager = nullptr;
+
+	//パーツマネージャ読み込みフラグ
+	bool isLoaded = false;
 
 	//ModManagerインスタンス
 	ModManager* mManager = nullptr;

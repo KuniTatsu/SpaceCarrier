@@ -25,13 +25,22 @@ public:
 	}
 
 	//パーツのステータス全てを一気に渡してみたい
-	inline std::tuple<int, int, std::string,float*>GetAllPartsData() {
+	inline std::tuple<int, int, std::string, float*>GetAllPartsData() {
 		return{ partsId, partsType, partsName, basicStatus };
 	}
 
 	//描画パーツ名の取得関数
-	inline std::string GetFactName() {
+	inline std::string& GetFactName() {
 		return factName;
+	}
+
+	//test
+	//アイコン画像がクリックされたらtrueを返す関数
+	bool isClicked(int MouseX, int MouseY);
+
+	//名前の文字列の長さを取得する関数
+	inline int& GetStrLength() {
+		return strWidth;
 	}
 
 private:
@@ -52,7 +61,18 @@ private:
 	//修飾ステータスを含めたパーツ名
 	std::string factName = "";
 
+	//名前の文字列の長さ
+	int strWidth = 0;
+
 	//所持修飾ステータス
 	std::vector<std::shared_ptr<Mod>>myMods;
+
+
+	//アイコン画像の描画中心座標
+	int iconX = 0;
+	int iconY = 0;
+
+	//アイコンマウス検知テスト画像
+	int hoge = 0;
 
 };

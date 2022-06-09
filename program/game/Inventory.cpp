@@ -52,10 +52,20 @@ void Inventory::AddWeaponInventory(int PartsId)
 void Inventory::InventoryMove()
 {
 	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_UP)) {
-		guideY -= 10;
+		if (guideY >= 145)return;
+		guideY += 10;
 	}
 	else if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_DOWN)) {
-		guideY += 10;
+		guideY -= 10;
+	}
+}
+
+void Inventory::InventorySelect()
+{
+	//auto parts = inventory.begin();
+
+	for (auto parts : inventory) {
+		parts->isClicked(gManager->mousePosX, gManager->mousePosY);
 	}
 }
 
@@ -63,25 +73,30 @@ void Inventory::InventoryMove()
 void Inventory::InventoryDraw(int FrameTopX, int FrameTopY, int FrameBottomX, int FrameBottomY)
 {
 	//描画範囲を限定する(この範囲内から出たら描画されない)
-	SetDrawArea(FrameTopX, FrameTopY, FrameBottomX, FrameBottomY-1);
+	SetDrawArea(FrameTopX, FrameTopY, FrameBottomX, FrameBottomY - 1);
 	auto parts = inventory.begin();
 	for (int i = 0; i < inventory.size(); ++i) {
 
+		//中央揃えのための文字列の長さ取得
+		auto length = (*parts)->GetStrLength();
+
+		//パーツごとの描画するy座標 画像同士の幅をあける
 		int y = guideY + (i / 2) * 230;
-		//GuideXとGuideYを動かすことで全てのパーツ画像を動かす
+
+		//GuideYを動かすことで全てのパーツ画像を動かす
 		//偶数なら左側
 		if (i % 2 == 0) {
 			(*parts)->DrawPartsIcon(guideX, y);
 
-			//パーツ名の描画
-			DrawStringEx(guideX - 60, y - 80, -1, (*parts)->GetFactName().c_str());
+			//パーツ名の描画 (180-length/2)は表示可能領域の中央座標を求める式
+			DrawStringEx(-80 + (180 - length / 2), y - 100, GetColor(0, 0, 0), (*parts)->GetFactName().c_str());
 		}
 		//奇数なら右側
 		else {
 			(*parts)->DrawPartsIcon(guideX + 180, y);
 
 			//パーツ名の描画
-			DrawStringEx(guideX - 60 + 50, y - 80, -1, (*parts)->GetFactName().c_str());
+			DrawStringEx(110 + (180 - length / 2), y - 100, GetColor(0, 0, 0), (*parts)->GetFactName().c_str());
 		}
 
 		parts++;

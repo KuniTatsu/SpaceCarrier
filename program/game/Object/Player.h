@@ -86,7 +86,7 @@ public:
 		return partsInventory;
 	}
 	//インベントリのスクロール
-	void InventoryMove();
+	void InventoryUpdate();
 	//船改造画面でのインベントリ描画関数
 	void DrawInventory();
 
