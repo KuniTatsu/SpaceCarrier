@@ -51,22 +51,23 @@ void Inventory::AddWeaponInventory(int PartsId)
 
 void Inventory::InventoryMove()
 {
-	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_UP)) {
+	if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_UP) || gManager->mouseWheel > 0) {
 		if (guideY >= 145)return;
 		guideY += 10;
 	}
-	else if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_DOWN)) {
+	else if (tnl::Input::IsKeyDown(tnl::Input::eKeys::KB_DOWN) || gManager->mouseWheel < 0) {
 		guideY -= 10;
 	}
 }
 
-void Inventory::InventorySelect()
+std::shared_ptr<ShipParts> Inventory::InventorySelect()
 {
-	//auto parts = inventory.begin();
-
 	for (auto parts : inventory) {
-		parts->isClicked(gManager->mousePosX, gManager->mousePosY);
+		if (parts->isClicked(gManager->mousePosX, gManager->mousePosY)) {
+			return parts;
+		}
 	}
+	return nullptr;
 }
 
 //インベントリ内のパーツを2列で羅列して表示する関数

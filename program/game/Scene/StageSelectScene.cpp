@@ -53,16 +53,12 @@ void StageSelectScene::Init()
 
 	//ModManagerê∂ê¨
 	gManager->CreateModManager();
-	//Playerê∂ê¨
-	player = std::make_shared<Player>();
-	//GameManagerÇ…ìoò^
-	gManager->SetPlayer(player);
-	//ëDÇê∂ê¨
-	player->ShipInit();
 
-	//ObserverÇ…playerÇìoò^
-	auto observer = gManager->GetObserver();
-	observer->SetPlayer(player);
+
+	
+	//playerÇÃÉCÉìÉXÉ^ÉìÉXéÊìæ
+	player = gManager->CreatePlayer();
+
 }
 
 void StageSelectScene::CreateStage()

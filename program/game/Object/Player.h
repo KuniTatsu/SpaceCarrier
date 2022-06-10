@@ -7,6 +7,7 @@ class GameManager;
 class Factory;
 class Inventory;
 class Ship;
+class ShipParts;
 
 class Player final :public Object
 {
@@ -85,22 +86,31 @@ public:
 	inline std::shared_ptr<Inventory>& GetPlayerInventory() {
 		return partsInventory;
 	}
-	//インベントリのスクロール
-	void InventoryUpdate();
+	//インベントリの更新
+	bool InventoryUpdate(std::shared_ptr<ShipParts>& Parts);
+
+
 	//船改造画面でのインベントリ描画関数
 	void DrawInventory();
 
 	//船改造画面での現在の船の画像描画関数
 	void DrawShip();
 
+	//船が登録されているか取得する関数
+
+
 private:
 
 	void Move();
+
+	//船が生成されているか
+	bool isShipCreated = false;
 
 	//----------------ポインタ関係--------------------//
 
 	//objファクトリーポインタ
 	Factory* fac = nullptr;
+
 	//所持パーツを格納するインベントリ
 	std::shared_ptr<Inventory>partsInventory = nullptr;
 

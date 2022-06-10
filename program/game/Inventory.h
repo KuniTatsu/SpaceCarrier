@@ -45,7 +45,7 @@ public:
 	void InventoryMove();
 
 	//インベントリ内のパーツがクリックされたか感知する関数
-	void InventorySelect();
+	std::shared_ptr<ShipParts> InventorySelect();
 
 	//インベントリ内のアイコン画像を描画する関数
 	void InventoryDraw(int FrameTopX, int FrameTopY, int FrameBottomX, int FrameBottomY);

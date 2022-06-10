@@ -31,6 +31,7 @@ public:
 
 	//オブジェクトファクトリーインスタンス
 	Factory* objFac = nullptr;
+
 	//ファクトリーの取得
 	inline Factory* GetFactory() {
 		return objFac;
@@ -137,12 +138,19 @@ public:
 		return STAGELENGTH[static_cast<int>(mystage)];
 	}
 
-	//四角形のマウス感知
+	//四角形のマウスクリック感知
 	bool isClickedRect(int MouseX, int MouseY, int RectLeft, int RectTop, int RectRight, int RectBottom);
+
+	//四角形のマウス範囲内感知
+	bool OnMouseRect(int MouseX, int MouseY, int RectLeft, int RectTop, int RectRight, int RectBottom);
+
 
 	//マウス座標
 	int mousePosX = 0;
 	int mousePosY = 0;
+
+	//マウススクロール
+	int mouseWheel = 0;
 
 	//UIを並べる方向
 	enum class DIR {
@@ -168,6 +176,9 @@ public:
 	inline void SetLoadedFlag(){
 		isLoaded = true;
 	}
+
+	//playerを作る関数
+	std::shared_ptr<Player> CreatePlayer();
 
 private:
 	//シングルトンインスタンス
@@ -198,6 +209,7 @@ private:
 	//オブジェクトリスト
 	std::list<std::shared_ptr<Object>> objects;
 
+	//playerポインタ
 	std::shared_ptr<Player>player = nullptr;
 
 	//アイテム情報をexcelから読み取る関数

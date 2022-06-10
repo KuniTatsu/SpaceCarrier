@@ -46,6 +46,9 @@ void GameManager::Update(const float Deltatime)
 	//マウス座標取得
 	GetMousePoint(&mousePosX, &mousePosY);
 
+	//マウススクロール量取得
+	mouseWheel = GetMouseWheelRotVol();  //ホイールの回転量取得
+
 	SceneManager::Update();
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2))
 	{
@@ -226,11 +229,36 @@ bool GameManager::isClickedRect(int MouseX, int MouseY, int RectLeft, int RectTo
 	return false;
 }
 
+bool GameManager::OnMouseRect(int MouseX, int MouseY, int RectLeft, int RectTop, int RectRight, int RectBottom)
+{
+	//マウスの座標が四角形の外側ならreturn false
+	if (MouseX<RectLeft || MouseX>RectRight || mousePosY<RectTop || mousePosY>RectBottom)return false;
+
+	return true;
+}
+
 void GameManager::CreateModManager()
 {
 	mManager = ModManager::Instance();
 }
 
+
+std::shared_ptr<Player> GameManager::CreatePlayer()
+{
+	if (player != nullptr) {
+		return player;
+	}
+	//インスタンス生成
+	player = std::make_shared<Player>();
+	//船を生成
+	player->ShipInit();
+
+	//Observerにplayerを登録
+	enemyChecker->SetPlayer(player);
+
+	return player;
+
+}
 
 void GameManager::loadItem()
 {

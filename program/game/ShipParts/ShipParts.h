@@ -43,6 +43,11 @@ public:
 		return strWidth;
 	}
 
+	//装備状況を返す関数
+	inline bool IsEquiped() {
+		return isEquiped;
+	}
+
 private:
 	//パーツの追加体力
 	float hp = 0;
@@ -54,6 +59,9 @@ private:
 	float speed = 0;
 	//パーツの追加積載可能量
 	float containerAmount = 0;
+
+	//装備されているかどうか
+	bool isEquiped = false;
 
 	//hp,energy,def,speed,container
 	float basicStatus[5] = {};

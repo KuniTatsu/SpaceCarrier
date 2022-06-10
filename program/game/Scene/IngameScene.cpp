@@ -189,9 +189,12 @@ bool InGameScene::SeqGoalResalt(const float deltatime)
 		//ステージの進捗状況をリセットする
 		ResetStageProgress();
 
-		//プレイヤーの生成
-		player = std::make_shared<Player>();
-		player->SetList();
+		//敵と弾をすべて消す
+
+
+		////プレイヤーの生成
+		//player = std::make_shared<Player>();
+		//player->SetList();
 
 		ChangeSequence(sequence::CRUIZE);
 		return true;
@@ -273,6 +276,8 @@ void InGameScene::ResetStageProgress()
 	nowStayPos = 0.0f;
 	//進捗を0にリセット
 	progress = 0.0f;
+
+	isDestroyEnemy = false;
 	//playerの描画座標を画面中心に移動
 	player->SetPos(gManager->Center);
 }

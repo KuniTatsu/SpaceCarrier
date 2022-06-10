@@ -68,10 +68,18 @@ void Player::CheckIsLive()
 {
 }
 
-void Player::InventoryUpdate()
+bool Player::InventoryUpdate(std::shared_ptr<ShipParts>& Parts)
 {
+	//インベントリの上下移動
 	partsInventory->InventoryMove();
-	partsInventory->InventorySelect();
+	//パーツのアイコン画像をクリックしたらそのパーツのポインタを得る
+	auto parts = partsInventory->InventorySelect();
+	if (nullptr != parts) {
+		//引数の参照にパーツポインタを渡す
+		Parts = parts;
+		return true;
+	}
+	return false;
 }
 
 void Player::DrawInventory()
