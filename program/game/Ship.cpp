@@ -16,12 +16,13 @@ Ship::~Ship()
 void Ship::DrawShipParts()
 {
 	for (auto parts : shipParts) {
-		parts->DrawParts(gManager->Center.x + 50, gManager->Center.y);
+		parts->DrawParts(gManager->Center.x + 200, gManager->Center.y-160);
 	}
 }
 
 void Ship::SetProtoParts(std::shared_ptr<ShipParts>Parts)
 {
+	Parts->ChangeEquiped();
 	shipParts.emplace_back(Parts);
 }
 

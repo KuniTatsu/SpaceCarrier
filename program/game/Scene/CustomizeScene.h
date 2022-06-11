@@ -8,7 +8,10 @@
 #include<functional>
 
 class Player;
+class Ship;
 class ShipParts;
+class Menu;
+class SelectMenu;
 
 class CustomizeScene :public BaseScene
 {
@@ -20,18 +23,30 @@ public:
 	void Draw();
 
 private:
+
+	//--------------ポインタ関係----------------------//
+	// 
 	//playerのインスタンス
 	std::shared_ptr<Player>player = nullptr;
 	//GameManagerのインスタンス
 	GameManager* gManager = nullptr;
 
+	//パーツ装備メニューのインスタンス
+	std::shared_ptr<SelectMenu>partsEquipMenu = nullptr;
 
-	//初期化関数
-	void Init();
+	//shipのインスタンス
+	std::shared_ptr<Ship>playerShip = nullptr;
 
 	//インベントリでクリックしたときにパーツを指定した際の入れ物
 	std::shared_ptr<ShipParts> selectedParts = nullptr;
 
+	//------------------------------------------------//
+
+	//初期化関数
+	void Init();
+
+	//警告画像フラグ
+	bool isCaution = false;
 
 	//--------------シークエンス関係----------------//
 	tnl::Sequence<CustomizeScene>mainSeqence =
@@ -100,13 +115,15 @@ private:
 	const int GRAPHICSIZE = 240;
 
 	//topシークエンスのmenu画像描画中心座標
-	const tnl::Vector3 GRAPHICCENTER[3] = { tnl::Vector3(200,580,0),tnl::Vector3(520,580,0),tnl::Vector3(840,580,0) };
-	
+	const tnl::Vector3 GRAPHICCENTER[3] = { tnl::Vector3(200,600,0),tnl::Vector3(520,600,0),tnl::Vector3(840,600,0) };
+
 	//背景画像
 	int background = 0;
 	//menuハイライト画像
 	int highright = 0;
 
 	//-----------------------------------------------//
+
+
 };
 

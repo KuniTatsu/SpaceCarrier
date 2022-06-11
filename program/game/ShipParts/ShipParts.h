@@ -43,6 +43,18 @@ public:
 		return strWidth;
 	}
 
+	inline void	ChangeEquiped() {
+		//‘•”õ‚µ‚Ä‚¢‚½‚ç
+		if (isEquiped)
+		{
+			//‘•”õó‘Ô‚ğŠO‚·
+			isEquiped = false;
+			return;
+		}
+		isEquiped = true;
+	}
+	//‘•”õó‘Ô‚ğØ‚è‘Ö‚¦‚éŠÖ”
+
 	//‘•”õó‹µ‚ğ•Ô‚·ŠÖ”
 	inline bool IsEquiped() {
 		return isEquiped;

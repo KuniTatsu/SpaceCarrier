@@ -2,6 +2,9 @@
 #include"../Manager/GameManager.h"
 #include"../Object/Player.h"
 #include"../Manager/SceneManager.h"
+#include"../Menu.h"
+#include"../ShipParts/ShipParts.h"
+#include"../Ship.h"
 
 CustomizeScene::CustomizeScene()
 {
@@ -47,6 +50,8 @@ void CustomizeScene::Init()
 	gManager = GameManager::Instance();
 	player = gManager->GetPlayer();
 
+	playerShip = player->GetShip();
+
 	menuShipCustomGh = gManager->LoadGraphEx("graphics/CustomMenu_1.png");
 	menuWeaponCustomGh = gManager->LoadGraphEx("graphics/CustomMenu_2.png");
 	menuReturnGh = gManager->LoadGraphEx("graphics/CustomMenu_3.png");
@@ -57,6 +62,11 @@ void CustomizeScene::Init()
 
 	background = gManager->LoadGraphEx("graphics/BackGroundCustomScene.png");
 	highright = gManager->LoadGraphEx("graphics/CustomMenu_HighLight.png");
+
+	partsEquipMenu = std::make_shared<SelectMenu>(400, 300, 120, 80, "graphics/FrameBlack.png");
+
+	partsEquipMenu->AddMenuElements("装備する");
+	partsEquipMenu->AddMenuElements("やめる");
 
 }
 
@@ -85,13 +95,29 @@ bool CustomizeScene::SeqTop(const float deltatime)
 
 bool CustomizeScene::SeqSelect(const float deltatime)
 {
+	//クリックしたら警告画像を消す
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		isCaution = false;
+		return true;
+	}
+
 	//もしインベントリ内のパーツをクリックして選択したら
 	if (player->InventoryUpdate(selectedParts)) {
+		//すでに装備しているパーツをクリックしていたら
+		if (selectedParts->IsEquiped()) {
 
+			//すでに装備している旨を表示する
+			isCaution = true;
+			return true;
+		}
+
+		ChangeSequence(sequence::SHIPCUSTOM);
+		return true;
 		//customシークエンスに移る
 
 	}
 
+	//戻るボタンをクリックしたら
 	if (gManager->isClickedRect(gManager->mousePosX, gManager->mousePosY, GRAPHICCENTER[2].x - (GRAPHICSIZE / 2), GRAPHICCENTER[2].y - (GRAPHICSIZE / 2),
 		GRAPHICCENTER[2].x + (GRAPHICSIZE / 2), GRAPHICCENTER[2].y + (GRAPHICSIZE / 2))) {
 		ChangeSequence(sequence::TOP);
@@ -102,6 +128,47 @@ bool CustomizeScene::SeqSelect(const float deltatime)
 
 bool CustomizeScene::SeqShipCustomize(const float deltatime)
 {
+	//menuを表示
+
+	//装備する,やめる
+	//menuの移動
+	partsEquipMenu->MenuUpdate();
+
+	//enterキーを押したら決定,nowSelectNumによって動作を変える
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+
+		//----------------装備の変更--------------------------//
+		if (partsEquipMenu->GetNowSelectNum() == 0) {
+			//装備を変更する
+			auto type = selectedParts->GetPartsType();
+			player->ChangeShipParts(type, selectedParts);
+
+			//パーツ変更完了通知を出す
+			//ポップメッセージ？ウィンドウ？
+
+			//selectシークエンスに戻る
+			ChangeSequence(sequence::SELECT);
+			return true;
+		}
+		//-----------------selectシークエンスに戻る------------//
+		else if (partsEquipMenu->GetNowSelectNum() == 1) {
+
+			//selectシークエンスに戻る
+			ChangeSequence(sequence::SELECT);
+
+			//menuを0に戻す
+			partsEquipMenu->ResetMenuNum();
+			return true;
+		}
+	}
+
+	//どちらかを行うまでシークエンスを出ない
+	//装備するを押したらパーツタイプを読み取り、
+	//shipのchangeShipParts関数を呼ぶ
+
+	//引数にselectedPartsを入れる
+
+	DrawStringEx(500, 500, -1, "カスタマイズシークエンスだよ");
 	return true;
 }
 
@@ -161,13 +228,14 @@ void CustomizeScene::DrawTopSeq()
 	//各menu画像の描画
 	int i = 0;
 	for (auto gh : ghs) {
-		DrawRotaGraph(200 + i * 320, 580, 0.8, 0, gh, false);
+		DrawRotaGraph(200 + i * 320, 600, 0.8, 0, gh, false);
 		++i;
 	}
 }
 
 void CustomizeScene::DrawSelectSeq()
 {
+	//パーツインベントリの描画
 	player->DrawInventory();
 	player->DrawShip();
 
@@ -182,8 +250,19 @@ void CustomizeScene::DrawSelectSeq()
 
 void CustomizeScene::DrawCustomSeq()
 {
+	//パーツインベントリの描画
 	player->DrawInventory();
 	player->DrawShip();
+
+	//装備選択メニューの描画
+	partsEquipMenu->DrawSelectMenu();
+
+	auto shipStatus = playerShip->GetShipStatus();
+
+	/*for (int i = 0; i < 5; ++i) {
+		DrawStringEx()
+	}*/
+
 }
 
 void CustomizeScene::DrawWeaponSeq()

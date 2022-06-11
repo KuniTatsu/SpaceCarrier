@@ -21,6 +21,7 @@
     <ClCompile Include="program\game\Manager\ModManager.cpp" />
     <ClCompile Include="program\game\Manager\PartsManager.cpp" />
     <ClCompile Include="program\game\Manager\UIManager.cpp" />
+    <ClCompile Include="program\game\Menu.cpp" />
     <ClCompile Include="program\game\Mod.cpp" />
     <ClCompile Include="program\game\Observer.cpp" />
     <ClCompile Include="program\game\Scene\CustomizeScene.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="program\game\Manager\ModManager.h" />
     <ClInclude Include="program\game\Manager\PartsManager.h" />
     <ClInclude Include="program\game\Manager\UIManager.h" />
+    <ClInclude Include="program\game\Menu.h" />
     <ClInclude Include="program\game\Mod.h" />
     <ClInclude Include="program\game\Observer.h" />
     <ClInclude Include="program\game\Scene\CustomizeScene.h" />

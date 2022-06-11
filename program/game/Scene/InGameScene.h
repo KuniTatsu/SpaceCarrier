@@ -107,9 +107,10 @@ private:
 	//test
 	int testGh = 0;
 	//”wŒi‚Ì•`‰æÀ•W’†S
-	tnl::Vector3 backGroundPos = {};
+	tnl::Vector3 backGroundPos1 = {};
+	tnl::Vector3 backGroundPos2 = {};
 	//”wŒi‰æ‘œ‚Ì‘å‚«‚³
-	const int SIZEY = 960;
+	const int SIZEY = 768;
 
 	//”wŒi‰æ‘œƒXƒNƒ[ƒ‹
 	void MoveBackGround();

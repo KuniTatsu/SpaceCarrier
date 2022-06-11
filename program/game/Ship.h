@@ -47,6 +47,9 @@ public:
 		return weapones.size();
 	}
 
+	//船のパーツを変更する関数
+	void ChangeShipParts(int PartsType, std::shared_ptr<PartsBase> NewParts);
+
 private:
 
 	//初期化関数
@@ -137,8 +140,7 @@ private:
 	float containerAmount = 0;
 	*/
 
-	//船のパーツを変更する関数
-	void ChangeShipParts(int PartsType, std::shared_ptr<PartsBase> NewParts);
+	
 
 
 };

@@ -31,8 +31,9 @@ void InGameScene::Update()
 void InGameScene::Draw()
 {
 	//一枚目の背景画像
-	//DrawRotaGraph(backGroundPos.x, backGroundPos.y, 2, 0, backGroundGh, false);
-	//DrawRotaGraph(backGroundPos.x, backGroundPos.y - SIZEY, 2, 0, testGh, false);
+	DrawRotaGraph(backGroundPos1.x, backGroundPos1.y, 1, 0, backGroundGh, false);
+
+	DrawRotaGraph(backGroundPos2.x, backGroundPos2.y, 1, 0, backGroundGh, false);
 
 	auto objectList = gManager->GetObjectList();
 	auto itr = objectList.begin();
@@ -57,15 +58,16 @@ void InGameScene::Init()
 	bManager = BulletManager::Instance();
 	eManager = EnemyManager::Instance();
 
-	backGroundGh = gManager->LoadGraphEx("graphics/space.jpg");
-	testGh = gManager->LoadGraphEx("graphics/space.jpg");
+	backGroundGh = gManager->LoadGraphEx("graphics/space.png");
+	//testGh = gManager->LoadGraphEx("graphics/space2.png");
 
 	stageGaugeBase = gManager->LoadGraphEx("graphics/StageGauge_None.png");
 	stageGaugeFill = gManager->LoadGraphEx("graphics/StageGauge_Fill.png");
 
 	goalTestGh = gManager->LoadGraphEx("graphics/TestGoal.png");
 
-	backGroundPos = { gManager->Center.x,gManager->Center.y,0 };
+	backGroundPos1 = { gManager->Center.x,gManager->Center.y,0 };
+	backGroundPos2 = tnl::Vector3(gManager->Center.x, -(SIZEY / 2), 0);
 
 	//プレイヤーの生成
 	//player = std::make_shared<Player>();
@@ -225,11 +227,20 @@ void InGameScene::ChangeSequence(const sequence seq)
 }
 void InGameScene::MoveBackGround()
 {
-	backGroundPos.y += 5;
+	backGroundPos1.y += 5;
+	backGroundPos2.y += 5;
+
 	//画面下端に画像の上端が移動したら
-	if (backGroundPos.y - 480 >= 768) {
+	if (backGroundPos1.y >= 1152) {
 		//元に戻す 元画像サイズと画面サイズの差を引く
-		backGroundPos.y = gManager->Center.y - 72;
+		//backGroundPos.y = gManager->Center.y - 72;
+		backGroundPos1.y = -SIZEY / 2;
+	}
+	//画面下端に画像の上端が移動したら
+	if (backGroundPos2.y >= 1152) {
+		//元に戻す 元画像サイズと画面サイズの差を引く
+		//backGroundPos.y = gManager->Center.y - 72;
+		backGroundPos2.y = -SIZEY / 2;
 	}
 }
 

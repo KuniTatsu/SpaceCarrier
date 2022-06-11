@@ -4,6 +4,7 @@
 #include"../Inventory.h"
 #include"../Factory.h"
 #include"../Ship.h"
+#include"../ShipParts/PartsBase.h"
 
 Player::Player()
 {
@@ -41,9 +42,6 @@ void Player::Draw()
 
 	//全武器のクールダウン表示
 	DrawWeaponCoolDown();
-
-
-
 }
 
 void Player::Init()
@@ -90,6 +88,11 @@ void Player::DrawInventory()
 void Player::DrawShip()
 {
 	myShip->DrawShipParts();
+}
+
+void Player::ChangeShipParts(int PartsType, std::shared_ptr<PartsBase> NewParts)
+{
+	myShip->ChangeShipParts(PartsType, NewParts);
 }
 
 void Player::Move()
@@ -179,6 +182,12 @@ void Player::ShipInit()
 	}
 	//船のステータス合計を計算
 	myShip->SetShipStatus();
+
+	//------debug------
+	partsInventory->AddInventory(102);
+	partsInventory->AddInventory(102);
+
+	//-----------------
 
 	//船の初期武器の登録
 	auto weaponList = partsInventory->GetWeaponInventory();

@@ -8,6 +8,8 @@
 
 //#include"Object.h"
 
+//std::string hoge[5] = { "aaa","ii","uuu","eee","ooo"};
+
 TitleScene::TitleScene()
 {
 	gManager = GameManager::Instance();
@@ -80,4 +82,11 @@ void TitleScene::Draw()
 	}*/
 
 	//---------------------------------------------------------------------//
+
+
+	/*for (int i = 0; i < 5; ++i) {
+
+		DrawStringEx(300, 10 + (i * 15) , GetColor(0,0,0), hoge[i].c_str());
+
+	}*/
 }
