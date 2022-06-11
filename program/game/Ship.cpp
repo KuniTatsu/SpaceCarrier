@@ -16,7 +16,7 @@ Ship::~Ship()
 void Ship::DrawShipParts()
 {
 	for (auto parts : shipParts) {
-		parts->DrawParts(gManager->Center.x + 200, gManager->Center.y-160);
+		parts->DrawParts(gManager->Center.x + 200, gManager->Center.y - 160);
 	}
 }
 
@@ -54,7 +54,7 @@ void Ship::SetShipStatus()
 	//各パーツの基本ステータス配列が入った配列:二次元配列
 	float* partsStatus[5] = {};
 	for (int i = 0; i < shipParts.size(); ++i) {
-		partsStatus[i] = std::dynamic_pointer_cast<ShipParts, PartsBase>(shipParts[i])->GetPartsStatus();
+		partsStatus[i] = shipParts[i]->GetPartsStatus();
 	}
 
 	//二次元配列の各配列番号ごとに足して船のステータスに代入する
@@ -76,13 +76,17 @@ void Ship::ClearShipStatus()
 	}
 }
 //-------船のパーツ換装関数---------------//
-void Ship::ChangeShipParts(int PartsType, std::shared_ptr<PartsBase> NewParts)
+void Ship::ChangeShipParts(int PartsType, std::shared_ptr<ShipParts> NewParts)
 {
+	//装備中パーツの装備状態を更新する
+	shipParts[PartsType]->ChangeEquiped();
+
 	//装備中のパーツを外す
 	shipParts[PartsType] = nullptr;
 
 	//所持している換装対象のパーツを装備する
 	shipParts[PartsType] = NewParts;
+	shipParts[PartsType]->ChangeEquiped();
 }
 
 void Ship::ShootShipWeapon()

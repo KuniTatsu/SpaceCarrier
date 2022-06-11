@@ -48,7 +48,12 @@ public:
 	}
 
 	//船のパーツを変更する関数
-	void ChangeShipParts(int PartsType, std::shared_ptr<PartsBase> NewParts);
+	void ChangeShipParts(int PartsType, std::shared_ptr<ShipParts> NewParts);
+
+	//船に装備しているパーツ一覧を返す関数
+	inline const std::vector<std::shared_ptr<ShipParts>>& GetShipPartsList() {
+		return shipParts;
+	}
 
 private:
 
@@ -77,11 +82,9 @@ private:
 	//各パーツのポインタ
 	//std::shared_ptr<PartsBase> shipParts[static_cast<uint32_t>(PARTS::MAX)] = { nullptr,nullptr, nullptr, nullptr, nullptr };
 
-	std::vector < std::shared_ptr<PartsBase>>shipParts = {};
+	//船に装備しているパーツ
+	std::vector<std::shared_ptr<ShipParts>>shipParts = {};
 
-	/*std::shared_ptr<PartsBase>* GetPoint() {
-		return shipParts;
-	}*/
 
 	/*
 	//------各パーツのポインタ---------
@@ -140,7 +143,7 @@ private:
 	float containerAmount = 0;
 	*/
 
-	
+
 
 
 };

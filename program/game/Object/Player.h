@@ -102,7 +102,7 @@ public:
 		return myShip;
 	}
 	//船のパーツ換装関数
-	void ChangeShipParts(int PartsType, std::shared_ptr<PartsBase> NewParts);
+	void ChangeShipParts(int PartsType, std::shared_ptr<ShipParts> NewParts);
 
 
 private:

@@ -6,6 +6,7 @@
 #include<memory>
 #include<vector>
 #include<functional>
+#include<string>
 
 class Player;
 class Ship;
@@ -40,13 +41,27 @@ private:
 	//インベントリでクリックしたときにパーツを指定した際の入れ物
 	std::shared_ptr<ShipParts> selectedParts = nullptr;
 
+	//船のパーツ名
+	const std::string PARTSNAME[5] = { "船体","貨物室","装甲","発電機","スラスター" };
+
 	//------------------------------------------------//
 
 	//初期化関数
 	void Init();
 
+	//船に装備中のパーツ一覧を描画する関数
+	void DrawEquipParts();
+
 	//警告画像フラグ
 	bool isCaution = false;
+
+	/*
+	HULL,
+		CONTAINER,
+		ARMOR,
+		GENERATOR,
+		THRUSTER,
+	*/
 
 	//--------------シークエンス関係----------------//
 	tnl::Sequence<CustomizeScene>mainSeqence =
@@ -121,6 +136,10 @@ private:
 	int background = 0;
 	//menuハイライト画像
 	int highright = 0;
+
+	//装備中警告画像
+	int caution = 0;
+
 
 	//-----------------------------------------------//
 

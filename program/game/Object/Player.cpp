@@ -90,7 +90,7 @@ void Player::DrawShip()
 	myShip->DrawShipParts();
 }
 
-void Player::ChangeShipParts(int PartsType, std::shared_ptr<PartsBase> NewParts)
+void Player::ChangeShipParts(int PartsType, std::shared_ptr<ShipParts> NewParts)
 {
 	myShip->ChangeShipParts(PartsType, NewParts);
 }

@@ -41,7 +41,6 @@ void CustomizeScene::Draw()
 	//シークエンスごとのDraw関数
 	drawFunc(this);
 
-
 	DrawStringEx(700, 200, -1, "Rキーでステージセレクトへ戻る");
 }
 
@@ -63,11 +62,31 @@ void CustomizeScene::Init()
 	background = gManager->LoadGraphEx("graphics/BackGroundCustomScene.png");
 	highright = gManager->LoadGraphEx("graphics/CustomMenu_HighLight.png");
 
-	partsEquipMenu = std::make_shared<SelectMenu>(400, 300, 120, 80, "graphics/FrameBlack.png");
+	caution = gManager->LoadGraphEx("graphics/CustomCaution.png");
 
+	//-----------装備確認メニューの生成----------------//
+	partsEquipMenu = std::make_shared<SelectMenu>(400, 300, 120, 80, "graphics/FrameBlack.png");
+	//メニュー項目の追加
 	partsEquipMenu->AddMenuElements("装備する");
 	partsEquipMenu->AddMenuElements("やめる");
 
+}
+
+void CustomizeScene::DrawEquipParts()
+{
+	//船パーツ一覧の描画
+	for (int i = 0; i < 5; ++i) {
+		//パーツ名の取得
+		auto name = playerShip->GetShipPartsList()[i]->GetFactName();
+
+		//auto hoge = PARTSNAME[i].c_str();
+
+		//パーツ部位名の描画
+		DrawStringEx(50, 600 + (i * 20), -1, PARTSNAME[i].c_str());
+
+		//パーツ名の描画
+		DrawStringEx(140, 600 + (i * 20), -1, name.c_str());
+	}
 }
 
 bool CustomizeScene::SeqTop(const float deltatime)
@@ -213,7 +232,7 @@ void CustomizeScene::ChangeSequence(const sequence seq)
 		break;
 	}
 }
-
+//トップシークエンスでの描画関数
 void CustomizeScene::DrawTopSeq()
 {
 
@@ -232,7 +251,7 @@ void CustomizeScene::DrawTopSeq()
 		++i;
 	}
 }
-
+//セレクトシークエンスでの描画関数
 void CustomizeScene::DrawSelectSeq()
 {
 	//パーツインベントリの描画
@@ -246,8 +265,14 @@ void CustomizeScene::DrawSelectSeq()
 		DrawRotaGraph(GRAPHICCENTER[2].x, GRAPHICCENTER[2].y, 0.8, 0, highright, false);
 	}
 	DrawRotaGraph(GRAPHICCENTER[2].x, GRAPHICCENTER[2].y, 0.8, 0, ghs[2], false);
-}
 
+	//装備中のパーツ一覧の描画
+	DrawEquipParts();
+
+
+	if (isCaution)DrawRotaGraph(gManager->Center.x, gManager->Center.y, 1, 0, caution, false);
+}
+//カスタマイズシークエンスでの描画関数
 void CustomizeScene::DrawCustomSeq()
 {
 	//パーツインベントリの描画
@@ -259,9 +284,8 @@ void CustomizeScene::DrawCustomSeq()
 
 	auto shipStatus = playerShip->GetShipStatus();
 
-	/*for (int i = 0; i < 5; ++i) {
-		DrawStringEx()
-	}*/
+	//装備中のパーツ一覧の描画
+	DrawEquipParts();
 
 }
 
