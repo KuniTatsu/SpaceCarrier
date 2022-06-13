@@ -16,7 +16,7 @@ public:
 		return basicStatus;
 	}
 	//Mod–¼æ“¾ŠÖ”
-	std::string GetModName() {
+	std::string& GetModName() {
 		return modName;
 	}
 

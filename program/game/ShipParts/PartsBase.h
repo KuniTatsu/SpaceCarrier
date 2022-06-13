@@ -30,6 +30,24 @@ public:
 		return iconPass;
 	}
 
+	//装備状態を切り替える関数
+	inline void	ChangeEquiped() {
+		//装備していたら
+		if (isEquiped)
+		{
+			//装備状態を外す
+			isEquiped = false;
+			return;
+		}
+		isEquiped = true;
+	}
+
+
+	//装備状況を返す関数
+	inline bool IsEquiped() {
+		return isEquiped;
+	}
+
 
 	//船改造画面での描画関数
 	virtual void DrawParts(int X,int Y) = 0;
@@ -54,6 +72,12 @@ protected:
 
 	//iconBackGh
 	int iconBachGh = 0;
+
+	//equipIconGh
+	int iconEquipGh = 0;
+
+	//装備されているかどうか
+	bool isEquiped = false;
 
 	//ゲームマネージャポインタ
 	GameManager* gManager = nullptr;

@@ -14,7 +14,13 @@ public:
 		int Height, std::string GhPath);
 	virtual~Menu() {};
 
+	//”wŒi•`‰æ
 	void MenuDraw();
+
+	//¶ãÀ•Wæ“¾
+	inline const tnl::Vector3& GetTopPos() {
+		return menuTopPos;
+	}
 
 protected:
 	//ƒƒjƒ…[¶ãÀ•W

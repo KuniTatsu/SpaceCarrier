@@ -35,14 +35,19 @@ private:
 	//パーツ装備メニューのインスタンス
 	std::shared_ptr<SelectMenu>partsEquipMenu = nullptr;
 
+	//ステータスの背景UI
+	std::shared_ptr<Menu>equipBack = nullptr;
+	std::shared_ptr<Menu>statusBack = nullptr;
+
+	std::shared_ptr<Menu>uiBack = nullptr;
+	//uiBackMenuの左上座標
+	tnl::Vector3 topPos;
+
 	//shipのインスタンス
 	std::shared_ptr<Ship>playerShip = nullptr;
 
 	//インベントリでクリックしたときにパーツを指定した際の入れ物
 	std::shared_ptr<ShipParts> selectedParts = nullptr;
-
-	//船のパーツ名
-	const std::string PARTSNAME[5] = { "船体","貨物室","装甲","発電機","スラスター" };
 
 	//------------------------------------------------//
 
@@ -52,16 +57,17 @@ private:
 	//船に装備中のパーツ一覧を描画する関数
 	void DrawEquipParts();
 
+	//船のステータス一覧を描画する関数
+	void DrawShipStatus(int TopX, int TopY);
+
+
 	//警告画像フラグ
 	bool isCaution = false;
 
-	/*
-	HULL,
-		CONTAINER,
-		ARMOR,
-		GENERATOR,
-		THRUSTER,
-	*/
+	//船のパーツ名
+	const std::string PARTSNAME[5] = { "船体","貨物室","装甲","発電機","スラスター" };
+
+	const std::string STATUSNAME[5] = { "体力","電力","防御力","速度","貨物容量" };
 
 	//--------------シークエンス関係----------------//
 	tnl::Sequence<CustomizeScene>mainSeqence =

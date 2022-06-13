@@ -83,6 +83,7 @@ bool Player::InventoryUpdate(std::shared_ptr<ShipParts>& Parts)
 void Player::DrawInventory()
 {		//380x465
 	partsInventory->InventoryDraw(partsInventory->guideX - 95, 30, partsInventory->guideX + 290, 495);
+	//partsInventory->InventoryDraw(0, 30,1024, 495);
 }
 
 void Player::DrawShip()

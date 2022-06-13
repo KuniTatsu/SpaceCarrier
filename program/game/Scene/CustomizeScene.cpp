@@ -41,7 +41,7 @@ void CustomizeScene::Draw()
 	//シークエンスごとのDraw関数
 	drawFunc(this);
 
-	DrawStringEx(700, 200, -1, "Rキーでステージセレクトへ戻る");
+	//DrawStringEx(700, 200, -1, "Rキーでステージセレクトへ戻る");
 }
 
 void CustomizeScene::Init()
@@ -70,10 +70,21 @@ void CustomizeScene::Init()
 	partsEquipMenu->AddMenuElements("装備する");
 	partsEquipMenu->AddMenuElements("やめる");
 
+	equipBack = std::make_shared<Menu>(40, 590, 340, 120, "graphics/FrameBlack.png");
+	statusBack = std::make_shared<Menu>(390, 590, 140, 120, "graphics/FrameBlack.png");
+
+	uiBack = std::make_shared<Menu>(30, 560, 510, 160, "graphics/FrameBlack.png");
+	topPos = uiBack->GetTopPos();
+
+	
+
 }
 
 void CustomizeScene::DrawEquipParts()
 {
+	//背景の描画
+	equipBack->MenuDraw();
+
 	//船パーツ一覧の描画
 	for (int i = 0; i < 5; ++i) {
 		//パーツ名の取得
@@ -85,8 +96,24 @@ void CustomizeScene::DrawEquipParts()
 		DrawStringEx(50, 600 + (i * 20), -1, PARTSNAME[i].c_str());
 
 		//パーツ名の描画
-		DrawStringEx(140, 600 + (i * 20), -1, name.c_str());
+		DrawStringEx(160, 600 + (i * 20), -1, name.c_str());
 	}
+}
+//船のステータスを描画する
+void CustomizeScene::DrawShipStatus(int TopX, int TopY)
+{
+	//背景の描画
+	statusBack->MenuDraw();
+
+	//船のステータス取得
+	auto status = playerShip->GetShipStatus();
+
+	for (int i = 0; i < 5; ++i) {
+
+		DrawStringEx(TopX, TopY + i * 20, -1, STATUSNAME[i].c_str());
+		DrawStringEx(TopX + 70, TopY + i * 20, -1, "%.0f", (status[i]));
+	}
+
 }
 
 bool CustomizeScene::SeqTop(const float deltatime)
@@ -111,7 +138,7 @@ bool CustomizeScene::SeqTop(const float deltatime)
 	}
 	return true;
 }
-
+//船体パーツの選択シークエンス
 bool CustomizeScene::SeqSelect(const float deltatime)
 {
 	//クリックしたら警告画像を消す
@@ -144,7 +171,7 @@ bool CustomizeScene::SeqSelect(const float deltatime)
 	}
 	return true;
 }
-
+//換装確認画面
 bool CustomizeScene::SeqShipCustomize(const float deltatime)
 {
 	//menuを表示
@@ -190,7 +217,7 @@ bool CustomizeScene::SeqShipCustomize(const float deltatime)
 	DrawStringEx(500, 500, -1, "カスタマイズシークエンスだよ");
 	return true;
 }
-
+//武装換装選択シークエンス //未実装
 bool CustomizeScene::SeqWeaponCustomize(const float deltatime)
 {
 	return true;
@@ -264,13 +291,27 @@ void CustomizeScene::DrawSelectSeq()
 		//メニューをハイライト表示する
 		DrawRotaGraph(GRAPHICCENTER[2].x, GRAPHICCENTER[2].y, 0.8, 0, highright, false);
 	}
+	//戻るボタン
 	DrawRotaGraph(GRAPHICCENTER[2].x, GRAPHICCENTER[2].y, 0.8, 0, ghs[2], false);
+
+
+	//画面下部の一覧の背景
+	uiBack->MenuDraw();
+
+	DrawStringEx(topPos.x + 10, topPos.y + 10, -1, "船のステータス");
 
 	//装備中のパーツ一覧の描画
 	DrawEquipParts();
 
+	//船のステータス描画
+	DrawShipStatus(400, 600);
 
-	if (isCaution)DrawRotaGraph(gManager->Center.x, gManager->Center.y, 1, 0, caution, false);
+
+	//装備中警告画像の描画
+	if (isCaution) {
+		DrawRotaGraph(gManager->Center.x, gManager->Center.y, 1, 0, caution, false);
+		DrawStringEx(gManager->Center.x, gManager->Center.y + 40, -1, "Enterを押してください");
+	}
 }
 //カスタマイズシークエンスでの描画関数
 void CustomizeScene::DrawCustomSeq()
@@ -284,8 +325,16 @@ void CustomizeScene::DrawCustomSeq()
 
 	auto shipStatus = playerShip->GetShipStatus();
 
+
+	//画面下部の一覧の背景
+	uiBack->MenuDraw();
+
+	DrawStringEx(topPos.x + 10, topPos.y + 10, -1, "船のステータス");
 	//装備中のパーツ一覧の描画
 	DrawEquipParts();
+
+	//船のステータス描画
+	DrawShipStatus(400, 600);
 
 }
 

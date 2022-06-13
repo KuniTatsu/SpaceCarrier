@@ -61,6 +61,8 @@ private:
 
 	//inventoryの枠の画像ハンドル
 	int inventoryFrameGh = 0;
+	//背景の画像ハンドル
+	int inventoryBackGh = 0;
 
 	//武器パーツのインベントリ
 	std::list<std::shared_ptr<WeaponParts>>weaponInventory;

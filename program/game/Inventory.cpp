@@ -22,6 +22,7 @@ Inventory::~Inventory()
 void Inventory::Init()
 {
 	inventoryFrameGh = gManager->LoadGraphEx("graphics/InventoryFrame.png");
+	inventoryBackGh = gManager->LoadGraphEx("graphics/InventoryBack.png");
 }
 //--------------船のパーツをインベントリに追加する関数群-----------------------//
 void Inventory::AddInventory(std::shared_ptr<ShipParts> Parts)
@@ -73,8 +74,16 @@ std::shared_ptr<ShipParts> Inventory::InventorySelect()
 //インベントリ内のパーツを2列で羅列して表示する関数
 void Inventory::InventoryDraw(int FrameTopX, int FrameTopY, int FrameBottomX, int FrameBottomY)
 {
+	SetFontSize(15);
 	//描画範囲を限定する(この範囲内から出たら描画されない)
 	SetDrawArea(FrameTopX, FrameTopY, FrameBottomX, FrameBottomY - 1);
+
+	//最外枠の画像の描画
+	auto center = tnl::Vector3(FrameTopX + ((FrameBottomX - FrameTopX) / 2 - 1), FrameTopY + ((FrameBottomY - FrameTopY) / 2), 0);
+
+	//インベントリ背景の描画
+	DrawRotaGraph(center.x, center.y, 1.5, 0, inventoryBackGh, true);
+
 	auto parts = inventory.begin();
 	for (int i = 0; i < inventory.size(); ++i) {
 
@@ -105,9 +114,23 @@ void Inventory::InventoryDraw(int FrameTopX, int FrameTopY, int FrameBottomX, in
 	//描画エリアを元に戻す
 	SetDrawArea(0, 0, 1024, 768);
 
-	//最外枠の画像の描画
-	auto center = tnl::Vector3(FrameTopX + ((FrameBottomX - FrameTopX) / 2 - 1), FrameTopY + ((FrameBottomY - FrameTopY) / 2), 0);
+	////最外枠の画像の描画
+	//auto center = tnl::Vector3(FrameTopX + ((FrameBottomX - FrameTopX) / 2 - 1), FrameTopY + ((FrameBottomY - FrameTopY) / 2), 0);
 	DrawRotaGraph(center.x, center.y, 1.5, 0, inventoryFrameGh, true);
 
+	//もしカーソルされていたら
+	auto check = inventory.begin();
+	for (int i = 0; i < inventory.size(); ++i) {
+		if ((*check)->isCursored) {
 
+			//インベントリ描画範囲外なら処理しない
+			if (gManager->mousePosY > FrameTopY && gManager->mousePosY < FrameBottomY) {
+				//ステータスを描画する
+				(*check)->DrawPartsSet();
+			}
+		}
+		check++;
+	}
+
+	SetFontSize(16);
 }

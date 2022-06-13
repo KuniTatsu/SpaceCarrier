@@ -2,6 +2,7 @@
 #include"../Manager/GameManager.h"
 #include"../Manager/ModManager.h"
 #include"../Mod.h"
+#include"../Menu.h"
 
 ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float Energy, float Defence, float Speed, std::string GhPass,
 	std::string IconPass, float ContainerAmount)
@@ -34,8 +35,13 @@ ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float En
 	iconGh = gManager->LoadGraphEx(IconPass);
 
 	iconBachGh = gManager->LoadGraphEx("graphics/ShipParts/Icon_Back_fix.png");
+	iconEquipGh = gManager->LoadGraphEx("graphics/ShipParts/Icon_Back_Equiped.png");
 
-	hoge = gManager->LoadGraphEx("graphics/ShipParts/Icon_Back_test.png");
+	highRight = gManager->LoadGraphEx("graphics/ShipParts/Icon_Back_test.png");
+
+	statusBack = std::make_shared<Menu>(500, 320, 140, 120, "graphics/FrameBlack.png");
+
+	modNameBack = std::make_shared<Menu>(400, 320, 90, 120, "graphics/FrameBlack.png");
 
 	//以下の処理はマスター生成時には実行しない
 	if (!gManager->GetLoadedFlag())return;
@@ -59,6 +65,9 @@ ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float En
 
 		// 描画時の文字列の幅を取得
 		strWidth = GetDrawStringWidth(factName.c_str(), StrLen);
+
+		//合計ステータスの取得
+		SetTrueStatus();
 		return;
 	}
 
@@ -68,6 +77,11 @@ ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float En
 		myMods.emplace_back(mod);
 		tnl::DebugTrace("\n修飾Mod[%s]を付与しました\n", mod->GetModName().c_str());
 	}
+	//Modステータスの取得
+	SetEditStatus();
+	//合計ステータスの取得
+	SetTrueStatus();
+
 	//１つ目のModの名前をパーツの名前に加えて表示する
 	factName = myMods[0]->GetModName() + partsName;
 
@@ -89,20 +103,74 @@ void ShipParts::DrawParts(int X, int Y)
 
 void ShipParts::DrawPartsIcon(int X, int Y)
 {
-	//-----------debug--------------
-	if (gManager->mousePosX>=X-90&& gManager->mousePosX <= X + 90&&
-			gManager->mousePosY>=Y-112&& gManager->mousePosY <= Y + 112
+	//-----------ハイライト表示--------------
+	//マウスがアイコン画像の中にあればそのアイコン画像の背景をハイライトする
+	if (gManager->mousePosX >= X - 90 && gManager->mousePosX <= X + 90 &&
+		gManager->mousePosY >= Y - 112 && gManager->mousePosY <= Y + 112
 		) {
-		DrawRotaGraph(X, Y, 1.5, 0, hoge, false);
+		DrawRotaGraph(X, Y, 1.5, 0, highRight, false);
+		if (!isCursored)isCursored = true;
+	}
+	else {
+		if (isCursored)isCursored = false;
 	}
 	//-----------------------------
 
-	DrawRotaGraph(X, Y, 1.5, 0, iconBachGh, true);
+	//装備されていたら背景画像を変える
+	if (isEquiped) DrawRotaGraph(X, Y, 1.5, 0, iconEquipGh, true);
+	else DrawRotaGraph(X, Y, 1.5, 0, iconBachGh, true);
+
 	DrawRotaGraph(X, Y, 1.5, 0, iconGh, false);
 
-	iconX = X;
-	iconY = Y;
+	iconCenter.x = X;
+	iconCenter.y = Y;
 
+	////マウスがアイコン画像の中にあればその装備のステータスを表示する
+	//if (gManager->mousePosX >= X - 90 && gManager->mousePosX <= X + 90 &&
+	//	gManager->mousePosY >= Y - 112 && gManager->mousePosY <= Y + 112)
+	//{
+	//	statusBack->MenuDraw();
+
+	//	auto pos = statusBack->GetTopPos();
+	//	DrawPartsStatus(pos.x + 10, pos.y + 10);
+	//}
+
+
+}
+//修飾Modの持つステータスの合計
+void ShipParts::SetEditStatus()
+{
+	//modを持たないなら計算しない
+	if (myMods.empty()) {
+		for (int i = 0; i < 5; ++i) {
+			addStatus[i] = 0;
+		}
+		return;
+	}
+
+	//全てのModからステータスをそれぞれ加算する
+	for (auto mod : myMods) {
+
+		auto status = mod->GetBasicStatus();
+
+		addHp += status[0];
+		addEnergy += status[1];
+		addDefence += status[2];
+		addSpeed += status[3];
+		addContainerAmount += status[4];
+
+		//配列にも入れておく
+		for (int i = 0; i < 5; ++i) {
+			addStatus[i] += status[i];
+		}
+	}
+}
+
+void ShipParts::SetTrueStatus()
+{
+	for (int i = 0; i < 5; ++i) {
+		trueStatus[i] = basicStatus[i] + addStatus[i];
+	}
 }
 
 bool ShipParts::isClicked(int MouseX, int MouseY)
@@ -114,10 +182,44 @@ bool ShipParts::isClicked(int MouseX, int MouseY)
 	//iconY-112.5 -> iconY+112.5の範囲内にいればy座標はアイコンの中にある
 
 	//もしアイコン画像内にマウスがあり、クリックしていれば
-	if (gManager->isClickedRect(MouseX, MouseY, iconX - 90, iconY - 112, iconX + 90, iconY + 112)) {
+	if (gManager->isClickedRect(MouseX, MouseY, iconCenter.x - 90, iconCenter.y - 112, iconCenter.x + 90, iconCenter.y + 112)) {
 		tnl::DebugTrace("\n%sのアイコン画像がクリックされました\n", factName.c_str());
 		return true;
 	}
 
 	return false;
+}
+
+//ハイライトされたパーツのステータスを描画する関数
+void ShipParts::DrawPartsStatus(int TopX, int TopY)
+{
+	for (int i = 0; i < 5; ++i) {
+		DrawStringEx(TopX, TopY + i * 20, -1, STATUSNAME[i].c_str());
+		DrawStringEx(TopX + 70, TopY + i * 20, -1, "%.0f", trueStatus[i]);
+	}
+}
+
+void ShipParts::DrawPartsSet()
+{
+	statusBack->MenuDraw();
+
+	auto pos = statusBack->GetTopPos();
+	DrawPartsStatus(pos.x + 10, pos.y + 10);
+
+	auto modPos = modNameBack->GetTopPos();
+
+	modNameBack->MenuDraw();
+	DrawStringEx(modPos.x + 10, modPos.y + 10, -1, "所持MOD");
+	if (myMods.empty()) {
+
+		DrawStringEx(modPos.x + 10, modPos.y + 30, -1, "無し");
+		return;
+	}
+
+	for (int i = 0; i < myMods.size(); ++i) {
+		auto name = myMods[i]->GetModName();
+		DrawStringEx(modPos.x + 10, modPos.y + 30 + i * 20, -1, name.c_str());
+	}
+
+
 }
