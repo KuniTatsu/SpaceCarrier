@@ -71,6 +71,12 @@ void PartsManager::LoadCsv()
 		weaponPartsMaster[type].emplace_back(parts);
 	}
 
+	//---------------ドロップウェイトのロード----------------//
+	loadPartsWeight = tnl::LoadCsv("Csv/PartsWeight.csv");
+	for (int i = 1; i < loadPartsCsv.size(); ++i) {
+		dropWeight.emplace_back(std::stoi(loadPartsWeight[i][3]));
+	}
+
 
 }
 

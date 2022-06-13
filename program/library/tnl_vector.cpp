@@ -12,7 +12,7 @@ namespace tnl {
 	const Vector3 Vector3::left		= {-1,  0,  0 };
 	const Vector3 Vector3::right	= { 1,  0,  0 };
 	const Vector3 Vector3::up		= { 0,  1,  0 };
-	const Vector3 Vector3::down		= { 0, -1,  0 };
+	const Vector3 Vector3::donw		= { 0, -1,  0 };
 
 	const Vector3 Vector3::axis[static_cast<uint32_t>(eAxis::MAX)] = {
 		Vector3::front,
@@ -20,7 +20,7 @@ namespace tnl {
 		Vector3::left,
 		Vector3::right,
 		Vector3::up,
-		Vector3::down
+		Vector3::donw
 	};
 
 	//-----------------------------------------------------------------------------------------------------

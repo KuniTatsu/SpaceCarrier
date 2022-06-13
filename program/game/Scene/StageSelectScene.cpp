@@ -5,6 +5,7 @@
 #include"../Manager/SceneManager.h"
 #include"../Object/Player.h"
 #include"../Observer.h"
+#include"../Menu.h"
 
 StageSelectScene::StageSelectScene()
 {
@@ -24,8 +25,11 @@ void StageSelectScene::Update()
 		CreateStage();
 		return;
 	}
+	auto pos = customMenu->GetTopPos();
 
-	if (tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_C)) {
+	if (tnl::Input::IsKeyDownTrigger(tnl::Input::eKeys::KB_C)||
+		gManager->isClickedRect(gManager->mousePosX, gManager->mousePosY,pos.x,pos.y, pos.x+customMenu->GetWidth(), pos.y+ customMenu->GetHeight())
+		) {
 		SceneManager::ChangeScene(SceneManager::SCENE::CUSTOM);
 		return;
 	}
@@ -35,6 +39,14 @@ void StageSelectScene::Update()
 void StageSelectScene::Draw()
 {
 	uiManager->DrawUI();
+
+	customMenu->MenuDraw();
+	auto pos = customMenu->GetTopPos();
+
+	SetFontSize(20);
+	DrawStringEx(pos.x + 80, pos.y + 35, -1, "カスタマイズ");
+	SetFontSize(16);
+
 	DrawStringEx(700, 150, -1, "Cキーでカスタマイズシーンに移動する");
 }
 
@@ -54,8 +66,8 @@ void StageSelectScene::Init()
 	//ModManager生成
 	gManager->CreateModManager();
 
+	customMenu = std::make_shared<Menu>(362, 500, 300, 80, "graphics/FrameBlack.png");
 
-	
 	//playerのインスタンス取得
 	player = gManager->CreatePlayer();
 

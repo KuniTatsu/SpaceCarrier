@@ -24,7 +24,7 @@ void Animation::Update()
 		actIndex++;
 		actWait = actSpeed;
 		actIndex %= maxMotionIndex;
-		tnl::DebugTrace("\nアニメーション更新%d回目\n", actIndex);
+		//tnl::DebugTrace("\nアニメーション更新%d回目\n", actIndex);
 	}
 	else return;
 	//画像更新

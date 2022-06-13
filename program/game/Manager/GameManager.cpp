@@ -23,7 +23,7 @@
 
 GameManager::GameManager()
 {
-	tnl::DebugTrace("\nコンストラクタが呼ばれたよ\n");
+	//tnl::DebugTrace("\nコンストラクタが呼ばれたよ\n");
 }
 
 GameManager* GameManager::Instance()
@@ -260,33 +260,4 @@ std::shared_ptr<Player> GameManager::CreatePlayer()
 
 }
 
-void GameManager::loadItem()
-{
-	loadItemCsv = tnl::LoadCsv("Csv/Item.csv");
-	for (int i = 1; i < loadItemCsv.size(); ++i) {
-
-		//id
-		int a = std::atoi(loadItemCsv[i][0].c_str());
-		//ItemType
-		int b = std::atoi(loadItemCsv[i][1].c_str());
-		//setDay
-		int c = std::atoi(loadItemCsv[i][2].c_str());
-		//addStatus
-		int d = std::atoi(loadItemCsv[i][3].c_str());
-		//addStatusNum
-		int e = std::atoi(loadItemCsv[i][4].c_str());
-		//setAbility
-		int f = std::atoi(loadItemCsv[i][5].c_str());
-		//setAbilityType
-		int g = std::atoi(loadItemCsv[i][6].c_str());
-		//num
-		int h = std::atoi(loadItemCsv[i][10].c_str());
-
-
-		//Item* abi = new Item(a, b, c, d, e, f, g, loadItemCsv[i][7], loadItemCsv[i][8], loadItemCsv[i][9], h);
-
-		//abilitytypeごとにリストに格納
-		//itemList[b].emplace_back(abi);
-	}
-}
 

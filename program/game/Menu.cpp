@@ -62,19 +62,35 @@ void SelectMenu::AddMenuElements(std::string Text)
 
 }
 
-void SelectMenu::MenuUpdate()
+bool SelectMenu::MenuUpdate()
 {
 	//メニューの選択中項目の移動
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
 		nowSelectNum = (nowSelectNum + (elements.size() - 1)) % elements.size();
-		tnl::DebugTrace("\n[%d]番メニュー選択中\n", nowSelectNum);
+		//tnl::DebugTrace("\n[%d]番メニュー選択中\n", nowSelectNum);
 	}
 	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
 		nowSelectNum = (nowSelectNum + 1) % elements.size();
-		tnl::DebugTrace("\n[%d]番メニュー選択中\n", nowSelectNum);
+		//tnl::DebugTrace("\n[%d]番メニュー選択中\n", nowSelectNum);
 	}
 
+
+	return false;
 }
+
+bool SelectMenu::CheckMenuClick()
+{
+	for (int i = 0; i < elements.size(); ++i) {
+		if (elements[i]->isClickElement()) {
+			nowSelectNum = i;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
 
 void SelectMenu::DrawSelectMenu()
 {
@@ -84,16 +100,16 @@ void SelectMenu::DrawSelectMenu()
 	//メニュー項目の描画
 	for (int i = 0; i < elements.size(); ++i) {
 		elements[i]->DrawElement();
-		//DrawStringEx(menuTopPos.x + OFFSET.x, menuTopPos.y + (i * DISTANCE) + OFFSET.y, -1, menuElements[i].c_str());
 	}
-	//選択中項目のハイライト
+
+	//--------------選択中項目のハイライト---------------------//
 	//アルファ合成に変更
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 	//描画領域の指定
 	//SetDrawArea(menuTopPos.x, menuTopPos.y, menuTopPos.x + width, menuTopPos.y + height);
 
 	//ハイライト画像の描画
-	DrawRotaGraph(elements[nowSelectNum]->centerPos.x,elements[nowSelectNum]->centerPos.y, 1, 0, highLightGh, false);
+	DrawRotaGraph(elements[nowSelectNum]->centerPos.x, elements[nowSelectNum]->centerPos.y, 1, 0, highLightGh, false);
 
 	//SetDrawArea(0, 0, 1024, 768);
 	//ブレンドモードを戻す
@@ -108,10 +124,10 @@ Element::Element(float CenterX, float CenterY, std::string Text)
 	gManager = GameManager::Instance();
 
 	centerPos.x = CenterX;
-	centerPos.y = CenterY+10;
+	centerPos.y = CenterY + 10;
 
 	leftPos.x = CenterX - TEXTRECT.x / 2;
-	leftPos.y = CenterY ;
+	leftPos.y = CenterY - TEXTRECT.y / 2;
 
 	element = Text;
 
@@ -122,9 +138,18 @@ Element::~Element()
 {
 }
 
+bool Element::isClickElement()
+{
+	if (gManager->isClickedRect(gManager->mousePosX, gManager->mousePosY, leftPos.x, leftPos.y, leftPos.x + TEXTRECT.x, leftPos.y + TEXTRECT.y))
+	{
+		return true;
+	}
+	return false;
+}
+
 void Element::DrawElement()
 {
 	DrawRotaGraph(centerPos.x, centerPos.y, 1, 0, gh, false);
 
-	DrawStringEx(leftPos.x + 10, leftPos.y, -1, element.c_str());
+	DrawStringEx(leftPos.x + 10, centerPos.y-10, -1, element.c_str());
 }

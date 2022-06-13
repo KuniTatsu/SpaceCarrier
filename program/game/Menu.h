@@ -22,6 +22,16 @@ public:
 		return menuTopPos;
 	}
 
+	//幅取得
+	inline const int& GetWidth() {
+		return width;
+	}
+
+	//高さ取得
+	inline const int& GetHeight() {
+		return height;
+	}
+
 protected:
 	//メニュー左上座標
 	tnl::Vector3 menuTopPos = {};
@@ -49,7 +59,10 @@ public:
 	void AddMenuElements(std::string Text);
 
 	//menu選択関数
-	void MenuUpdate();
+	bool MenuUpdate();
+
+	//menuクリック検知関数
+	bool CheckMenuClick();
 
 	//menu描画関数
 	void DrawSelectMenu();
@@ -95,6 +108,11 @@ public:
 	~Element();
 	//メニュー項目の描画
 	void DrawElement();
+
+
+
+	//メニュー項目のクリック検知
+	bool isClickElement();
 
 	//中心座標
 	tnl::Vector3 centerPos = {};

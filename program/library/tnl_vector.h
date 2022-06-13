@@ -18,7 +18,7 @@ namespace tnl {
 		static const Vector3 left;
 		static const Vector3 right;
 		static const Vector3 up;
-		static const Vector3 down;
+		static const Vector3 donw;
 		enum class eAxis : uint32_t { FRONT, BACK, LEFT, RIGHT, UP, DOWN, MAX };
 		enum class fAxis : uint32_t { 
 			FRONT	= (1 << static_cast<uint32_t>(eAxis::FRONT)),
@@ -70,7 +70,7 @@ namespace tnl {
 		float	angle(const Vector3& v) const noexcept;
 		void	normalize()				noexcept;
 		Vector3	cross(const Vector3& v) const noexcept;
-		float	length()				const noexcept;
+		float	length()				noexcept;
 		Vector3	xy()					const noexcept;
 		Vector3	xz()					const noexcept;
 		Vector3	yz()					const noexcept;
@@ -224,7 +224,7 @@ namespace tnl {
 		return static_cast<Vector3>(f3);
 	}
 	//-----------------------------------------------------------------------------------------------------
-	inline float Vector3::length() const noexcept {
+	inline float Vector3::length() noexcept {
 		return DirectX::XMVector3Length(DirectX::XMLoadFloat3(this)).m128_f32[0];
 	}
 	//-----------------------------------------------------------------------------------------------------

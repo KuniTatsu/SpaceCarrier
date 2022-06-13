@@ -9,6 +9,7 @@ class Inventory;
 class Ship;
 class PartsBase;
 class ShipParts;
+class PartsManager;
 
 class Player final :public Object
 {
@@ -104,6 +105,8 @@ public:
 	//船のパーツ換装関数
 	void ChangeShipParts(int PartsType, std::shared_ptr<ShipParts> NewParts);
 
+	//パーツの新規取得関数
+	void CreateNewParts();
 
 private:
 
@@ -120,6 +123,9 @@ private:
 
 	//playerの乗る宇宙船
 	std::shared_ptr<Ship>myShip = nullptr;
+
+	//PartsManagerインスタンス
+	PartsManager* pManager = nullptr;
 
 
 	//---------------キー関係----------------------//

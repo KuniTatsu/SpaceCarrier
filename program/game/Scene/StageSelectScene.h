@@ -7,6 +7,7 @@
 class GameManager;
 class UIManager;
 class Player;
+class Menu;
 
 class StageSelectScene:public BaseScene
 {
@@ -22,6 +23,9 @@ private:
 
 	GameManager* gManager = nullptr;	
 	UIManager* uiManager = nullptr;	
+
+	//カスタマイズシーンへ移動するUI画像
+	std::shared_ptr<Menu>customMenu=nullptr;
 
 	//UI画像の基準点
 	const tnl::Vector3 UIBASEPOS = { 200,200,0 };

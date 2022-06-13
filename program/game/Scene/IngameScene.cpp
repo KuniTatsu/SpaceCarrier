@@ -6,6 +6,7 @@
 #include"../Object/Object.h"
 #include"../Object/Player.h"
 #include"../Object/Enemy.h"
+#include"../Object/DropItem.h"
 #include"../Factory.h"
 #include<time.h>
 #include"../Animation.h"
@@ -108,7 +109,7 @@ bool InGameScene::SeqCruize(const float deltatime)
 	}
 
 	//敵の生成　
-	if (GetRand(100) % 100 > 98) {
+	if (GetRand(100) % 100 > 95) {
 		/*auto enemy = std::dynamic_pointer_cast<Enemy, Object>(fac->create("Enemy", gManager->GetRandomPos(),
 			tnl::Vector3(0, 2, 0), Factory::MOVETYPE::STOPPOS , Factory::SHOOTTYPE::STRAIGHT));*/
 
@@ -160,9 +161,40 @@ bool InGameScene::SeqCruize(const float deltatime)
 				enemy->SetIsLive();
 				bullet->SetIsLive();
 				isDestroyEnemy = true;
+
+				/*
+				//ドロップアイテムの処理　いずれ実装
+				auto playerNowPos = player->GetPos();
+				auto drop = std::dynamic_pointer_cast<Object, DropItem>(std::make_shared<DropItem>(playerNowPos.x, playerNowPos.y));
+				drop->SetList();
+				dropItemList.emplace_back(drop);
+				*/
 			}
 		}
 	}
+	/*
+
+	//dropItemとの当たり判定
+	for (auto item : dropItemList) {
+
+		auto hoge = std::dynamic_pointer_cast<Object, DropItem>(item);
+		if (tnl::IsIntersectSphere(player->GetPos(), player->GetRadius(), hoge->GetPos(), hoge->GetRadius())) {
+			hoge->SetIsLive();
+			//ドロップ品を追加する
+			player->CreateNewParts();
+		}
+
+	}
+	auto it = dropItemList.begin();
+	while (it != dropItemList.end()) {
+		if (!(*it)->GetIsLive()) {
+			it = dropItemList.erase(it);
+			continue;
+		}
+		it++;
+	}
+
+	*/
 	//インスタンス消去
 	bManager->RemoveBulletList();
 	eManager->RemoveEnemyList();

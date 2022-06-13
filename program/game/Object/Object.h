@@ -31,13 +31,16 @@ protected:
 	};
 public:
 	Object();
-
+	//-------オブジェクトを生成した直後にこれを必ず呼ぶこと---------------//
+	//オブジェクトリストへの登録
 	void SetList();
+	//------------------------------------------------------------------//
+
 	//生死状態の獲得
 	inline bool& GetIsLive() {
 		return isLive;
 	}
-
+	//死亡判定セット関数
 	inline void	SetIsLive() {
 		isLive = false;
 	}

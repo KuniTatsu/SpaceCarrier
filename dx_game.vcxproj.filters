@@ -86,6 +86,7 @@
     <ClCompile Include="program\game\Inventory.cpp" />
     <ClCompile Include="program\game\Observer.cpp" />
     <ClCompile Include="program\game\Menu.cpp" />
+    <ClCompile Include="program\game\Object\DropItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\game\game_main.h">
@@ -184,5 +185,6 @@
     <ClInclude Include="program\game\Inventory.h" />
     <ClInclude Include="program\game\Observer.h" />
     <ClInclude Include="program\game\Menu.h" />
+    <ClInclude Include="program\game\Object\DropItem.h" />
   </ItemGroup>
 </Project>

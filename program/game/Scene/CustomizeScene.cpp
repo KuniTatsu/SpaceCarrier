@@ -181,7 +181,7 @@ bool CustomizeScene::SeqShipCustomize(const float deltatime)
 	partsEquipMenu->MenuUpdate();
 
 	//enterƒL[‚ð‰Ÿ‚µ‚½‚çŒˆ’è,nowSelectNum‚É‚æ‚Á‚Ä“®ì‚ð•Ï‚¦‚é
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)||partsEquipMenu->CheckMenuClick()) {
 
 		//----------------‘•”õ‚Ì•ÏX--------------------------//
 		if (partsEquipMenu->GetNowSelectNum() == 0) {

@@ -13,6 +13,7 @@ class Player;
 class Enemy;
 class Factory;
 class Animation;
+class DropItem;
 
 class InGameScene :public BaseScene
 {
@@ -33,6 +34,9 @@ private:
 
 	//enemyリスト
 	std::list<std::shared_ptr<Enemy>>enemyList;
+
+	//dropItemのリスト
+	std::list<std::shared_ptr<DropItem>>dropItemList;
 
 	std::shared_ptr<Player>player = nullptr;
 

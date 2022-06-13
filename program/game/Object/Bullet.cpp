@@ -6,27 +6,21 @@
 Bullet::Bullet(tnl::Vector3& StartPos, tnl::Vector3& VPos)
 {
 	Initialize(StartPos, VPos);
-	tnl::DebugTrace("\nBulletが作成されました\n");
 	bManager = BulletManager::Instance();
 }
 //移動ベクトルを指定せずに動き方を指定する生成方法
 Bullet::Bullet(tnl::Vector3 StartPos, MovementBase* MoveType)
 {
 	Initialize(StartPos);
-	tnl::DebugTrace("\nBulletが作成されました\n");
 	bManager = BulletManager::Instance();
 
 	moveType = MoveType;
 
-	/*tnl::Vector3 vecSpeed = moveType->GetVecSpeed();
-
-	tnl::DebugTrace("\n%d,%d,%d\n", vecSpeed.x, vecSpeed.y, vecSpeed.z);*/
 
 }
 
 Bullet::~Bullet()
 {
-	tnl::DebugTrace("\nBulletが破棄されました\n");
 }
 
 void Bullet::Update()

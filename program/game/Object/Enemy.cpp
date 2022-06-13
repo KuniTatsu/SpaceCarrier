@@ -8,7 +8,7 @@
 
 Enemy::Enemy(tnl::Vector3 StartPos)
 {
-	tnl::DebugTrace("\n“G‚ª¶¬‚³‚ê‚Ü‚µ‚½\n");
+	//tnl::DebugTrace("\n“G‚ª¶¬‚³‚ê‚Ü‚µ‚½\n");
 	//‰æ‘œ“Ç‚İ‚İ
 	gh = gManager->LoadGraphEx("graphics/Enemy.png");
 
@@ -18,7 +18,7 @@ Enemy::Enemy(tnl::Vector3 StartPos)
 
 Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, MovementBase* MoveType, ShootBase* ShootType)
 {
-	tnl::DebugTrace("\n“G‚ª¶¬‚³‚ê‚Ü‚µ‚½\n");
+	//tnl::DebugTrace("\n“G‚ª¶¬‚³‚ê‚Ü‚µ‚½\n");
 
 	//‰æ‘œ“Ç‚İ‚İ
 	gh = gManager->LoadGraphEx(Gh);
@@ -39,7 +39,7 @@ Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, MovementBase* MoveType, Shoo
 
 Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, float Defence, float Speed, MovementBase* MoveType, ShootBase* ShootType)
 {
-	tnl::DebugTrace("\n“G‚ª¶¬‚³‚ê‚Ü‚µ‚½\n");
+	//tnl::DebugTrace("\n“G‚ª¶¬‚³‚ê‚Ü‚µ‚½\n");
 
 	//‰æ‘œ“Ç‚İ‚İ
 	gh = gManager->LoadGraphEx(Gh);
@@ -69,7 +69,7 @@ Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, floa
 
 Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, float Defence, float Speed, MovementBase* MoveType, ShootBase* ShootType, ShootBase* ExShootType)
 {
-	tnl::DebugTrace("\n“G‚ª¶¬‚³‚ê‚Ü‚µ‚½\n");
+	//tnl::DebugTrace("\n“G‚ª¶¬‚³‚ê‚Ü‚µ‚½\n");
 
 	//‰æ‘œ“Ç‚İ‚İ
 	gh = gManager->LoadGraphEx(Gh);
@@ -98,8 +98,8 @@ Enemy::Enemy(tnl::Vector3 StartPos, std::string Gh, float Hp, float Attack, floa
 
 Enemy::~Enemy()
 {
-	tnl::DebugTrace("\n“G‚ªÁ‹‚³‚ê‚Ü‚µ‚½\n");
-	tnl::DebugTrace("\npos[%f,%f]\n", pos.x, pos.y);
+	//tnl::DebugTrace("\n“G‚ªÁ‹‚³‚ê‚Ü‚µ‚½\n");
+	//tnl::DebugTrace("\npos[%f,%f]\n", pos.x, pos.y);
 
 	DeleteMemory();
 }
@@ -139,7 +139,7 @@ void Enemy::SetEnemyList()
 void Enemy::SetObserver(Observer* EnemyChecker)
 {
 	enemyChecker = EnemyChecker;
-	tnl::DebugTrace("\nObserver‚ª“o˜^‚³‚ê‚Ü‚µ‚½\n");
+	//tnl::DebugTrace("\nObserver‚ª“o˜^‚³‚ê‚Ü‚µ‚½\n");
 }
 
 void Enemy::notify()

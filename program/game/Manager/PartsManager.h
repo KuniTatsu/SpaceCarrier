@@ -52,6 +52,11 @@ public:
 	//ランダムなパーツIDを返す関数
 	int GetRandomPartsId();
 
+	//ドロップウェイト取得関数
+	inline std::vector<int>& GetDropWeight() {
+		return dropWeight;
+	}
+
 private:
 	//シングルトンインスタンス
 	static PartsManager* instance;
@@ -60,10 +65,16 @@ private:
 
 	std::vector<std::vector<std::string>> loadWeaponPartsCsv;
 
+	//ドロップレート
+	std::vector < std::vector<std::string>>loadPartsWeight;
+
 	//船体パーツマスター
 	std::vector<std::vector<std::shared_ptr<ShipParts>>>shipPartsMaster;
 	//武器パーツマスター
 	std::vector<std::vector<std::shared_ptr<WeaponParts>>>weaponPartsMaster;
+
+	//パーツのドロップウェイト
+	std::vector<int>dropWeight;
 
 	//パーツIDのリスト
 	std::vector<int>PartsIdList;

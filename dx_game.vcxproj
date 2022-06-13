@@ -23,6 +23,7 @@
     <ClCompile Include="program\game\Manager\UIManager.cpp" />
     <ClCompile Include="program\game\Menu.cpp" />
     <ClCompile Include="program\game\Mod.cpp" />
+    <ClCompile Include="program\game\Object\DropItem.cpp" />
     <ClCompile Include="program\game\Observer.cpp" />
     <ClCompile Include="program\game\Scene\CustomizeScene.cpp" />
     <ClCompile Include="program\game\Scene\StageSelectScene.cpp" />
@@ -48,7 +49,9 @@
     <ClCompile Include="program\library\tnl_math.cpp" />
     <ClCompile Include="program\library\tnl_matrix.cpp" />
     <ClCompile Include="program\library\tnl_quaternion.cpp" />
-    <ClCompile Include="program\library\tnl_util.cpp" />
+    <ClCompile Include="program\library\tnl_util.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="program\library\tnl_vector.cpp" />
     <ClCompile Include="program\system\sys_main.cpp" />
   </ItemGroup>
@@ -65,6 +68,7 @@
     <ClInclude Include="program\game\Manager\UIManager.h" />
     <ClInclude Include="program\game\Menu.h" />
     <ClInclude Include="program\game\Mod.h" />
+    <ClInclude Include="program\game\Object\DropItem.h" />
     <ClInclude Include="program\game\Observer.h" />
     <ClInclude Include="program\game\Scene\CustomizeScene.h" />
     <ClInclude Include="program\game\Scene\StageSelectScene.h" />
@@ -144,8 +148,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

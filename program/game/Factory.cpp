@@ -12,7 +12,7 @@
 
 ObjectFactory::ObjectFactory()
 {
-	tnl::DebugTrace("\nFactory子クラスが生成されました。\n");
+	//tnl::DebugTrace("\nFactory子クラスが生成されました。\n");
 }
 
 //弾を作る関数
@@ -168,7 +168,7 @@ std::shared_ptr<Object>ObjectFactory::CreateObject(const tnl::Vector3& StartPos,
 
 Factory::Factory()
 {
-	tnl::DebugTrace("\nFactory親クラスが生成されました。\n");
+	//tnl::DebugTrace("\nFactory親クラスが生成されました。\n");
 	gManager = GameManager::Instance();
 }
 

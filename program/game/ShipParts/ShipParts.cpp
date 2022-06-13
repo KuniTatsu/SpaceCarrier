@@ -75,7 +75,7 @@ ShipParts::ShipParts(int Id, int PartsType, std::string Name, float Hp, float En
 	for (int i = 0; i <= modNum; ++i) {
 		auto mod = mManager->CreateNewMod();
 		myMods.emplace_back(mod);
-		tnl::DebugTrace("\n修飾Mod[%s]を付与しました\n", mod->GetModName().c_str());
+		//tnl::DebugTrace("\n修飾Mod[%s]を付与しました\n", mod->GetModName().c_str());
 	}
 	//Modステータスの取得
 	SetEditStatus();
@@ -183,7 +183,7 @@ bool ShipParts::isClicked(int MouseX, int MouseY)
 
 	//もしアイコン画像内にマウスがあり、クリックしていれば
 	if (gManager->isClickedRect(MouseX, MouseY, iconCenter.x - 90, iconCenter.y - 112, iconCenter.x + 90, iconCenter.y + 112)) {
-		tnl::DebugTrace("\n%sのアイコン画像がクリックされました\n", factName.c_str());
+		//tnl::DebugTrace("\n%sのアイコン画像がクリックされました\n", factName.c_str());
 		return true;
 	}
 

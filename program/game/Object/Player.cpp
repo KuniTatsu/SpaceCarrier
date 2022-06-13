@@ -5,6 +5,7 @@
 #include"../Factory.h"
 #include"../Ship.h"
 #include"../ShipParts/PartsBase.h"
+#include"../Manager/PartsManager.h"
 
 Player::Player()
 {
@@ -51,6 +52,8 @@ void Player::Init()
 
 	targetingCircle = gManager->LoadGraphEx("graphics/TargetPointa.png");
 
+	pManager = PartsManager::Instance();
+
 	//player‚Ì“–‚½‚è”»’è”¼Œa
 	radius = 12.5;
 
@@ -94,6 +97,16 @@ void Player::DrawShip()
 void Player::ChangeShipParts(int PartsType, std::shared_ptr<ShipParts> NewParts)
 {
 	myShip->ChangeShipParts(PartsType, NewParts);
+}
+
+void Player::CreateNewParts()
+{
+	auto weight = pManager->GetDropWeight();
+
+	auto id = gManager->GerRandomNumInWeight(weight);
+
+	partsInventory->AddInventory(id);
+
 }
 
 void Player::Move()
